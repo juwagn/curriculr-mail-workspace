@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../shared/tokens.css" />
+    <link rel="stylesheet" href="../shared/ui.css" />
+    <link rel="stylesheet" href="snippets.css" />
+    <script type="module" src="snippets.js"></script>
+  </head>
+  <body>
+    <form id="later">
+      <label for="send-at">Später senden</label>
+      <div class="row">
+        <input type="datetime-local" id="send-at" required />
+        <button type="submit" class="primary">Planen</button>
+      </div>
+    </form>
+    <ul id="list" aria-label="Textbausteine"></ul>
+    <p id="empty" class="dim" hidden>Noch keine Textbausteine.</p>
+    <p id="error" role="alert" hidden></p>
+    <footer>
+      <button type="button" id="edit">Bausteine bearbeiten …</button>
+    </footer>
+  </body>
+</html>

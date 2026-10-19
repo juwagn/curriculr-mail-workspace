@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../shared/tokens.css" />
+    <link rel="stylesheet" href="../shared/ui.css" />
+    <link rel="stylesheet" href="snippets.css" />
+    <script type="module" src="message-actions.js"></script>
+  </head>
+  <body>
+    <ul aria-label="Schul-Aktionen">
+      <li>
+        <button type="button" class="snippet" data-action="archive">
+          <span class="snippet-title">PDF/Attest archivieren</span>
+          <span class="snippet-preview">Nach Schul-Archiv speichern, Tag „Erledigt“</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="snippet" data-action="event">
+          <span class="snippet-title">Termin im Schul-Kalender anlegen</span>
+          <span class="snippet-preview">Datum und Uhrzeit aus der Mail übernehmen</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="snippet" data-action="ticket">
+          <span class="snippet-title">Als IT-Ticket / To-Do kopieren</span>
+          <span class="snippet-preview">Markdown-Aufgabe mit Raumnummer</span>
+        </button>
+      </li>
+    </ul>
+    <p id="status" class="dim" role="status" hidden></p>
+    <p id="error" role="alert" hidden></p>
+  </body>
+</html>

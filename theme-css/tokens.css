@@ -1,0 +1,6 @@
+/* Weiterleitung auf die gemeinsamen Tokens des Add-ons.
+ * Gebraucht, wenn userChrome.css direkt aus dem Repo geladen wird
+ * (Import-Stub von install-dev, z. B. im Nextcloud-Ordner): Dann löst
+ * @import url("tokens.css") relativ zu theme-css/ auf. Beim Hardlink
+ * liegt stattdessen chrome/tokens.css direkt neben userChrome.css. */
+@import url("../extension-workspace-switcher/shared/tokens.css");

@@ -1,0 +1,71 @@
+main {
+  padding: 20px 22px;
+  display: grid;
+  gap: 14px;
+}
+
+h1 {
+  font-size: 1.1rem;
+}
+
+#issues {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.issue {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--ws-border);
+  border-inline-start: 3px solid var(--ws-accent);
+  border-radius: var(--ws-radius);
+  background: var(--ws-surface);
+}
+
+.issue.warn {
+  border-inline-start-color: var(--ws-danger);
+}
+
+.issue h2 {
+  font-size: 0.95rem;
+}
+
+.issue .text {
+  color: var(--ws-text-dim);
+  overflow-wrap: anywhere;
+}
+
+.issue .text strong {
+  color: var(--ws-text);
+}
+
+.check {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.later {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.later input {
+  background: var(--ws-surface);
+  border: 1px solid var(--ws-border);
+  border-radius: var(--ws-radius-sm);
+  padding: 5px 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}

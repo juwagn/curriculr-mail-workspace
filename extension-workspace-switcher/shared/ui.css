@@ -1,0 +1,123 @@
+/* Gemeinsame Gestaltung für Options-Seite, Textbaustein-Popup und Warndialog.
+ * Tokens (Farben, Radien) stehen in tokens.css, die vor dieser Datei geladen wird.
+ * Eigene Farben kommen als --ws-custom-* im Inline-Style des Roots
+ * (applyPageColors in settings.mjs). */
+
+:root {
+  /* Tokens kommen aus tokens.css. Erweiterungsseiten kennen kein
+     data-workspace und starten im Schul-Akzent (confirm.js setzt ihn je Absender). */
+  --ws-accent: var(--ws-accent-school);
+  color-scheme: light dark;
+  font: message-box;
+  font-size: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--ws-bg);
+  color: var(--ws-text);
+  line-height: 1.45;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+.dim {
+  color: var(--ws-text-dim);
+}
+
+button,
+select,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  border: 1px solid var(--ws-border);
+  background: var(--ws-surface);
+  border-radius: var(--ws-radius-sm);
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--ws-surface-2);
+}
+
+button.primary {
+  background: var(--ws-accent);
+  border-color: var(--ws-accent);
+  color: lch(from var(--ws-accent) calc((var(--ws-on-accent-threshold) - l) * infinity) 0 0);
+}
+
+button.primary:hover {
+  background: color-mix(in srgb, var(--ws-accent) 88%, #000);
+}
+
+button.danger {
+  color: var(--ws-danger);
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--ws-accent);
+  outline-offset: 1px;
+}
+
+select,
+input[type="text"],
+textarea {
+  background: var(--ws-surface);
+  border: 1px solid var(--ws-border);
+  border-radius: var(--ws-radius-sm);
+  padding: 6px 8px;
+}
+
+textarea {
+  resize: vertical;
+  width: 100%;
+}
+
+.pill {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.85em;
+  font-weight: 600;
+  --pill-bg: var(--ws-accent-all);
+  background: var(--pill-bg);
+  color: lch(from var(--pill-bg) calc((var(--ws-on-accent-threshold) - l) * infinity) 0 0);
+}
+
+.pill.school {
+  --pill-bg: var(--ws-accent-school);
+}
+
+.pill.private {
+  --pill-bg: var(--ws-accent-private);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  button,
+  select,
+  input,
+  textarea {
+    transition: background-color 120ms ease, border-color 120ms ease;
+  }
+}

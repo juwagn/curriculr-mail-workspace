@@ -1,0 +1,511 @@
+/* Curricu:lr Mail-Workspace – userChrome.css für Thunderbird 128+ (getestet mit 158)
+ *
+ * Aufbau:
+ *   0. Gemeinsame Tokens aus tokens.css (Farben Hell/Dunkel, Modus-Akzent
+ *      über :root[data-workspace], Radien). Quelle:
+ *      extension-workspace-switcher/shared/tokens.css, install-dev legt sie
+ *      neben diese Datei.
+ *   1. Theme-eigene Tokens (Schatten, Abstände, Dauer)
+ *   3. Abbildung der Tokens auf Thunderbirds eigene CSS-Variablen
+ *   4. Strukturregeln: Karten, Ordnerliste, Spaces Toolbar, Toolbar
+ *
+ * Gilt im Hauptfenster (messenger.xhtml) und im 3-Pane-Tab (about:3pane).
+ * userChrome.css ist ein User-Sheet und verliert ohne !important gegen
+ * Thunderbirds eigene Regeln. Darum tragen alle Deklarationen !important.
+ *
+ * Alles steht in @media not (prefers-contrast), damit der Hochkontrastmodus
+ * von Windows unangetastet bleibt. Einzige Ausnahme: das Ausblenden von
+ * Konten, denn der Switcher muss auch dort funktionieren. */
+
+/* @import muss vor allen Regeln stehen. */
+@import url("tokens.css");
+
+/* ---------------------------------------------------------------------- */
+/* Workspace-Switcher: Konten ausblenden (auch im Hochkontrastmodus)      */
+/* ---------------------------------------------------------------------- */
+
+#folderTree li[data-server-key].workspace-hidden {
+  display: none !important;
+}
+
+@media not (prefers-contrast) {
+  /* -------------------------------------------------------------------- */
+  /* 1. Theme-eigene Tokens (Farben, Akzent, Radien: tokens.css)          */
+  /* -------------------------------------------------------------------- */
+  :root {
+    /* Ordnerfarbe: das Experiment setzt sie inline auf li[data-ws-folder-color]. */
+    --ws-folder-color: initial;
+
+    --ws-shadow: 0 1px 2px rgba(15, 15, 30, 0.06);
+
+    /* Abstände und Bewegung */
+    --ws-space-1: 3px;
+    --ws-space-2: 6px;
+    --ws-space-3: 10px;
+    --ws-duration: 140ms;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ws-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 3. Thunderbird-Variablen                                             */
+  /* -------------------------------------------------------------------- */
+  :root {
+    /* Flächen */
+    --layout-background-0: var(--ws-surface) !important;
+    --layout-background-1: var(--ws-bg) !important;
+    --layout-background-2: var(--ws-surface-2) !important;
+    --layout-background-3: var(--ws-surface-2) !important;
+    --layout-background-4: var(--ws-border) !important;
+    --layout-color-0: var(--ws-text) !important;
+    --layout-color-1: var(--ws-text) !important;
+    --layout-color-2: var(--ws-text-dim) !important;
+    --layout-border-0: var(--ws-border) !important;
+    --layout-border-1: var(--ws-border) !important;
+    --toolbar-background-color: var(--ws-bg) !important;
+    --toolbar-text-color: var(--ws-text) !important;
+    --tree-view-bg: var(--ws-bg) !important;
+    --tree-pane-background: var(--ws-bg) !important;
+
+    /* Akzent */
+    --selected-item-color: var(--ws-accent) !important;
+    --selected-item-text-color: var(--ws-accent-text) !important;
+    --button-primary-background-color: var(--ws-accent) !important;
+    --button-primary-text-color: var(--ws-accent-text) !important;
+    --focus-outline-color: var(--ws-accent) !important;
+
+    /* Form */
+    --button-border-radius: var(--ws-radius-sm) !important;
+    --input-text-border-radius: var(--ws-radius-sm) !important;
+    --input-search-border-radius: var(--ws-radius-lg) !important;
+    --list-item-min-height: 30px !important;
+
+    /* Karten: Radius und vertikaler Abstand. Die Zeilenhöhe rechnet
+     * Thunderbird selbst aus; 3px Abstand passt, weil der Zeilenabstand
+     * in den Karten um 1px kleiner wird. */
+    --listbox-border-radius: var(--ws-radius) !important;
+    --card-container-padding-block: var(--ws-space-1) !important;
+    --thread-card-content-gap: 2px !important;
+    --tree-card-content-inline: var(--ws-space-3) !important;
+
+    --tree-card-background: var(--ws-surface) !important;
+    --tree-card-border: transparent !important;
+    --tree-card-border-hover: var(--ws-border) !important;
+    --tree-card-border-focus: var(--ws-accent-line) !important;
+    --tree-card-background-current: var(--ws-accent-softer) !important;
+    --tree-card-background-selected: var(--ws-accent-soft) !important;
+    --tree-card-background-selected-current: var(--ws-accent-soft) !important;
+    --tree-card-border-selected: transparent !important;
+    --tree-card-background-current-unfocused: var(--ws-surface-2) !important;
+    --tree-card-background-selected-unfocused: var(--ws-accent-softer) !important;
+    --tree-card-background-selected-current-unfocused: var(--ws-accent-softer) !important;
+    --tree-card-background-selected-current-unfocused-hover: var(--ws-accent-soft) !important;
+    --tree-card-border-selected-unfocused: transparent !important;
+
+    /* Tabellenansicht */
+    --listbox-selected-bg: var(--ws-accent-soft) !important;
+    --listbox-hover: var(--ws-hover) !important;
+    --unread-color: var(--ws-text) !important;
+    --thread-pane-unread-fill: var(--ws-accent) !important;
+    --thread-pane-unread-stroke: var(--ws-accent) !important;
+  }
+
+  /* Ordnerliste und Spaces Toolbar: ruhige Seitenleiste */
+  #folderPane,
+  #spacesToolbar {
+    --sidebar-background: var(--ws-sidebar) !important;
+    --sidebar-background-color: var(--ws-sidebar) !important;
+    --sidebar-color: var(--ws-text) !important;
+    --sidebar-text-color: var(--ws-text) !important;
+    --layout-background-1: var(--ws-sidebar) !important;
+    --treeitem-background-hover: var(--ws-hover) !important;
+    --treeitem-background-selected: var(--ws-accent-soft) !important;
+    --treeitem-background-active: var(--ws-accent-soft) !important;
+    --treeitem-text-active: var(--ws-text) !important;
+    --folderpane-unread-count-background: var(--ws-accent) !important;
+    --folderpane-unread-count-text: var(--ws-accent-text) !important;
+    --folderpane-unread-new-count-background: var(--ws-accent) !important;
+    --folderpane-total-count-background: var(--ws-surface-2) !important;
+    --spaces-bg-color: var(--ws-sidebar) !important;
+    --spaces-bg-image: none !important;
+    --spaces-button-text-color: var(--ws-text-dim) !important;
+    --spaces-button-active-text-color: var(--ws-accent) !important;
+    --spaces-button-active-bg-color: var(--ws-accent-soft) !important;
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4a. Nachrichtenliste – Karten                                        */
+  /* -------------------------------------------------------------------- */
+  #threadTree[rows="thread-card"] {
+    background-color: var(--ws-bg) !important;
+
+    & tr[is="thread-card"] > td {
+      padding-inline: var(--ws-space-2) !important;
+    }
+
+    & tr[is="thread-card"] .card-container {
+      box-shadow: var(--ws-shadow) !important;
+    }
+
+    & tr[is="thread-card"].selected .card-container,
+    & tr[is="thread-card"].current .card-container {
+      box-shadow: none !important;
+    }
+
+    /* Auswahl: Fläche allein ist im Modus Alle zu schwach (~1.2:1),
+       darum Umrandung im Akzent (WCAG 1.4.11). Links liegt schon der Ungelesen-Balken. */
+    & tr[is="thread-card"].selected .card-container {
+      outline: 2px solid var(--ws-accent) !important;
+      outline-offset: -2px !important;
+    }
+
+    /* Ruhe: Menü-Knopf und leerer Stern nur bei Hover, Fokus oder Auswahl.
+       Bedienung bleibt über Kontextmenü und Tastatur (Knöpfe sind tabindex -1). */
+    & tr[is="thread-card"]:not(:hover, :focus-within, .current, .selected) .tree-button-more,
+    & tr[is="thread-card"]:not(:hover, :focus-within, .current, .selected, [data-properties~="flagged"]) .tree-button-flag {
+      opacity: 0 !important;
+    }
+
+    /* Typografie */
+    & .card-container .sender {
+      font-weight: 600 !important;
+      color: var(--ws-text) !important;
+    }
+
+    & .card-container .date {
+      color: var(--ws-text-dim) !important;
+      opacity: 1 !important;
+    }
+
+    & .card-layout:not([data-properties~="unread"]) .card-container .subject {
+      color: var(--ws-text-dim) !important;
+    }
+
+    & .card-layout[data-properties~="unread"] .card-container .sender {
+      font-weight: 700 !important;
+    }
+
+    /* Ungelesen: Akzentbalken links statt grünem Punkt */
+    & .card-layout[data-properties~="unread"]:not([data-properties~="new"]) {
+      --read-status-display: none !important;
+    }
+
+    & .card-layout[data-properties~="unread"] .card-container::before {
+      content: "" !important;
+      position: absolute !important;
+      inset-block: var(--ws-space-2) !important;
+      inset-inline-start: 0 !important;
+      inline-size: 3px !important;
+      border-radius: 0 3px 3px 0 !important;
+      background: var(--ws-accent) !important;
+    }
+
+    /* Neue Nachrichten behalten den Stern, aber im Akzent */
+    & .card-layout[data-properties~="unread"][data-properties~="new"] {
+      --read-status-fill: var(--ws-accent) !important;
+      --read-status-stroke: var(--ws-accent) !important;
+      --new-subject-color: var(--ws-text) !important;
+    }
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4b. Ordnerliste                                                      */
+  /* -------------------------------------------------------------------- */
+  #folderPane {
+    background-color: var(--ws-sidebar) !important;
+  }
+
+  #folderTree li > .container {
+    border-radius: var(--ws-radius-sm) !important;
+    margin-inline: var(--ws-space-2) !important;
+    outline: none !important;
+  }
+
+  #folderTree li.selected > .container {
+    background-color: var(--ws-accent-soft) !important;
+    color: var(--ws-text) !important;
+  }
+
+  #folderTree li.selected > .container > .icon {
+    --icon-color: var(--ws-accent) !important;
+  }
+
+  #folderTree li > .container > .icon {
+    --icon-color: var(--ws-text-dim) !important;
+  }
+
+  /* Konto-Zeilen: halbfette Überschrift mit Luft darüber, gliedert mehrere Konten */
+  #folderTree li[data-server-type] > .container > .name {
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+    color: var(--ws-text) !important;
+  }
+
+  #folderTree li[data-server-type]:not(:first-child) {
+    margin-block-start: var(--ws-space-md) !important;
+  }
+
+  /* Modus Alle: Akzent ist Graphit, volle Zähler wirken wie Knöpfe. Darum leise. */
+  :root[data-workspace="all"] #folderPane {
+    --folderpane-unread-count-background: var(--ws-surface-2) !important;
+    --folderpane-unread-new-count-background: var(--ws-surface-2) !important;
+    --folderpane-unread-count-text: var(--ws-text) !important;
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4c. Spaces Toolbar                                                   */
+  /* -------------------------------------------------------------------- */
+  /* Volle Akzentfläche: zeigt den Modus auf einen Blick.
+     Schrift/Icons über --ws-accent-text, damit auch eigene Farben lesbar bleiben. */
+  #spacesToolbar {
+    --spaces-bg-color: var(--ws-accent) !important;
+    --spaces-button-text-color: color-mix(in srgb, var(--ws-accent-text) 78%, transparent) !important;
+    --spaces-button-active-text-color: var(--ws-accent-text) !important;
+    --spaces-button-active-bg-color: color-mix(in srgb, var(--ws-accent-text) 20%, transparent) !important;
+    background-color: var(--ws-accent) !important;
+    border-inline-end: none !important;
+    color: var(--ws-accent-text) !important;
+  }
+
+  /* Aktiver Button: Farben kommen über --spaces-button-active-* */
+  #spacesToolbar .spaces-toolbar-button {
+    border-radius: var(--ws-radius) !important;
+  }
+
+  #spacesToolbar .spaces-toolbar-button:hover {
+    background-color: color-mix(in srgb, var(--ws-accent-text) 12%, transparent) !important;
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4d. Toolbar und Modus-Indikator                                      */
+  /* -------------------------------------------------------------------- */
+  #unifiedToolbar {
+    border-block-end: 2px solid var(--ws-accent-line) !important;
+  }
+
+  .unified-toolbar-button {
+    border-radius: var(--ws-radius-sm) !important;
+  }
+
+  global-search-bar {
+    --button-border-radius: var(--ws-radius-lg) !important;
+  }
+
+  /* Workspace-Badge am Anfang der Toolbar: SCHULE / PRIVAT / ALLE */
+  :root[data-workspace] #unifiedToolbarContent::before {
+    content: "ALLE" !important;
+    order: -2 !important;
+    align-self: center !important;
+    margin-inline: var(--ws-space-2) var(--ws-space-3) !important;
+    padding: 3px 12px !important;
+    border-radius: var(--ws-radius-pill) !important;
+    background: var(--ws-accent) !important;
+    color: var(--ws-accent-text) !important;
+    font-size: var(--ws-text-sm) !important;
+    font-weight: 700 !important;
+    letter-spacing: var(--ws-tracking-caps) !important;
+  }
+
+  :root[data-workspace="school"] #unifiedToolbarContent::before {
+    content: "SCHULE" !important;
+  }
+
+  :root[data-workspace="private"] #unifiedToolbarContent::before {
+    content: "PRIVAT" !important;
+  }
+
+  /* Fokus-Modus: dezenter Hinweis neben dem Badge */
+  :root[data-ws-focus="true"] #unifiedToolbarContent::after {
+    content: "● Fokus" !important;
+    align-self: center !important;
+    order: -1 !important;
+    margin-inline-end: var(--ws-space-3) !important;
+    color: var(--ws-text-dim) !important;
+    font-size: 0.8em !important;
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4e. Verfassen-Fenster: Absender-Workspace auf einen Blick            */
+  /*     (data-ws-compose setzt die Extension je nach Identität)          */
+  /* -------------------------------------------------------------------- */
+  /* Akzent je Absender setzt tokens.css über :root[data-ws-compose]. */
+  :root[data-ws-compose] #MsgHeadersToolbar {
+    border-inline-start: 4px solid var(--ws-accent) !important;
+    background-color: var(--ws-accent-softer) !important;
+  }
+
+  :root[data-ws-compose] #msgIdentity {
+    outline: 2px solid var(--ws-accent-line) !important;
+    outline-offset: 1px !important;
+    border-radius: var(--ws-radius-sm) !important;
+  }
+
+  :root[data-ws-compose] #MsgHeadersToolbar::before {
+    align-self: flex-start !important;
+    margin: var(--ws-space-2) var(--ws-space-3) 0 !important;
+    padding: 1px 8px !important;
+    border-radius: 999px !important;
+    background: var(--ws-accent) !important;
+    color: var(--ws-accent-text) !important;
+    font-size: 0.75em !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  :root[data-ws-compose="school"] #MsgHeadersToolbar::before {
+    content: "SCHULE" !important;
+  }
+
+  :root[data-ws-compose="private"] #MsgHeadersToolbar::before {
+    content: "PRIVAT" !important;
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4f. Schlagwörter als Pills statt Zeilenfärbung                       */
+  /*     Die Tag-Icons der Karten liegen im Shadow DOM von                */
+  /*     thread-card-tags; gestaltbar ist nur der Host als Pill.          */
+  /* -------------------------------------------------------------------- */
+  #threadTree tr[is="thread-card"] .card-layout[data-properties~="tagged"] .card-container :is(.subject, .sender) {
+    color: var(--ws-text) !important;
+  }
+
+  #threadTree tr[is="thread-card"] thread-card-tags:not([tags=""]) {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+    padding: 1px 6px !important;
+    border-radius: 999px !important;
+    background: color-mix(in srgb, var(--tag-color, var(--ws-accent)) 16%, var(--ws-surface)) !important;
+    border: 1px solid color-mix(in srgb, var(--tag-color, var(--ws-accent)) 35%, transparent) !important;
+  }
+
+  /* Tabellenansicht: Text normal, Schlagwort als farbiger Balken am Betreff */
+  #threadTree .table-layout[data-properties~="tagged"]:not(.selected) {
+    color: var(--ws-text) !important;
+  }
+
+  #threadTree .table-layout[data-properties~="tagged"] .subject-line {
+    box-shadow: inset 3px 0 0 var(--tag-color, transparent) !important;
+    padding-inline-start: var(--ws-space-2) !important;
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4g. Schnell-Tab-Leiste und farbige Ordner                            */
+  /* -------------------------------------------------------------------- */
+  #ws-pinned-folders-bar {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: var(--ws-space-1) !important;
+    padding: var(--ws-space-2) var(--ws-space-2) var(--ws-space-1) !important;
+    overflow-x: auto !important;
+    scrollbar-width: thin !important;
+    background: var(--ws-bg) !important;
+    border-block-end: 1px solid var(--ws-border) !important;
+  }
+
+  #ws-pinned-folders-bar .ws-pinned-folder {
+    --ws-pin-color: var(--ws-accent);
+    flex: none !important;
+    appearance: none !important;
+    margin: 0 !important;
+    padding: 3px 12px !important;
+    border: 1px solid var(--ws-border) !important;
+    border-radius: 999px !important;
+    background: var(--ws-surface) !important;
+    color: var(--ws-text) !important;
+    font: inherit !important;
+    font-size: 0.92em !important;
+    cursor: pointer !important;
+    box-shadow: inset 3px 0 0 var(--ws-pin-color) !important;
+  }
+
+  #ws-pinned-folders-bar .ws-pinned-folder:hover {
+    background: var(--ws-accent-softer) !important;
+  }
+
+  #ws-pinned-folders-bar .ws-pinned-folder.ws-current {
+    background: var(--ws-accent-soft) !important;
+    border-color: var(--ws-accent-line) !important;
+    font-weight: 600 !important;
+  }
+
+  #ws-pinned-folders-bar .ws-pinned-folder.ws-drop-target {
+    background: var(--ws-pin-color) !important;
+    border-color: var(--ws-pin-color) !important;
+    color: lch(from var(--ws-pin-color) calc((var(--ws-on-accent-threshold) - l) * infinity) 0 0) !important;
+  }
+
+  #ws-pinned-folders-bar .ws-pinned-folder:focus-visible {
+    outline: 2px solid var(--ws-accent) !important;
+    outline-offset: 1px !important;
+  }
+
+  /* Farbige Ordner: Icon in der Ordnerfarbe, auch wenn ausgewählt */
+  #folderTree li[data-ws-folder-color] > .container > .icon {
+    --icon-color: var(--ws-folder-color) !important;
+  }
+
+  #folderTree li[data-ws-folder-color] > .container > .name {
+    text-decoration: underline 2px color-mix(in srgb, var(--ws-folder-color) 55%, transparent) !important;
+    text-underline-offset: 4px !important;
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4h. Klassenzimmer: Sichtschutz und Fokus-Modus                       */
+  /* -------------------------------------------------------------------- */
+  :root[data-ws-privacy="blur"] :is(#threadTree tbody tr td, #messagePane, #messagepane, #today-pane-panel #agenda) {
+    filter: blur(6px) !important;
+    transition: filter 0.15s ease !important;
+  }
+
+  :root[data-ws-privacy="blur"] :is(#threadTree tbody tr:hover td, #messagePane:hover, #messagepane:hover, #today-pane-panel #agenda:hover) {
+    filter: none !important;
+  }
+
+  :root[data-ws-focus="true"] #folderTree .folder-count-badge {
+    display: none !important;
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4j. Nachrichtenkopf (about:message)                                  */
+  /*     Dort gibt es kein data-workspace: nur Neutrale, kein Akzent.      */
+  /* -------------------------------------------------------------------- */
+  #expandedsubjectBox {
+    font-size: var(--ws-text-lg) !important;
+    font-weight: var(--ws-weight-semibold) !important;
+    color: var(--ws-text) !important;
+  }
+
+  /* Uhrzeit klar von den Knöpfen absetzen */
+  .message-header-datetime {
+    margin-inline: var(--ws-space-md) !important;
+    color: var(--ws-text-dim) !important;
+  }
+
+  #messageHeader .message-header-view-button {
+    color: var(--ws-text-dim) !important;
+  }
+
+  #messageHeader .message-header-view-button:hover {
+    color: var(--ws-text) !important;
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4i. Bewegung                                                         */
+  /* -------------------------------------------------------------------- */
+  @media (prefers-reduced-motion: no-preference) {
+    #threadTree[rows="thread-card"] .card-container,
+    #folderTree li > .container,
+    #spacesToolbar .spaces-toolbar-button,
+    #unifiedToolbar {
+      transition:
+        background-color var(--ws-duration) ease,
+        border-color var(--ws-duration) ease,
+        color var(--ws-duration) ease !important;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+/* Spark Look – userContent.css
+ * Sanfte Anpassung von Zitaten und Links in Nachrichten.
+ * Kein !important: HTML-Mails behalten ihr eigenes Layout. */
+
+@media not (prefers-contrast) {
+  blockquote[type="cite"] {
+    border-inline-start: 3px solid light-dark(#cfe0fd, #2c4670);
+    padding-inline-start: 12px;
+    margin-inline: 0;
+  }
+
+  a:any-link {
+    color: light-dark(#2f7cf6, #5b9bff);
+  }
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vor dem Senden prüfen</title>
+    <link rel="stylesheet" href="../shared/tokens.css" />
+    <link rel="stylesheet" href="../shared/ui.css" />
+    <link rel="stylesheet" href="confirm.css" />
+    <script type="module" src="confirm.js"></script>
+  </head>
+  <body>
+    <main role="alertdialog" aria-labelledby="title" aria-describedby="issues">
+      <h1 id="title">Vor dem Senden prüfen</h1>
+      <ul id="issues"></ul>
+
+      <template id="tpl-mismatch">
+        <li class="issue warn">
+          <h2>Absender passt nicht zum Workspace</h2>
+          <p class="text"></p>
+        </li>
+      </template>
+      <template id="tpl-bcc">
+        <li class="issue">
+          <h2>Externe Empfänger sind für alle sichtbar</h2>
+          <p class="text"></p>
+          <label class="check"><input type="checkbox" id="move-bcc" checked /> <span class="label"></span></label>
+        </li>
+      </template>
+      <template id="tpl-sensitive">
+        <li class="issue warn">
+          <h2>Sensibler Verlauf wird weitergeleitet</h2>
+          <p class="text"></p>
+          <label class="check"><input type="checkbox" id="strip-quotes" checked /> Sensiblen Zitat-Verlauf vor dem Senden automatisch entfernen</label>
+        </li>
+      </template>
+      <template id="tpl-afterHours">
+        <li class="issue">
+          <h2>Feierabend</h2>
+          <p class="text">Es ist nach Dienstschluss. Eltern und Kollegium müssen nicht sofort lesen.</p>
+        </li>
+      </template>
+
+      <div class="later">
+        <label for="send-at">Später senden am</label>
+        <input type="datetime-local" id="send-at" />
+      </div>
+
+      <div class="actions">
+        <button type="button" id="cancel">Nicht senden</button>
+        <button type="button" id="later">Später senden</button>
+        <button type="button" id="send">Jetzt senden</button>
+      </div>
+    </main>
+  </body>
+</html>

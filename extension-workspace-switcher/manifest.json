@@ -1,0 +1,85 @@
+{
+  "manifest_version": 2,
+  "name": "Curricu:lr Mail-Workspace",
+  "description": "Teil der Curricu:lr-Familie. Wechselt zwischen Schule, Privat und Alle: blendet Konten aus, wählt den Absender, prüft Mails vor dem Senden, sendet später, bietet Textbausteine, Schnell-Tabs, Auto-Tags und Kalender-Kopplung.",
+  "version": "0.2.0",
+  "author": "Julian Wagner",
+  "homepage_url": "https://github.com/juwagn/curriculr-mail-workspace",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "mail-workspace@curriculr",
+      "strict_min_version": "128.0"
+    }
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "permissions": [
+    "accountsRead",
+    "compose",
+    "compose.save",
+    "compose.send",
+    "storage",
+    "menus",
+    "messagesRead",
+    "messagesMove",
+    "messagesTags",
+    "messagesModify",
+    "messagesDelete",
+    "downloads",
+    "alarms",
+    "clipboardWrite",
+    "notifications"
+  ],
+  "browser_action": {
+    "default_title": "Workspace wechseln (Strg+Umschalt+Y)",
+    "default_label": "Alle",
+    "default_icon": "icons/all.svg"
+  },
+  "compose_action": {
+    "default_title": "Textbausteine",
+    "default_label": "Bausteine",
+    "default_icon": "icons/snippets.svg",
+    "default_popup": "popup/snippets.html"
+  },
+  "message_display_action": {
+    "default_title": "Schul-Aktionen",
+    "default_label": "Schule",
+    "default_icon": "icons/school.svg",
+    "default_popup": "popup/message-actions.html"
+  },
+  "commands": {
+    "cycle-workspace": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Workspace wechseln (Schule, Privat, Alle)"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "32": "icons/curriculr.svg",
+    "64": "icons/curriculr.svg",
+    "128": "icons/curriculr.svg"
+  },
+  "experiment_apis": {
+    "workspace": {
+      "schema": "experiments/workspace/schema.json",
+      "parent": {
+        "scopes": [
+          "addon_parent"
+        ],
+        "paths": [
+          [
+            "workspace"
+          ]
+        ],
+        "script": "experiments/workspace/implementation.js"
+      }
+    }
+  }
+}

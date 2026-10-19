@@ -1,0 +1,165 @@
+/* Spark Look – userChrome.css für Thunderbird 158
+ * Überschreibt CSS-Variablen von Thunderbird mit einer Spark-inspirierten Palette.
+ * Hell/Dunkel folgt dem System über light-dark(). */
+
+@media not (prefers-contrast) {
+  :root {
+    /* Palette */
+    --spark-accent: light-dark(#2f7cf6, #5b9bff);
+    --spark-accent-soft: light-dark(#e3eefe, #25395c);
+    --spark-accent-text: light-dark(#ffffff, #0f1115);
+    --spark-bg-0: light-dark(#ffffff, #1b1c1f);
+    --spark-bg-1: light-dark(#f4f6fa, #222327);
+    --spark-bg-2: light-dark(#eceff5, #2a2b30);
+    --spark-border: light-dark(#e3e7ee, #34363c);
+    --spark-text: light-dark(#1d2330, #eceef2);
+    --spark-text-dim: light-dark(#5d6677, #a4aab8);
+
+    /* Dunkelblaue Seitenleiste, in Hell und Dunkel */
+    --spark-navy: light-dark(#2a3447, #1f2634);
+    --spark-navy-hover: rgba(255, 255, 255, 0.08);
+    --spark-navy-selected: rgba(255, 255, 255, 0.15);
+    --spark-navy-text: #f1f4fa;
+    --spark-navy-text-dim: #aeb8cc;
+
+    /* Flächen */
+    --layout-background-0: var(--spark-bg-0) !important;
+    --layout-background-1: var(--spark-bg-1) !important;
+    --layout-background-2: var(--spark-bg-2) !important;
+    --layout-background-3: var(--spark-bg-2) !important;
+    --layout-background-4: var(--spark-border) !important;
+    --layout-color-0: var(--spark-text) !important;
+    --layout-color-1: var(--spark-text) !important;
+    --layout-color-2: var(--spark-text-dim) !important;
+    --layout-border-0: var(--spark-border) !important;
+    --layout-border-1: var(--spark-border) !important;
+    --sidebar-background-color: var(--spark-bg-1) !important;
+    --sidebar-text-color: var(--spark-text) !important;
+    --sidebar-border-color: var(--spark-border) !important;
+    --toolbar-background-color: var(--spark-bg-0) !important;
+    --toolbar-text-color: var(--spark-text) !important;
+    --tree-view-bg: var(--spark-bg-1) !important;
+
+    /* Akzent */
+    --selected-item-color: var(--spark-accent) !important;
+    --selected-item-text-color: var(--spark-accent-text) !important;
+    --button-primary-background-color: var(--spark-accent) !important;
+    --button-primary-text-color: var(--spark-accent-text) !important;
+
+    /* Rundungen und Abstände */
+    --button-border-radius: 8px !important;
+    --button-min-height: 34px !important;
+    --input-text-border-radius: 8px !important;
+    --input-search-border-radius: 18px !important;
+    --listbox-border-radius: 0 !important;
+    --list-item-min-height: 34px !important;
+    --card-container-padding-block: 0 !important;
+    --tree-card-content-inline: 16px !important;
+
+    /* Nachrichtenliste als Karten (Karten-Ansicht) */
+    --tree-card-background: var(--spark-bg-0) !important;
+    --tree-card-border: transparent !important;
+    --tree-card-border-hover: var(--spark-border) !important;
+    --tree-card-border-focus: var(--spark-accent) !important;
+    --tree-card-background-current: var(--spark-bg-2) !important;
+    --tree-card-background-selected: var(--spark-accent-soft) !important;
+    --tree-card-background-selected-current: var(--spark-accent-soft) !important;
+    --tree-card-border-selected: transparent !important;
+    --tree-card-background-current-unfocused: var(--spark-bg-2) !important;
+    --tree-card-background-selected-unfocused: var(--spark-accent-soft) !important;
+    --tree-card-background-selected-current-unfocused: var(--spark-accent-soft) !important;
+    --tree-card-border-selected-unfocused: transparent !important;
+
+    /* Tabellen-Ansicht (Fallback) */
+    --listbox-selected-bg: var(--spark-accent-soft) !important;
+    --listbox-hover: var(--spark-bg-2) !important;
+    --unread-color: var(--spark-text) !important;
+
+    /* Ungelesen-Punkt in Akzentfarbe statt Grün */
+    --thread-pane-unread-fill: var(--spark-accent) !important;
+    --thread-pane-unread-stroke: var(--spark-accent) !important;
+  }
+
+  /* Ordnerleiste und Icon-Leiste: dunkelblau mit hellem Text */
+  #folderPane,
+  #spacesToolbar {
+    --sidebar-background: var(--spark-navy) !important;
+    --sidebar-color: var(--spark-navy-text) !important;
+    --sidebar-background-color: var(--spark-navy) !important;
+    --sidebar-text-color: var(--spark-navy-text) !important;
+    --layout-background-1: var(--spark-navy) !important;
+    --layout-background-2: var(--spark-navy-selected) !important;
+    --layout-color-0: var(--spark-navy-text) !important;
+    --layout-color-1: var(--spark-navy-text) !important;
+    --layout-color-2: var(--spark-navy-text-dim) !important;
+    --layout-border-0: rgba(255, 255, 255, 0.10) !important;
+    --treeitem-background-selected: var(--spark-navy-selected) !important;
+    --treeitem-background-hover: var(--spark-navy-hover) !important;
+    --treeitem-background-active: var(--spark-navy-selected) !important;
+    --folderpane-unread-count-background: var(--spark-accent) !important;
+    --folderpane-unread-count-text: #ffffff !important;
+    --folderpane-unread-new-count-background: var(--spark-accent) !important;
+    --folderpane-total-count-background: rgba(255, 255, 255, 0.18) !important;
+    --folder-color-folder: var(--spark-navy-text-dim) !important;
+    --folder-color-folder-filter: var(--spark-navy-text-dim) !important;
+    --folder-color-inbox: var(--spark-navy-text) !important;
+    --folder-color-sent: var(--spark-navy-text-dim) !important;
+    --folder-color-outbox: var(--spark-navy-text-dim) !important;
+    --folder-color-draft: var(--spark-navy-text-dim) !important;
+    --folder-color-trash: var(--spark-navy-text-dim) !important;
+    --folder-color-archive: var(--spark-navy-text-dim) !important;
+    --folder-color-template: var(--spark-navy-text-dim) !important;
+    --folder-color-spam: var(--spark-navy-text-dim) !important;
+    --spaces-bg-color: var(--spark-navy) !important;
+    --spaces-bg-image: none !important;
+    --spaces-button-text-color: var(--spark-navy-text-dim) !important;
+    --spaces-button-active-text-color: #ffffff !important;
+    --spaces-button-active-bg-color: var(--spark-navy-selected) !important;
+  }
+
+  /* Icon-Leiste: helle Icons auf Dunkelblau */
+  #spacesToolbar {
+    color: var(--spark-navy-text-dim) !important;
+  }
+
+  /* Ordnerzeilen: leicht abgerundet, aktive Zeile heller, Icons einheitlich hell */
+  #folderTree li > .container {
+    border-radius: 8px;
+    margin-inline: 8px;
+  }
+  #folderTree li > .container > .icon {
+    --icon-color: var(--spark-navy-text-dim) !important;
+  }
+  #folderTree li[data-folder-type="inbox"] > .container > .icon {
+    --icon-color: var(--spark-navy-text) !important;
+  }
+  #folderTree li.selected > .container {
+    background-color: var(--spark-navy-selected);
+    color: var(--spark-navy-text);
+    outline: none !important;
+    border-color: transparent !important;
+  }
+
+  /* Nachrichtenliste: flache Zeilen mit Trennlinie statt einzelner Karten */
+  tr.card-layout > td > .card-container {
+    border: 0 !important;
+    border-bottom: 1px solid var(--spark-border) !important;
+    border-radius: 0 !important;
+  }
+
+  /* Toolbar-Buttons: abgerundet */
+  .unified-toolbar-button {
+    border-radius: 8px;
+  }
+
+  /* Suchfeld in der Toolbar: Pill (Shadow-DOM, Radius kommt aus der Variable) */
+  global-search-bar {
+    --button-border-radius: 18px !important;
+  }
+
+  /* Ungelesen-Punkt der Karten in Akzentfarbe statt Grün */
+  .card-layout[data-properties~="unread"]:not([data-properties~="new"]) {
+    --read-status-fill: var(--spark-accent) !important;
+    --read-status-stroke: var(--spark-accent) !important;
+  }
+}

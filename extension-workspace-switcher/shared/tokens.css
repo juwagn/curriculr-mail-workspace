@@ -1,0 +1,188 @@
+/* Workspace Suite – gemeinsame Design-Tokens
+ *
+ * Teil der Curricu:lr-Familie. Marken-Werte aus curriculr-terminplan
+ * (plugin/assets/css/design-tokens.css): Marine und Kronengold.
+ * Schule nutzt Curricu:lr-Marine, Privat Salbei, Alle Graphit, dazu warme Neutrale
+ * (docs/design-system.md). Die Hell-Akzente stehen gleichlautend in
+ * MODE_COLORS (logic.mjs) und in icons/<modus>.svg: bei Änderung alle drei anpassen.
+ *
+ * Eine Quelle für theme-css/userChrome.css und die Add-on-Seiten
+ * (options, popup, confirm). Grundlage: docs/design-brief.md,
+ * Kontraste geprüft in docs/design-system.md (WCAG AA).
+ *
+ * Einbindung:
+ *   - Add-on-Seiten: <link rel="stylesheet" href="../shared/tokens.css"> vor ui.css
+ *   - Theme (geplant, Schritt 2): install-dev legt tokens.css neben userChrome.css in chrome/,
+ *     userChrome.css beginnt mit @import url("tokens.css");
+ *
+ * Nur --ws-* Variablen, keine Regeln. Darum kein !important nötig:
+ * Thunderbird definiert keine --ws-* Namen.
+ * Hochkontrast: Tokens dürfen existieren, angewendet werden sie nur
+ * innerhalb von @media not (prefers-contrast) (userChrome.css). */
+
+:root {
+  /* Eigene Farben aus den Optionen setzt das Add-on inline als --ws-custom-*.
+     initial = nicht gesetzt, dann greift der Fallback in var(). */
+  --ws-custom-school: initial;
+  --ws-custom-school-dark: initial;
+  --ws-custom-private: initial;
+  --ws-custom-private-dark: initial;
+  --ws-custom-all: initial;
+  --ws-custom-all-dark: initial;
+
+  /* Curricu:lr-Marke: Marine trägt Interaktion, Gold nur als Signatur (Doppelpunkt). */
+  --brand-marine-900: #00345c;
+  --brand-marine-700: #00467d;
+  --brand-gold: #ffc857;
+
+  /* ------------------------------------------------------------------ */
+  /* Farbe – Hell                                                       */
+  /* ------------------------------------------------------------------ */
+  /* Modus-Akzente */
+  --ws-accent-school: var(--ws-custom-school, var(--brand-marine-700));
+  --ws-accent-private: var(--ws-custom-private, #4f7560);
+  --ws-accent-all: var(--ws-custom-all, #4a4744);
+  --ws-accent: var(--ws-accent-all);
+
+  /* Schrift auf Akzentflächen: hell, ab LCH-Helligkeit 70 dunkel. */
+  --ws-on-accent-threshold: 70;
+  --ws-accent-text: lch(from var(--ws-accent) calc((var(--ws-on-accent-threshold) - l) * infinity) 0 0);
+
+  /* Neutrale */
+  --ws-bg: #f6f5f3;
+  --ws-surface: #fdfcfb;
+  --ws-surface-2: #efeeeb;
+  --ws-sidebar: #eeedea;
+  --ws-border: #e2e0dc;
+  --ws-text: #1f1e1c;
+  --ws-text-dim: #64615c;
+  --ws-danger: #b42318;
+  --ws-hover: color-mix(in srgb, var(--ws-text) 5%, transparent);
+
+  /* Modus-Tönung und Auswahl (Anteile geprüft, nicht erhöhen ohne Kontrastcheck) */
+  --ws-tint-amount: 4%;
+  --ws-selected-amount: 13%;
+  --ws-current-amount: 7%;
+
+  /* ------------------------------------------------------------------ */
+  /* Typografie: nur Systemschrift, Größen relativ zur Basis            */
+  /* ------------------------------------------------------------------ */
+  --ws-font: message-box;
+  --ws-text-sm: 0.857em;   /* Datum, Zähler, Hilfetext   (~12px bei 14px) */
+  --ws-text-md: 1em;       /* Fließtext, Labels          (14px)            */
+  --ws-text-lg: 1.25em;    /* Bereichstitel              (~17.5px)         */
+  --ws-text-xl: 1.75em;    /* Seitentitel                (~24.5px)         */
+  --ws-weight-regular: 400;
+  --ws-weight-medium: 500;
+  --ws-weight-semibold: 600;
+  --ws-weight-bold: 700;
+  --ws-leading: 1.45;
+  --ws-leading-tight: 1.2;
+  --ws-tracking-caps: 0.06em;  /* Badge, Gruppen-Überschriften in Versalien */
+
+  /* ------------------------------------------------------------------ */
+  /* Abstände: 4-px-Raster                                              */
+  /* ------------------------------------------------------------------ */
+  --ws-space-2xs: 2px;
+  --ws-space-xs: 4px;
+  --ws-space-sm: 8px;
+  --ws-space-md: 12px;
+  --ws-space-lg: 16px;
+  --ws-space-xl: 24px;
+  --ws-space-2xl: 32px;
+  --ws-space-3xl: 48px;
+
+  /* Dichte „normal“ (luftig). Kompakt: siehe [uidensity="compact"] unten. */
+  --ws-row-gap: var(--ws-space-xs);          /* Abstand zwischen Karten  */
+  --ws-row-pad-inline: var(--ws-space-md);   /* Innenabstand Karte       */
+  --ws-row-pad-block: var(--ws-space-sm);
+  --ws-control-pad-block: 6px;
+  --ws-control-pad-inline: var(--ws-space-md);
+  --ws-section-gap: var(--ws-space-2xl);     /* Einstellungen: Bereiche  */
+
+  /* ------------------------------------------------------------------ */
+  /* Radien, Fokus, Bewegung                                            */
+  /* ------------------------------------------------------------------ */
+  --ws-radius-sm: 6px;
+  --ws-radius: 8px;
+  --ws-radius-lg: 12px;
+  --ws-radius-pill: 999px;
+
+  --ws-focus-width: 2px;
+  --ws-focus-offset: 2px;
+  --ws-focus-color: var(--ws-accent);
+
+  --ws-duration-fast: 120ms;
+  --ws-duration: 160ms;
+  --ws-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ------------------------------------------------------------------ */
+  /* Abgeleitet (gilt für Hell und Dunkel)                              */
+  /* ------------------------------------------------------------------ */
+  --ws-bg-tinted: color-mix(in srgb, var(--ws-accent) var(--ws-tint-amount), var(--ws-bg));
+  --ws-sidebar-tinted: color-mix(in srgb, var(--ws-accent) var(--ws-tint-amount), var(--ws-sidebar));
+  --ws-accent-soft: color-mix(in srgb, var(--ws-accent) var(--ws-selected-amount), var(--ws-surface));
+  --ws-accent-softer: color-mix(in srgb, var(--ws-accent) var(--ws-current-amount), var(--ws-surface));
+  --ws-accent-line: color-mix(in srgb, var(--ws-accent) 45%, transparent);
+}
+
+/* -------------------------------------------------------------------- */
+/* Farbe – Dunkel                                                       */
+/* -------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ws-accent-school: var(--ws-custom-school-dark, #80a3be);
+    --ws-accent-private: var(--ws-custom-private-dark, #93b8a0);
+    --ws-accent-all: var(--ws-custom-all-dark, #bdb8b1);
+    /* Dunkel: Akzente sind hell, Schrift darauf dunkel. */
+    --ws-on-accent-threshold: 55;
+
+    --ws-bg: #19191a;
+    --ws-surface: #212122;
+    --ws-surface-2: #2a2a2b;
+    --ws-sidebar: #151516;
+    --ws-border: #343436;
+    --ws-text: #ecebe8;
+    --ws-text-dim: #aeaba5;
+    --ws-danger: #f2867a;
+
+    --ws-tint-amount: 6%;
+    --ws-selected-amount: 16%;
+    --ws-current-amount: 9%;
+    --ws-leading: 1.5;  /* helle Schrift auf dunkel braucht mehr Luft */
+  }
+}
+
+/* -------------------------------------------------------------------- */
+/* Modus                                                                */
+/* data-workspace setzt das Experiment (Hauptfenster) bzw. künftig die  */
+/* Add-on-Seite selbst; data-ws-compose setzt das Verfassen-Fenster.    */
+/* -------------------------------------------------------------------- */
+:root[data-workspace="school"] {
+  --ws-accent: var(--ws-accent-school);
+}
+
+:root[data-workspace="private"] {
+  --ws-accent: var(--ws-accent-private);
+}
+
+/* Im Verfassen-Fenster zählt der Absender, nicht der aktive Modus: darum danach. */
+:root[data-ws-compose="school"] {
+  --ws-accent: var(--ws-accent-school);
+}
+
+:root[data-ws-compose="private"] {
+  --ws-accent: var(--ws-accent-private);
+}
+
+/* -------------------------------------------------------------------- */
+/* Dichte „kompakt“: folgt Thunderbird (Ansicht → Dichte → Kompakt)     */
+/* -------------------------------------------------------------------- */
+:root[uidensity="compact"] {
+  --ws-row-gap: var(--ws-space-2xs);
+  --ws-row-pad-inline: var(--ws-space-sm);
+  --ws-row-pad-block: var(--ws-space-xs);
+  --ws-control-pad-block: var(--ws-space-xs);
+  --ws-control-pad-inline: var(--ws-space-sm);
+  --ws-section-gap: var(--ws-space-xl);
+}

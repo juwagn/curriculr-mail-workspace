@@ -1,0 +1,30 @@
+/* Curricu:lr Mail-Workspace – userContent.css
+ *
+ * Wirkt auf Inhaltsseiten, also auch auf angezeigte Nachrichten. Darum
+ * bewusst zurückhaltend und ohne !important: HTML-Mails behalten ihr
+ * eigenes Layout, nur Zitate und Klartext-Mails werden ruhiger. */
+
+@-moz-document url-prefix("imap:"), url-prefix("mailbox:"), url-prefix("news:"), url-prefix("ews:"), url-prefix("owl:") {
+  @media not (prefers-contrast) {
+    /* Zitate: dünne Linie statt verschachtelter Blöcke */
+    blockquote[type="cite"] {
+      margin-inline: 0;
+      padding-inline-start: 12px;
+      border-inline-start: 2px solid color-mix(in srgb, currentColor 25%, transparent);
+      color: color-mix(in srgb, currentColor 75%, transparent);
+    }
+
+    /* Klartext-Mails: lesbare Zeilenlänge und etwas mehr Luft */
+    .moz-text-plain pre,
+    pre.moz-quote-pre {
+      line-height: 1.5;
+      max-inline-size: 80ch;
+    }
+
+    /* Signaturtrenner dezent */
+    .moz-txt-sig,
+    .moz-signature {
+      opacity: 0.7;
+    }
+  }
+}

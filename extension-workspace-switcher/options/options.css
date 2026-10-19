@@ -1,0 +1,228 @@
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+  display: grid;
+  gap: 20px;
+}
+
+header {
+  display: grid;
+  gap: 6px;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+/* Curricu:lr-Wortmarke: Doppelpunkt in Kronengold, Logo-Icon davor */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--ws-space-sm);
+}
+
+.brand-colon {
+  color: var(--brand-gold);
+  -webkit-text-stroke: 0.5px var(--brand-marine-900);
+}
+
+h2 {
+  font-size: 1.05rem;
+}
+
+section {
+  background: var(--ws-surface);
+  border: 1px solid var(--ws-border);
+  border-radius: var(--ws-radius-lg);
+  padding: 18px 20px;
+  display: grid;
+  gap: 12px;
+}
+
+#status {
+  min-height: 1.4em;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: start;
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--ws-border);
+  vertical-align: middle;
+}
+
+th {
+  font-weight: 600;
+  color: var(--ws-text-dim);
+  font-size: 0.9em;
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 10px 14px;
+  align-items: center;
+}
+
+.color-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.color-row input[type="color"] {
+  inline-size: 48px;
+  block-size: 30px;
+  padding: 2px;
+  border: 1px solid var(--ws-border);
+  border-radius: var(--ws-radius-sm);
+  background: var(--ws-surface);
+  cursor: pointer;
+}
+
+.check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-head > div {
+  display: flex;
+  gap: 8px;
+}
+
+#snippets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.snippet {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid var(--ws-border);
+  border-radius: var(--ws-radius);
+  background: var(--ws-bg);
+}
+
+.snippet-head {
+  display: flex;
+  gap: 8px;
+}
+
+.snippet-title {
+  flex: 1;
+  font-weight: 600;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 0.9em;
+}
+
+nav a {
+  color: var(--ws-accent);
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+h3 {
+  margin: 6px 0 0;
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+code {
+  font-size: 0.9em;
+  background: var(--ws-surface-2);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+input[type="number"],
+input[type="time"] {
+  background: var(--ws-surface);
+  border: 1px solid var(--ws-border);
+  border-radius: var(--ws-radius-sm);
+  padding: 5px 8px;
+}
+
+input[type="number"] {
+  inline-size: 5em;
+}
+
+.item input[type="color"] {
+  inline-size: 40px;
+  block-size: 30px;
+  padding: 2px;
+  border: 1px solid var(--ws-border);
+  border-radius: var(--ws-radius-sm);
+  background: var(--ws-surface);
+}
+
+.plain-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.grow {
+  flex: 1;
+  min-inline-size: 10em;
+}
+
+.rule-tag {
+  inline-size: 12em;
+  font-weight: 600;
+}
+
+.dot {
+  display: inline-block;
+  inline-size: 10px;
+  block-size: 10px;
+  border-radius: 50%;
+  margin-inline-end: 8px;
+  vertical-align: baseline;
+}

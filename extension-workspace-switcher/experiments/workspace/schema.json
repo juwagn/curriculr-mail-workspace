@@ -1,0 +1,175 @@
+[
+  {
+    "namespace": "workspace",
+    "description": "Setzt den aktiven Workspace im Thunderbird-Hauptfenster, blendet Konten aus und koppelt Ordner, Verfassen-Fenster und Kalender.",
+    "types": [
+      {
+        "id": "PinnedFolder",
+        "type": "object",
+        "properties": {
+          "folderURI": { "type": "string" },
+          "label": { "type": "string" },
+          "color": { "type": "string", "optional": true }
+        }
+      },
+      {
+        "id": "ApplyOptions",
+        "type": "object",
+        "properties": {
+          "privacyBlur": { "type": "boolean", "optional": true, "description": "Setzt data-ws-privacy=\"blur\"." },
+          "focus": { "type": "boolean", "optional": true, "description": "Setzt data-ws-focus=\"true\"." },
+          "muteHidden": { "type": "boolean", "optional": true, "description": "Abruf ausgeblendeter Konten pausieren (Standard: true)." },
+          "folderColors": {
+            "type": "object",
+            "optional": true,
+            "additionalProperties": { "type": "string" },
+            "description": "Ordner-URI -> #rrggbb"
+          },
+          "pinnedFolders": {
+            "type": "array",
+            "optional": true,
+            "items": { "$ref": "PinnedFolder" },
+            "description": "Tabs der Schnell-Tab-Leiste, bereits nach Workspace gefiltert."
+          }
+        }
+      },
+      {
+        "id": "CalendarInfo",
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "color": { "type": "string", "optional": true },
+          "visible": { "type": "boolean" }
+        }
+      },
+      {
+        "id": "BusyTime",
+        "type": "object",
+        "properties": {
+          "start": { "type": "number" },
+          "end": { "type": "number" }
+        }
+      },
+      {
+        "id": "NewEventDetails",
+        "type": "object",
+        "properties": {
+          "calendarId": { "type": "string", "optional": true },
+          "title": { "type": "string", "optional": true },
+          "startDate": { "type": "number", "description": "ms seit Epoche" },
+          "endDate": { "type": "number", "description": "ms seit Epoche" },
+          "description": { "type": "string", "optional": true },
+          "allDay": { "type": "boolean", "optional": true }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "apply",
+        "type": "function",
+        "async": true,
+        "description": "Setzt data-workspace auf allen Hauptfenstern und 3-Pane-Tabs und versieht die Konten mit .workspace-hidden. Gilt auch für später geöffnete Fenster und Tabs.",
+        "parameters": [
+          {
+            "name": "mode",
+            "type": "string",
+            "enum": ["school", "private", "all"]
+          },
+          {
+            "name": "hiddenAccountIds",
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Konto-IDs (z. B. account7), die ausgeblendet werden."
+          },
+          {
+            "name": "accentProperties",
+            "type": "object",
+            "optional": true,
+            "additionalProperties": { "type": "string" },
+            "description": "Eigene Akzentfarben als CSS-Variablen, z. B. {\"--ws-custom-school\": \"#ff8800\"}. Erlaubt sind nur --ws-custom-(school|private|all)(-dark) mit Werten #rrggbb; nicht übergebene werden entfernt."
+          },
+          {
+            "name": "options",
+            "$ref": "ApplyOptions",
+            "optional": true
+          }
+        ]
+      },
+      {
+        "name": "focusInbox",
+        "type": "function",
+        "async": true,
+        "description": "Zeigt den Posteingang des Kontos im aktiven 3-Pane-Tab des zuletzt benutzten Hauptfensters und klappt den Baum dorthin auf.",
+        "parameters": [{ "name": "accountId", "type": "string" }]
+      },
+      {
+        "name": "getFolderURI",
+        "type": "function",
+        "async": true,
+        "description": "Rechnet einen MailFolder (accountId + path) in die interne Ordner-URI um.",
+        "parameters": [
+          { "name": "accountId", "type": "string" },
+          { "name": "path", "type": "string" }
+        ]
+      },
+      {
+        "name": "markCompose",
+        "type": "function",
+        "async": true,
+        "description": "Setzt data-ws-compose=\"school|private\" auf das Verfassen-Fenster (leer = entfernen).",
+        "parameters": [
+          { "name": "tabId", "type": "integer" },
+          { "name": "workspaceName", "type": "string" }
+        ]
+      },
+      {
+        "name": "listCalendars",
+        "type": "function",
+        "async": true,
+        "description": "Alle eingerichteten Kalender (lokal, ICS, CalDAV).",
+        "parameters": []
+      },
+      {
+        "name": "syncCalendarVisibility",
+        "type": "function",
+        "async": true,
+        "description": "Blendet Kalender in Kalender-Ansicht und Today Pane ein oder aus.",
+        "parameters": [
+          {
+            "name": "visibility",
+            "type": "object",
+            "additionalProperties": { "type": "boolean" },
+            "description": "Kalender-ID -> sichtbar"
+          }
+        ]
+      },
+      {
+        "name": "getBusyTimes",
+        "type": "function",
+        "async": true,
+        "description": "Belegte Zeiten der Kalender im Zeitraum (ms seit Epoche).",
+        "parameters": [
+          { "name": "calendarIds", "type": "array", "items": { "type": "string" } },
+          { "name": "startMs", "type": "number" },
+          { "name": "endMs", "type": "number" }
+        ]
+      },
+      {
+        "name": "openNewEventDialog",
+        "type": "function",
+        "async": true,
+        "description": "Öffnet den Termin-Dialog von Thunderbird vorausgefüllt.",
+        "parameters": [{ "name": "details", "$ref": "NewEventDetails" }]
+      },
+      {
+        "name": "openCalendarWizard",
+        "type": "function",
+        "async": true,
+        "description": "Öffnet den Dialog „Neuer Kalender“ (z. B. ICS-Abonnement im Netzwerk).",
+        "parameters": []
+      }
+    ]
+  }
+]
