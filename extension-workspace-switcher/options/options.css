@@ -1,18 +1,30 @@
-main {
-  max-width: 760px;
+/* Einstellungen: Seitenleiste mit Gruppen links, ein Bereich rechts.
+ * Keine Karten pro Bereich: Gliederung über Abstand und Haarlinien. */
+
+.app {
+  max-width: 1040px;
   margin: 0 auto;
-  padding: 32px 16px 64px;
+  padding: var(--ws-space-2xl) var(--ws-space-xl) var(--ws-space-3xl);
   display: grid;
-  gap: 20px;
+  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-areas:
+    "head head"
+    "nav main";
+  column-gap: var(--ws-space-3xl);
+  row-gap: var(--ws-space-xl);
 }
 
 header {
-  display: grid;
-  gap: 6px;
+  grid-area: head;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ws-space-md);
 }
 
 h1 {
-  font-size: 1.6rem;
+  font-size: var(--ws-text-lg);
 }
 
 /* Curricu:lr-Wortmarke: Doppelpunkt in Kronengold, Logo-Icon davor */
@@ -27,21 +39,132 @@ h1 {
   -webkit-text-stroke: 0.5px var(--brand-marine-900);
 }
 
-h2 {
-  font-size: 1.05rem;
-}
-
-section {
-  background: var(--ws-surface);
-  border: 1px solid var(--ws-border);
-  border-radius: var(--ws-radius-lg);
-  padding: 18px 20px;
-  display: grid;
-  gap: 12px;
+.mode {
+  display: flex;
+  align-items: center;
+  gap: var(--ws-space-md);
 }
 
 #status {
   min-height: 1.4em;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Seitenleiste                                                           */
+/* ---------------------------------------------------------------------- */
+nav {
+  grid-area: nav;
+  align-self: start;
+  position: sticky;
+  top: var(--ws-space-xl);
+  display: grid;
+  gap: 2px;
+  padding: var(--ws-space-sm);
+  background: var(--ws-sidebar);
+  border-radius: var(--ws-radius-lg);
+}
+
+.nav-group {
+  margin: var(--ws-space-md) 0 var(--ws-space-xs);
+  padding-inline: var(--ws-space-md);
+  font-size: var(--ws-text-sm);
+  font-weight: var(--ws-weight-semibold);
+  letter-spacing: var(--ws-tracking-caps);
+  text-transform: uppercase;
+  color: var(--ws-text-dim);
+}
+
+.nav-group:first-child {
+  margin-block-start: var(--ws-space-xs);
+}
+
+nav a {
+  padding: var(--ws-space-sm) var(--ws-space-md);
+  border-radius: var(--ws-radius);
+  color: var(--ws-text);
+  text-decoration: none;
+}
+
+nav a:hover {
+  background: var(--ws-hover);
+}
+
+nav a[aria-current="page"] {
+  background: var(--ws-sidebar-selected);
+  font-weight: var(--ws-weight-semibold);
+}
+
+nav a:focus-visible {
+  outline: var(--ws-focus-width) solid var(--ws-focus-color);
+  outline-offset: calc(var(--ws-focus-offset) * -1);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Bereich                                                                */
+/* ---------------------------------------------------------------------- */
+main {
+  grid-area: main;
+  max-width: 640px;
+}
+
+section {
+  display: grid;
+  gap: var(--ws-space-lg);
+}
+
+main h2 {
+  font-size: var(--ws-text-lg);
+}
+
+h3 {
+  margin: var(--ws-section-gap) 0 0;
+  padding-top: var(--ws-space-lg);
+  border-top: 1px solid var(--ws-border);
+  font-size: var(--ws-text-md);
+  font-weight: var(--ws-weight-semibold);
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ws-space-sm);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-head > div {
+  display: flex;
+  gap: var(--ws-space-sm);
+}
+
+.empty {
+  color: var(--ws-text-dim);
+  padding-block: var(--ws-space-sm);
+}
+
+/* Formular: Label links, Feld rechts */
+.grid {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: var(--ws-space-lg) var(--ws-space-xl);
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ws-space-sm);
+  align-items: center;
+}
+
+.check {
+  display: flex;
+  gap: var(--ws-space-md);
+  align-items: flex-start;
+}
+
+.check small {
+  display: block;
 }
 
 table {
@@ -52,159 +175,71 @@ table {
 th,
 td {
   text-align: start;
-  padding: 8px 6px;
+  padding: var(--ws-space-md) var(--ws-space-sm);
   border-bottom: 1px solid var(--ws-border);
   vertical-align: middle;
 }
 
 th {
-  font-weight: 600;
+  font-weight: var(--ws-weight-semibold);
   color: var(--ws-text-dim);
-  font-size: 0.9em;
+  font-size: var(--ws-text-sm);
 }
 
 tr:last-child td {
   border-bottom: 0;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  gap: 10px 14px;
-  align-items: center;
-}
-
 .color-row {
   display: flex;
-  gap: 8px;
+  gap: var(--ws-space-sm);
   align-items: center;
 }
 
-.color-row input[type="color"] {
-  inline-size: 48px;
-  block-size: 30px;
+.color-row input[type="color"],
+.item input[type="color"] {
+  inline-size: 44px;
+  block-size: 32px;
   padding: 2px;
-  border: 1px solid var(--ws-border);
+  border: 1px solid var(--ws-field-border);
   border-radius: var(--ws-radius-sm);
   background: var(--ws-surface);
   cursor: pointer;
 }
 
-.check {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.section-head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.section-head > div {
-  display: flex;
-  gap: 8px;
-}
-
-#snippets {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 12px;
-}
-
-.snippet {
-  display: grid;
-  gap: 6px;
-  padding: 12px;
-  border: 1px solid var(--ws-border);
-  border-radius: var(--ws-radius);
-  background: var(--ws-bg);
-}
-
-.snippet-head {
-  display: flex;
-  gap: 8px;
-}
-
-.snippet-title {
-  flex: 1;
-  font-weight: 600;
-}
-
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 12px;
-  font-size: 0.9em;
-}
-
-nav a {
-  color: var(--ws-accent);
-  text-decoration: none;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-h3 {
-  margin: 6px 0 0;
-  font-size: 0.95rem;
-  font-weight: 650;
-}
-
-code {
-  font-size: 0.9em;
-  background: var(--ws-surface-2);
-  padding: 0 4px;
-  border-radius: 4px;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
 input[type="number"],
 input[type="time"] {
   background: var(--ws-surface);
-  border: 1px solid var(--ws-border);
+  border: 1px solid var(--ws-field-border);
   border-radius: var(--ws-radius-sm);
-  padding: 5px 8px;
+  padding: var(--ws-control-pad-block) var(--ws-space-sm);
 }
 
 input[type="number"] {
   inline-size: 5em;
 }
 
-.item input[type="color"] {
-  inline-size: 40px;
-  block-size: 30px;
-  padding: 2px;
-  border: 1px solid var(--ws-border);
+code {
+  font-size: 0.9em;
+  background: var(--ws-surface-2);
+  padding: 0 var(--ws-space-xs);
   border-radius: var(--ws-radius-sm);
-  background: var(--ws-surface);
 }
 
-.plain-list {
+/* Listen: Schnell-Tabs, Ordnerfarben, Regeln, Bausteine */
+.plain-list,
+#snippets {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 8px;
+  gap: var(--ws-space-sm);
 }
 
 .item {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--ws-space-sm);
   align-items: center;
 }
 
@@ -215,7 +250,37 @@ input[type="number"] {
 
 .rule-tag {
   inline-size: 12em;
-  font-weight: 600;
+  font-weight: var(--ws-weight-semibold);
+}
+
+/* Textbausteine: Trennung über Haarlinie, kein Rahmen */
+#snippets {
+  gap: 0;
+}
+
+.snippet {
+  display: grid;
+  gap: var(--ws-space-sm);
+  padding-block: var(--ws-space-lg);
+  border-bottom: 1px solid var(--ws-border);
+}
+
+.snippet:first-child {
+  padding-top: 0;
+}
+
+.snippet:last-child {
+  border-bottom: 0;
+}
+
+.snippet-head {
+  display: flex;
+  gap: var(--ws-space-sm);
+}
+
+.snippet-title {
+  flex: 1;
+  font-weight: var(--ws-weight-semibold);
 }
 
 .dot {
@@ -223,6 +288,48 @@ input[type="number"] {
   inline-size: 10px;
   block-size: 10px;
   border-radius: 50%;
-  margin-inline-end: 8px;
+  margin-inline-end: var(--ws-space-sm);
   vertical-align: baseline;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Schmales Fenster: Seitenleiste wird zur Leiste oben                    */
+/* ---------------------------------------------------------------------- */
+@media (max-width: 720px) {
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "head"
+      "nav"
+      "main";
+    padding-inline: var(--ws-space-lg);
+  }
+
+  nav {
+    position: static;
+    display: flex;
+    overflow-x: auto;
+    gap: var(--ws-space-xs);
+  }
+
+  .nav-group {
+    display: none;
+  }
+
+  nav a {
+    white-space: nowrap;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--ws-space-xs);
+  }
+
+  .grid > :nth-child(even) {
+    margin-block-end: var(--ws-space-md);
+  }
+}
+
+.plain-list:empty {
+  display: none;
 }

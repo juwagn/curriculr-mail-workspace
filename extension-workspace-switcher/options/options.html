@@ -7,58 +7,100 @@
     <link rel="stylesheet" href="../shared/ui.css" />
     <link rel="stylesheet" href="options.css" />
     <script type="module" src="options.js"></script>
+    <script type="module" src="nav.js"></script>
   </head>
   <body>
-    <main>
+    <div class="app">
       <header>
-        <h1 class="brand"><img src="../icons/curriculr.svg" alt="" width="28" height="28" /> Curricu<span class="brand-colon">:</span>lr Mail-Workspace</h1>
-        <p class="dim">
-          Aktiver Workspace: <span id="current-mode" class="pill"></span>
-          · Wechseln mit Klick auf den Toolbar-Button oder Strg+Umschalt+Y.
+        <h1 class="brand"><img src="../icons/curriculr.svg" alt="" width="28" height="28" /> <span>Curricu<span class="brand-colon">:</span>lr Mail-Workspace</span></h1>
+        <p class="mode">
+          <span id="current-mode" class="pill"></span>
+          <span id="status" class="dim" role="status" aria-live="polite"></span>
         </p>
-        <p id="status" class="dim" role="status" aria-live="polite"></p>
-        <nav aria-label="Abschnitte">
-          <a href="#h-accounts">Konten</a>
-          <a href="#h-guard">Sende-Wächter</a>
-          <a href="#h-scheduled">Später senden</a>
-          <a href="#h-classroom">Klassenzimmer</a>
-          <a href="#h-pinned">Schnell-Tabs</a>
-          <a href="#h-calendars">Kalender</a>
-          <a href="#h-tags">Auto-Tags</a>
-          <a href="#h-snippets">Bausteine</a>
-        </nav>
       </header>
 
-      <section aria-labelledby="h-accounts">
-        <h2 id="h-accounts">Konten zuordnen</h2>
-        <p class="dim">
-          „Beide“ bleibt in jedem Workspace sichtbar, etwa für Lokale Ordner.
-        </p>
-        <table id="accounts">
-          <thead>
-            <tr><th>Konto</th><th>Adressen</th><th>Workspace</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </section>
+      <nav aria-label="Bereiche">
+        <h2 class="nav-group">Alltag</h2>
+        <a href="#classroom">Klassenzimmer</a>
+        <a href="#pinned">Schnell-Tabs</a>
+        <a href="#tags">Auto-Tags</a>
+        <h2 class="nav-group">Schreiben</h2>
+        <a href="#snippets">Textbausteine</a>
+        <a href="#scheduled">Später senden</a>
+        <h2 class="nav-group">Sicherheit</h2>
+        <a href="#guard">Sende-Wächter</a>
+        <h2 class="nav-group">Einrichtung</h2>
+        <a href="#accounts">Konten</a>
+        <a href="#identity">Absender</a>
+        <a href="#calendars">Kalender</a>
+        <a href="#colors">Farben</a>
+      </nav>
 
-      <section aria-labelledby="h-identity">
-        <h2 id="h-identity">Standard-Absender</h2>
-        <p class="dim">Wird in neuen, leeren Nachrichten automatisch gesetzt.</p>
-        <div class="grid">
-          <label for="identity-school"><span class="pill school">Schule</span></label>
-          <select id="identity-school"></select>
-          <label for="identity-private"><span class="pill private">Privat</span></label>
-          <select id="identity-private"></select>
+      <main>
+      <section data-section="classroom" aria-labelledby="h-classroom" hidden>
+        <h2 id="h-classroom">Klassenzimmer</h2>
+        <p class="dim">Auch per Rechtsklick auf den Workspace-Button umschaltbar.</p>
+        <label class="check">
+          <input type="checkbox" id="privacy" class="switch" />
+          <span>Sichtschutz<small class="dim">Liste und Nachricht unscharf, bis die Maus darüber ist</small></span>
+        </label>
+        <div class="row">
+          <button type="button" id="focus-toggle">Fokus-Modus 60 Min. starten</button>
+          <span id="focus-state" class="dim"></span>
         </div>
       </section>
 
-      <section aria-labelledby="h-guard">
+      <section data-section="pinned" aria-labelledby="h-pinned" hidden>
+        <h2 id="h-pinned">Schnell-Tabs &amp; Ordnerfarben</h2>
+        <p class="dim">Tabs erscheinen über der Nachrichtenliste. Nachrichten lassen sich daraufziehen.</p>
+        <ol id="pinned" class="plain-list"></ol>
+        <p id="pinned-empty" class="empty">Noch keine Schnell-Tabs. Rechtsklick auf einen Ordner, dann anheften.</p>
+        <h3>Ordnerfarben</h3>
+        <ol id="folder-colors" class="plain-list"></ol>
+        <p id="folder-colors-empty" class="empty">Noch keine farbigen Ordner. Rechtsklick auf einen Ordner, dann Farbe wählen.</p>
+      </section>
+
+      <section data-section="tags" aria-labelledby="h-tags" hidden>
+        <div class="section-head">
+          <h2 id="h-tags">Auto-Tags</h2>
+          <button type="button" id="add-rule" class="primary">Regel hinzufügen</button>
+        </div>
+        <p class="dim">Neue Mails in Schul-Konten bekommen Schlagwörter, wenn Betreff oder Absender eines der Wörter enthält.</p>
+        <ol id="rules" class="plain-list"></ol>
+      </section>
+
+      <section data-section="snippets" aria-labelledby="h-snippets" hidden>
+        <div class="section-head">
+          <h2 id="h-snippets">Textbausteine</h2>
+          <div>
+            <button type="button" id="reset-snippets">Standard wiederherstellen</button>
+            <button type="button" id="add-snippet" class="primary">Baustein hinzufügen</button>
+          </div>
+        </div>
+        <p class="dim">
+          Im Verfassen-Fenster über den Button „Bausteine“ an der Cursorposition einfügen. Platzhalter:
+          <code>{{anrede_du_sie}}</code>, <code>{{gruss_du_sie}}</code>, <code>{{vorname}}</code>, <code>{{name}}</code>,
+          <code>{{freie_termine}}</code>.
+        </p>
+        <ol id="snippets"></ol>
+      </section>
+
+      <section data-section="scheduled" aria-labelledby="h-scheduled" hidden>
+        <h2 id="h-scheduled">Später senden</h2>
+        <p class="dim">Geplante Entwürfe. Thunderbird muss zur Sendezeit laufen; sonst wird beim nächsten Start gesendet.</p>
+        <table id="scheduled">
+          <thead><tr><th>Betreff</th><th>Sendezeit</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p id="scheduled-empty" class="empty">Nichts geplant. Im Verfassen-Fenster „Später senden“ wählen.</p>
+      </section>
+
+      <section data-section="guard" aria-labelledby="h-guard" hidden>
         <h2 id="h-guard">Sende-Wächter</h2>
-        <p class="dim">Alle Prüfungen erscheinen gemeinsam in einem Dialog vor dem Senden. BCC, Schweigepflicht und Feierabend gelten nur für Schul-Absender.</p>
+        <p class="dim">Alle Prüfungen erscheinen gemeinsam in einem Dialog. BCC, Schweigepflicht und Feierabend gelten nur für Schul-Absender.</p>
         <label class="check">
-          <input type="checkbox" id="guard" />
-          Sende-Wächter aktiv (falscher Absender, offene Elternverteiler, sensibler Verlauf, Feierabend)
+          <input type="checkbox" id="guard" class="switch" />
+          <span>Sende-Wächter aktiv<small class="dim">Falscher Absender, offene Elternverteiler, sensibler Verlauf, Feierabend</small></span>
         </label>
         <div class="grid">
           <label for="guard-domains">Interne Domains</label>
@@ -76,62 +118,31 @@
         </div>
       </section>
 
-      <section aria-labelledby="h-scheduled">
-        <h2 id="h-scheduled">Später senden</h2>
-        <p class="dim">Geplante Entwürfe. Thunderbird muss zur Sendezeit laufen; sonst wird beim nächsten Start gesendet.</p>
-        <table id="scheduled">
-          <thead><tr><th>Betreff</th><th>Sendezeit</th><th></th></tr></thead>
+      <section data-section="accounts" aria-labelledby="h-accounts" hidden>
+        <h2 id="h-accounts">Konten zuordnen</h2>
+        <p class="dim">
+          „Beide“ bleibt in jedem Workspace sichtbar, etwa für Lokale Ordner.
+        </p>
+        <table id="accounts">
+          <thead>
+            <tr><th>Konto</th><th>Adressen</th><th>Workspace</th></tr>
+          </thead>
           <tbody></tbody>
         </table>
-        <p id="scheduled-empty" class="dim">Nichts geplant.</p>
       </section>
 
-      <section aria-labelledby="h-classroom">
-        <h2 id="h-classroom">Klassenzimmer</h2>
-        <p class="dim">Auch per Rechtsklick auf den Workspace-Button umschaltbar.</p>
-        <label class="check">
-          <input type="checkbox" id="privacy" />
-          Sichtschutz: Betreffzeilen, Absender, Vorschau und Nachricht unscharf, bis die Maus darüber ist
-        </label>
-        <div class="row">
-          <button type="button" id="focus-toggle">Fokus-Modus 60 Min. starten</button>
-          <span id="focus-state" class="dim"></span>
-        </div>
-      </section>
-
-      <section aria-labelledby="h-colors">
-        <h2 id="h-colors">Farben</h2>
-        <p class="dim">Akzentfarbe je Workspace für Thunderbird, Toolbar-Icon und diese Seite. Im dunklen Modus wird sie automatisch aufgehellt.</p>
+      <section data-section="identity" aria-labelledby="h-identity" hidden>
+        <h2 id="h-identity">Standard-Absender</h2>
+        <p class="dim">Wird in neuen, leeren Nachrichten automatisch gesetzt.</p>
         <div class="grid">
-          <label for="color-school"><span class="pill school">Schule</span></label>
-          <div class="color-row">
-            <input type="color" id="color-school" />
-            <button type="button" class="color-reset" data-mode="school">Zurücksetzen</button>
-          </div>
-          <label for="color-private"><span class="pill private">Privat</span></label>
-          <div class="color-row">
-            <input type="color" id="color-private" />
-            <button type="button" class="color-reset" data-mode="private">Zurücksetzen</button>
-          </div>
-          <label for="color-all"><span class="pill all">Alle</span></label>
-          <div class="color-row">
-            <input type="color" id="color-all" />
-            <button type="button" class="color-reset" data-mode="all">Zurücksetzen</button>
-          </div>
+          <label for="identity-school"><span class="pill school">Schule</span></label>
+          <select id="identity-school"></select>
+          <label for="identity-private"><span class="pill private">Privat</span></label>
+          <select id="identity-private"></select>
         </div>
       </section>
 
-      <section aria-labelledby="h-pinned">
-        <h2 id="h-pinned">Schnell-Tabs &amp; Ordnerfarben</h2>
-        <p class="dim">Anheften und Farbe wählen per Rechtsklick auf einen Ordner. Tabs erscheinen über der Nachrichtenliste; Nachrichten lassen sich daraufziehen.</p>
-        <ol id="pinned" class="plain-list"></ol>
-        <p id="pinned-empty" class="dim">Noch keine Schnell-Tabs.</p>
-        <h3>Ordnerfarben</h3>
-        <ol id="folder-colors" class="plain-list"></ol>
-        <p id="folder-colors-empty" class="dim">Noch keine farbigen Ordner.</p>
-      </section>
-
-      <section aria-labelledby="h-calendars">
+      <section data-section="calendars" aria-labelledby="h-calendars" hidden>
         <div class="section-head">
           <h2 id="h-calendars">Kalender</h2>
           <button type="button" id="subscribe">Neuen iCal/ICS-Kalender abonnieren …</button>
@@ -160,31 +171,29 @@
         </div>
       </section>
 
-      <section aria-labelledby="h-tags">
-        <div class="section-head">
-          <h2 id="h-tags">Auto-Tags</h2>
-          <button type="button" id="add-rule" class="primary">Regel hinzufügen</button>
-        </div>
-        <p class="dim">Neue Mails in Schul-Konten bekommen Schlagwörter, wenn Betreff oder Absender eines der Wörter enthält.</p>
-        <ol id="rules" class="plain-list"></ol>
-      </section>
-
-      <section aria-labelledby="h-snippets">
-        <div class="section-head">
-          <h2 id="h-snippets">Textbausteine</h2>
-          <div>
-            <button type="button" id="reset-snippets">Standard wiederherstellen</button>
-            <button type="button" id="add-snippet" class="primary">Baustein hinzufügen</button>
+      <section data-section="colors" aria-labelledby="h-colors" hidden>
+        <h2 id="h-colors">Farben</h2>
+        <p class="dim">Akzent je Workspace. Im dunklen Modus wird er aufgehellt.</p>
+        <div class="grid">
+          <label for="color-school"><span class="pill school">Schule</span></label>
+          <div class="color-row">
+            <input type="color" id="color-school" />
+            <button type="button" class="color-reset" data-mode="school">Zurücksetzen</button>
+          </div>
+          <label for="color-private"><span class="pill private">Privat</span></label>
+          <div class="color-row">
+            <input type="color" id="color-private" />
+            <button type="button" class="color-reset" data-mode="private">Zurücksetzen</button>
+          </div>
+          <label for="color-all"><span class="pill all">Alle</span></label>
+          <div class="color-row">
+            <input type="color" id="color-all" />
+            <button type="button" class="color-reset" data-mode="all">Zurücksetzen</button>
           </div>
         </div>
-        <p class="dim">
-          Im Verfassen-Fenster über den Button „Bausteine“ an der Cursorposition einfügen. Platzhalter:
-          <code>{{anrede_du_sie}}</code>, <code>{{gruss_du_sie}}</code>, <code>{{vorname}}</code>, <code>{{name}}</code>,
-          <code>{{freie_termine}}</code>.
-        </p>
-        <ol id="snippets"></ol>
       </section>
-    </main>
+      </main>
+    </div>
 
     <template id="snippet-template">
       <li class="snippet">

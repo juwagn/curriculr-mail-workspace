@@ -26,7 +26,7 @@ body {
 h1,
 h2 {
   margin: 0;
-  font-weight: 650;
+  font-weight: var(--ws-weight-semibold);
   letter-spacing: -0.01em;
 }
 
@@ -46,22 +46,31 @@ textarea {
   color: inherit;
 }
 
+[hidden] {
+  display: none !important;
+}
+
+/* Feldrand: 3:1 gegen die Fläche (WCAG 1.4.11), anders als die dekorative Haarlinie. */
+:root {
+  --ws-field-border: color-mix(in srgb, var(--ws-text) 45%, var(--ws-surface));
+}
+
 button {
-  border: 1px solid var(--ws-border);
-  background: var(--ws-surface);
+  border: 1px solid var(--ws-field-border);
+  background: transparent;
   border-radius: var(--ws-radius-sm);
-  padding: 6px 12px;
+  padding: var(--ws-control-pad-block) var(--ws-control-pad-inline);
   cursor: pointer;
 }
 
 button:hover {
-  background: var(--ws-surface-2);
+  background: var(--ws-hover);
 }
 
 button.primary {
   background: var(--ws-accent);
   border-color: var(--ws-accent);
-  color: lch(from var(--ws-accent) calc((var(--ws-on-accent-threshold) - l) * infinity) 0 0);
+  color: var(--ws-accent-text);
 }
 
 button.primary:hover {
@@ -76,17 +85,18 @@ button:focus-visible,
 select:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--ws-accent);
-  outline-offset: 1px;
+  outline: var(--ws-focus-width) solid var(--ws-focus-color);
+  outline-offset: var(--ws-focus-offset);
 }
 
 select,
 input[type="text"],
+input[type="datetime-local"],
 textarea {
   background: var(--ws-surface);
-  border: 1px solid var(--ws-border);
+  border: 1px solid var(--ws-field-border);
   border-radius: var(--ws-radius-sm);
-  padding: 6px 8px;
+  padding: var(--ws-control-pad-block) var(--ws-space-sm);
 }
 
 textarea {
@@ -94,12 +104,43 @@ textarea {
   width: 100%;
 }
 
+/* Schalter für An/Aus-Optionen (input.switch). Zustand zeigt auch die Position, nicht nur Farbe. */
+input.switch {
+  appearance: none;
+  flex: none;
+  position: relative;
+  inline-size: 38px;
+  block-size: 22px;
+  margin: 0;
+  border-radius: var(--ws-radius-pill);
+  background: var(--ws-field-border);
+  cursor: pointer;
+}
+
+input.switch::after {
+  content: "";
+  position: absolute;
+  inset: 3px auto 3px 3px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--ws-surface);
+}
+
+input.switch:checked {
+  background: var(--ws-accent);
+}
+
+input.switch:checked::after {
+  transform: translateX(16px);
+}
+
 .pill {
   display: inline-block;
-  padding: 1px 8px;
-  border-radius: 999px;
-  font-size: 0.85em;
-  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: var(--ws-radius-pill);
+  font-size: var(--ws-text-sm);
+  font-weight: var(--ws-weight-semibold);
+  letter-spacing: var(--ws-tracking-caps);
   --pill-bg: var(--ws-accent-all);
   background: var(--pill-bg);
   color: lch(from var(--pill-bg) calc((var(--ws-on-accent-threshold) - l) * infinity) 0 0);
@@ -118,6 +159,10 @@ textarea {
   select,
   input,
   textarea {
-    transition: background-color 120ms ease, border-color 120ms ease;
+    transition: background-color var(--ws-duration-fast) var(--ws-ease-out), border-color var(--ws-duration-fast) var(--ws-ease-out);
+  }
+
+  input.switch::after {
+    transition: transform var(--ws-duration) var(--ws-ease-out);
   }
 }

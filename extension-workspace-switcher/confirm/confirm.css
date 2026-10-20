@@ -1,11 +1,11 @@
 main {
-  padding: 20px 22px;
+  padding: var(--ws-space-xl);
   display: grid;
-  gap: 14px;
+  gap: var(--ws-space-lg);
 }
 
 h1 {
-  font-size: 1.1rem;
+  font-size: var(--ws-text-lg);
 }
 
 #issues {
@@ -13,25 +13,47 @@ h1 {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 10px;
 }
 
+/* Warnung als Liste mit Symbol statt Karte mit Balken: Haarlinie trennt, das Symbol trägt die Art. */
 .issue {
   display: grid;
-  gap: 6px;
-  padding: 10px 12px;
-  border: 1px solid var(--ws-border);
-  border-inline-start: 3px solid var(--ws-accent);
-  border-radius: var(--ws-radius);
-  background: var(--ws-surface);
+  grid-template-columns: 24px minmax(0, 1fr);
+  column-gap: var(--ws-space-md);
+  row-gap: var(--ws-space-xs);
+  padding-block: var(--ws-space-md);
+  border-bottom: 1px solid var(--ws-border);
 }
 
-.issue.warn {
-  border-inline-start-color: var(--ws-danger);
+.issue:last-child {
+  border-bottom: 0;
+}
+
+.issue::before {
+  content: "i";
+  grid-row: 1 / span 3;
+  display: grid;
+  place-items: center;
+  inline-size: 24px;
+  block-size: 24px;
+  border-radius: 50%;
+  background: var(--ws-accent-soft);
+  color: var(--ws-text);
+  font-weight: var(--ws-weight-bold);
+}
+
+.issue.warn::before {
+  content: "!";
+  background: var(--ws-danger);
+  color: var(--ws-surface);
+}
+
+.issue > * {
+  grid-column: 2;
 }
 
 .issue h2 {
-  font-size: 0.95rem;
+  font-size: var(--ws-text-md);
 }
 
 .issue .text {
@@ -56,16 +78,11 @@ h1 {
   flex-wrap: wrap;
 }
 
-.later input {
-  background: var(--ws-surface);
-  border: 1px solid var(--ws-border);
-  border-radius: var(--ws-radius-sm);
-  padding: 5px 8px;
-}
 
 .actions {
   display: flex;
-  gap: 8px;
+  gap: var(--ws-space-sm);
+  padding-top: var(--ws-space-sm);
   justify-content: flex-end;
   flex-wrap: wrap;
 }

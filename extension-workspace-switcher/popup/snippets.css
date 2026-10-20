@@ -1,14 +1,14 @@
 body {
-  width: 300px;
-  padding: 6px;
+  width: 320px;
+  padding: var(--ws-space-sm);
   background: var(--ws-surface);
 }
 
 #later {
   display: grid;
-  gap: 4px;
-  padding: 6px 10px 10px;
-  margin-bottom: 6px;
+  gap: var(--ws-space-xs);
+  padding: var(--ws-space-sm) var(--ws-space-md) var(--ws-space-md);
+  margin-bottom: var(--ws-space-sm);
   border-bottom: 1px solid var(--ws-border);
 }
 
@@ -24,10 +24,6 @@ body {
 #later input {
   flex: 1;
   min-width: 0;
-  background: var(--ws-surface);
-  border: 1px solid var(--ws-border);
-  border-radius: var(--ws-radius-sm);
-  padding: 4px 6px;
 }
 
 ul {
@@ -45,13 +41,13 @@ ul {
   text-align: start;
   border: 0;
   background: transparent;
-  padding: 7px 10px;
-  border-radius: var(--ws-radius-sm);
+  padding: var(--ws-space-sm) var(--ws-space-md);
+  border-radius: var(--ws-radius);
 }
 
 .snippet:hover,
 .snippet:focus-visible {
-  background: var(--ws-surface-2);
+  background: var(--ws-accent-softer);
 }
 
 .snippet-title {
@@ -60,7 +56,7 @@ ul {
 
 .snippet-preview {
   color: var(--ws-text-dim);
-  font-size: 0.88em;
+  font-size: var(--ws-text-sm);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -78,8 +74,8 @@ ul {
 
 footer {
   border-top: 1px solid var(--ws-border);
-  margin-top: 6px;
-  padding-top: 6px;
+  margin-top: var(--ws-space-sm);
+  padding-top: var(--ws-space-sm);
 }
 
 footer button {
