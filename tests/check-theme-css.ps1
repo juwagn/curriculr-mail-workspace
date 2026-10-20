@@ -32,7 +32,7 @@ if (Test-Path -LiteralPath $cssPath) {
     Assert ($code -match '@media \(prefers-color-scheme: dark\)') 'Dark-Mode per prefers-color-scheme'
 
     # Token-System
-    foreach ($t in '--ws-accent', '--ws-accent-soft', '--ws-bg', '--ws-surface', '--ws-border', '--ws-text', '--ws-text-dim', '--ws-radius', '--ws-space-1', '--ws-space-2') {
+    foreach ($t in '--ws-accent', '--ws-accent-soft', '--ws-bg', '--ws-surface', '--ws-border', '--ws-text', '--ws-text-dim', '--ws-radius', '--ws-space-sm', '--ws-space-md') {
         Assert ($code -match [regex]::Escape($t) + '\s*:') "Token $t definiert"
     }
     $defined = [regex]::Matches($code, '(--ws-[a-z0-9-]+)\s*:') | ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique
@@ -44,8 +44,8 @@ if (Test-Path -LiteralPath $cssPath) {
     Assert ($code -match '(?si):root\[data-workspace="school"\]\s*\{[^}]*--ws-accent:\s*var\(--ws-accent-school\)') 'school setzt Schul-Akzent'
     Assert ($code -match '(?si):root\[data-workspace="private"\]\s*\{[^}]*--ws-accent:\s*var\(--ws-accent-private\)') 'private setzt Privat-Akzent'
     Assert ($code -match '(?i)--ws-accent-school:\s*var\(--ws-custom-school,\s*var\(--brand-marine-700\)\)') -and ($code -match '(?i)--brand-marine-700:\s*#00467d') 'Schul-Akzent: eigene Farbe, sonst Curricu:lr-Marine (hell)'
-    Assert ($code -match '(?i)--ws-accent-private:\s*var\(--ws-custom-private,\s*#4f7560\)') 'Privat-Akzent: eigene Farbe, sonst #4f7560 (hell)'
-    Assert ($code -match '(?i)--ws-accent-all:\s*var\(--ws-custom-all,\s*#4a4744\)') 'Alle-Akzent: eigene Farbe, sonst #4a4744 (hell)'
+    Assert ($code -match '(?i)--ws-accent-private:\s*var\(--ws-custom-private,\s*#2b7550\)') 'Privat-Akzent: eigene Farbe, sonst #2b7550 (hell)'
+    Assert ($code -match '(?i)--ws-accent-all:\s*var\(--ws-custom-all,\s*#8a5a0b\)') 'Alle-Akzent: eigene Farbe, sonst #8a5a0b (hell)'
     foreach ($m in 'school', 'private', 'all') {
         Assert ($code -match "(?i)--ws-accent-$($m):\s*var\(--ws-custom-$m-dark,") "Dark-Akzent $m nutzt --ws-custom-$m-dark"
     }
@@ -59,10 +59,12 @@ if (Test-Path -LiteralPath $cssPath) {
     Assert ($code.Contains('tr[is="thread-card"]')) 'Kartenzeilen ueber tr[is="thread-card"] angesprochen'
     Assert ($code -match '--listbox-border-radius:\s*var\(--ws-radius\)') 'Karten-Radius kommt aus dem Token'
     Assert ($code -match '(?i)--ws-radius:\s*8px') 'Basis-Radius 8px'
-    Assert ($code -match '--card-container-padding-block:\s*var\(--ws-space-1\)') 'vertikaler Kartenabstand aus Token'
-    Assert ($code -match '(?s)\[data-properties~="unread"\][^{]*\.card-container::before\s*\{[^}]*background') 'ungelesene Karten haben Akzentbalken'
+    Assert ($code -match '--card-container-padding-block:\s*var\(--ws-space-xs\)') 'vertikaler Kartenabstand aus Token'
+    Assert ($code -notmatch '(?s)\.card-container\s*\{[^}]*\bpadding(-block|-inline)?:') 'kein Padding auf .card-container (Thunderbird rechnet die Zeilenhoehe selbst, Absenderzeile verschwand sonst)'
+    Assert (($code -match '(?s)\[data-properties~="unread"\]\s*\{[^}]*--read-status-fill:\s*var\(--ws-accent\)') -and ($code -notmatch '\.card-container::before')) 'ungelesen: Punkt im Akzent, kein Balken'
     Assert ($code -match '(?s)\.sender\s*\{[^}]*font-weight') 'Absender typografisch hervorgehoben'
-    Assert ($code -match '(?s)tr\[is="thread-card"\]\.selected \.card-container\s*\{[^}]*outline:\s*2px solid var\(--ws-accent\)') 'Auswahl hat Akzent-Umrandung'
+    Assert ($code -match 'linear-gradient\(var\(--ws-divider\)') 'Karten haben feine Trennlinie'
+    Assert ($code -match '(?s)tr\[is="thread-card"\]\.selected \.card-container\s*\{[^}]*box-shadow:\s*inset 0 0 0 1px var\(--ws-accent-line\)') 'Auswahl hat feinen Akzent-Ring'
     Assert ($code -match '(?s)\.tree-button-more,[^{]*\.tree-button-flag\s*\{[^}]*opacity:\s*0') 'Menue-Knopf und leerer Stern nur bei Hover'
     Assert ($code -match '(?s)#spacesToolbar\s*\{[^}]*--spaces-bg-color:\s*var\(--ws-accent\)') 'Spaces Toolbar in Akzentfarbe'
 
@@ -76,7 +78,7 @@ if (Test-Path -LiteralPath $cssPath) {
     foreach ($label in 'SCHULE', 'PRIVAT', 'ALLE') { Assert ($code.Contains("content: `"$label`"")) "Toolbar-/Compose-Badge $label" }
     Assert ($code.Contains('#unifiedToolbarContent::before')) 'Workspace-Badge in der Toolbar'
     Assert ($code -match ':root\[data-ws-compose="school"\]' -and $code -match ':root\[data-ws-compose="private"\]') 'Verfassen-Fenster nach Absender-Workspace gefaerbt'
-    Assert ($code -match '(?s)thread-card-tags[^{]*\{[^}]*border-radius:\s*999px') 'Schlagwoerter als Pill'
+    Assert ($code -match '(?s)thread-card-tags[^{]*\{[^}]*border-radius:\s*var\(--ws-radius-pill\)') 'Schlagwoerter als Pill'
     Assert ($code -match '(?s)\[data-properties~="tagged"\][^{]*\{[^}]*color:\s*var\(--ws-text\)') 'getaggte Zeilen bleiben lesbar'
     Assert ($code.Contains('#ws-pinned-folders-bar')) 'Schnell-Tab-Leiste gestylt'
     Assert ($code.Contains('.ws-drop-target')) 'Drag-Over-Highlight der Schnell-Tabs'

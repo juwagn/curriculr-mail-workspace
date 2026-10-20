@@ -40,29 +40,37 @@
   /* ------------------------------------------------------------------ */
   /* Modus-Akzente */
   --ws-accent-school: var(--ws-custom-school, var(--brand-marine-700));
-  --ws-accent-private: var(--ws-custom-private, #4f7560);
-  --ws-accent-all: var(--ws-custom-all, #4a4744);
+  --ws-accent-private: var(--ws-custom-private, #2b7550);
+  --ws-accent-all: var(--ws-custom-all, #8a5a0b);
   --ws-accent: var(--ws-accent-all);
 
   /* Schrift auf Akzentflächen: hell, ab LCH-Helligkeit 70 dunkel. */
   --ws-on-accent-threshold: 70;
   --ws-accent-text: lch(from var(--ws-accent) calc((var(--ws-on-accent-threshold) - l) * infinity) 0 0);
 
-  /* Neutrale */
-  --ws-bg: #f6f5f3;
-  --ws-surface: #fdfcfb;
-  --ws-surface-2: #efeeeb;
-  --ws-sidebar: #eeedea;
-  --ws-border: #e2e0dc;
-  --ws-text: #1f1e1c;
-  --ws-text-dim: #64615c;
+  /* Neutrale: Papier und Tinte sind fest, alle Flächen mischen den Modus-Akzent
+     in Papier. So bekommt jeder Modus seine eigene Farbwelt (Schule kühles Blau,
+     Privat Salbei, Alle warmer Sand) statt einer grauen Einheitsfläche. */
+  --ws-paper: #fdfdfb;
+  --ws-bg: color-mix(in srgb, var(--ws-accent) var(--ws-bg-amount), var(--ws-paper));
+  --ws-surface: #fffffe;
+  --ws-surface-2: color-mix(in srgb, var(--ws-accent) var(--ws-surface-2-amount), var(--ws-paper));
+  --ws-sidebar: color-mix(in srgb, var(--ws-accent) var(--ws-sidebar-amount), var(--ws-paper));
+  --ws-border: color-mix(in srgb, var(--ws-accent) 14%, var(--ws-paper));
+  /* Trennlinie zwischen Listenzeilen: deutlicher als die Haarlinie, aber leise. */
+  --ws-divider: color-mix(in srgb, var(--ws-accent) 24%, var(--ws-paper));
+  --ws-text: #1c1e22;
+  --ws-text-dim: #545961;
   --ws-danger: #b42318;
-  --ws-hover: color-mix(in srgb, var(--ws-text) 5%, transparent);
+  --ws-hover: color-mix(in srgb, var(--ws-accent) 7%, transparent);
 
   /* Modus-Tönung und Auswahl (Anteile geprüft, nicht erhöhen ohne Kontrastcheck) */
-  --ws-tint-amount: 4%;
-  --ws-selected-amount: 13%;
-  --ws-current-amount: 7%;
+  --ws-bg-amount: 1.5%;
+  --ws-surface-2-amount: 6%;
+  --ws-sidebar-amount: 14%;
+  --ws-tint-amount: 8%;
+  --ws-selected-amount: 15%;
+  --ws-current-amount: 9%;
 
   /* ------------------------------------------------------------------ */
   /* Typografie: nur Systemschrift, Größen relativ zur Basis            */
@@ -93,12 +101,12 @@
   --ws-space-3xl: 48px;
 
   /* Dichte „normal“ (luftig). Kompakt: siehe [uidensity="compact"] unten. */
-  --ws-row-gap: var(--ws-space-xs);          /* Abstand zwischen Karten  */
-  --ws-row-pad-inline: var(--ws-space-md);   /* Innenabstand Karte       */
-  --ws-row-pad-block: var(--ws-space-sm);
-  --ws-control-pad-block: 6px;
-  --ws-control-pad-inline: var(--ws-space-md);
-  --ws-section-gap: var(--ws-space-2xl);     /* Einstellungen: Bereiche  */
+  --ws-row-gap: var(--ws-space-2xs);         /* Abstand zwischen Karten  */
+  --ws-row-pad-inline: var(--ws-space-lg);   /* Innenabstand Karte       */
+  --ws-row-pad-block: 10px;
+  --ws-control-pad-block: 8px;
+  --ws-control-pad-inline: var(--ws-space-lg);
+  --ws-section-gap: var(--ws-space-3xl);     /* Einstellungen: Bereiche  */
 
   /* ------------------------------------------------------------------ */
   /* Radien, Fokus, Bewegung                                            */
@@ -119,10 +127,12 @@
   /* ------------------------------------------------------------------ */
   /* Abgeleitet (gilt für Hell und Dunkel)                              */
   /* ------------------------------------------------------------------ */
-  --ws-bg-tinted: color-mix(in srgb, var(--ws-accent) var(--ws-tint-amount), var(--ws-bg));
-  --ws-sidebar-tinted: color-mix(in srgb, var(--ws-accent) var(--ws-tint-amount), var(--ws-sidebar));
-  --ws-accent-soft: color-mix(in srgb, var(--ws-accent) var(--ws-selected-amount), var(--ws-surface));
-  --ws-accent-softer: color-mix(in srgb, var(--ws-accent) var(--ws-current-amount), var(--ws-surface));
+  --ws-bg-tinted: color-mix(in srgb, var(--ws-accent) var(--ws-tint-amount), var(--ws-paper));
+  --ws-sidebar-tinted: var(--ws-sidebar);
+  /* Auswahl in der Seitenleiste: hellere Pille (Dunkel: getönte Aufhellung). */
+  --ws-sidebar-selected: color-mix(in srgb, var(--ws-accent) 4%, var(--ws-surface));
+  --ws-accent-soft: color-mix(in srgb, var(--ws-accent) var(--ws-selected-amount), var(--ws-bg));
+  --ws-accent-softer: color-mix(in srgb, var(--ws-accent) var(--ws-current-amount), var(--ws-bg));
   --ws-accent-line: color-mix(in srgb, var(--ws-accent) 45%, transparent);
 }
 
@@ -132,23 +142,26 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --ws-accent-school: var(--ws-custom-school-dark, #80a3be);
-    --ws-accent-private: var(--ws-custom-private-dark, #93b8a0);
-    --ws-accent-all: var(--ws-custom-all-dark, #bdb8b1);
+    --ws-accent-private: var(--ws-custom-private-dark, #8cc4a0);
+    --ws-accent-all: var(--ws-custom-all-dark, #dcb36a);
     /* Dunkel: Akzente sind hell, Schrift darauf dunkel. */
     --ws-on-accent-threshold: 55;
 
-    --ws-bg: #19191a;
-    --ws-surface: #212122;
-    --ws-surface-2: #2a2a2b;
-    --ws-sidebar: #151516;
-    --ws-border: #343436;
-    --ws-text: #ecebe8;
-    --ws-text-dim: #aeaba5;
+    --ws-paper: #16171a;
+    --ws-surface: #1f2023;
+    --ws-border: color-mix(in srgb, var(--ws-accent) 18%, var(--ws-paper));
+    --ws-divider: color-mix(in srgb, var(--ws-accent) 28%, var(--ws-paper));
+    --ws-text: #ecedee;
+    --ws-text-dim: #a9adb3;
     --ws-danger: #f2867a;
 
-    --ws-tint-amount: 6%;
-    --ws-selected-amount: 16%;
-    --ws-current-amount: 9%;
+    --ws-sidebar-selected: color-mix(in srgb, var(--ws-accent) 16%, var(--ws-sidebar));
+    --ws-bg-amount: 4%;
+    --ws-surface-2-amount: 8%;
+    --ws-sidebar-amount: 12%;
+    --ws-tint-amount: 8%;
+    --ws-selected-amount: 18%;
+    --ws-current-amount: 11%;
     --ws-leading: 1.5;  /* helle Schrift auf dunkel braucht mehr Luft */
   }
 }
@@ -179,9 +192,9 @@
 /* Dichte „kompakt“: folgt Thunderbird (Ansicht → Dichte → Kompakt)     */
 /* -------------------------------------------------------------------- */
 :root[uidensity="compact"] {
-  --ws-row-gap: var(--ws-space-2xs);
-  --ws-row-pad-inline: var(--ws-space-sm);
-  --ws-row-pad-block: var(--ws-space-xs);
+  --ws-row-gap: 1px;
+  --ws-row-pad-inline: var(--ws-space-md);
+  --ws-row-pad-block: 6px;
   --ws-control-pad-block: var(--ws-space-xs);
   --ws-control-pad-inline: var(--ws-space-sm);
   --ws-section-gap: var(--ws-space-xl);
