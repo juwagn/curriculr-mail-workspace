@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Neu
+- Moderne, größere Ordner-Symbole (Linien-Stil nach Lucide) im Ordnerbaum.
+
 ### Behoben
 - Absender und Datum fehlten in der Kartenansicht (eigenes Padding auf `.card-container`). Jede Mail hat jetzt eine feine Trennlinie.
 

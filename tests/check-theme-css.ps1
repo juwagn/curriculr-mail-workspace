@@ -63,6 +63,7 @@ if (Test-Path -LiteralPath $cssPath) {
     Assert ($code -notmatch '(?s)\.card-container\s*\{[^}]*\bpadding(-block|-inline)?:') 'kein Padding auf .card-container (Thunderbird rechnet die Zeilenhoehe selbst, Absenderzeile verschwand sonst)'
     Assert (($code -match '(?s)\[data-properties~="unread"\]\s*\{[^}]*--read-status-fill:\s*var\(--ws-accent\)') -and ($code -notmatch '\.card-container::before')) 'ungelesen: Punkt im Akzent, kein Balken'
     Assert ($code -match '(?s)\.sender\s*\{[^}]*font-weight') 'Absender typografisch hervorgehoben'
+    Assert (($code -match 'mask-image:\s*var\(--ws-icon-inbox\)') -and ($code -match '--ws-folder-icon-size:\s*20px')) 'Ordner-Symbole: eigener Satz als Maske, 20px'
     Assert ($code -match 'linear-gradient\(var\(--ws-divider\)') 'Karten haben feine Trennlinie'
     Assert ($code -match '(?s)tr\[is="thread-card"\]\.selected \.card-container\s*\{[^}]*box-shadow:\s*inset 0 0 0 1px var\(--ws-accent-line\)') 'Auswahl hat feinen Akzent-Ring'
     Assert ($code -match '(?s)\.tree-button-more,[^{]*\.tree-button-flag\s*\{[^}]*opacity:\s*0') 'Menue-Knopf und leerer Stern nur bei Hover'

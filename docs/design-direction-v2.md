@@ -38,6 +38,10 @@ Quellen: Superhuman, Spark, HEY, Apple Mail (macOS 26), Gmail (Material 3 Expres
 
 Kontrast (WCAG AA) per Skript für alle drei Modi in Hell und Dunkel geprüft: Text 4,5:1 oder besser. Knappste Paare: Privat Akzent auf Seitenleiste 4,53, Dunkel Schule Akzent auf Auswahl 3,81 (nur Icon, kein Text).
 
+## Ordner-Symbole
+
+Eigener Satz Linien-Symbole (Lucide, ISC-Lizenz) im Ordnerbaum: Posteingang, Entwürfe, Gesendet, Archiv, Spam, Papierkorb, Postausgang, Vorlagen, Suchordner, Ordner, Konto. 20 px statt 16 px (kompakt 18, Touch 22). Technik: Thunderbirds `context-fill` greift bei `data:`-Bildern nicht (alles wurde schwarz). Darum `content` auf ein transparentes Pixel, das Symbol als `mask-image`, Farbe über `background-color: var(--icon-color)`, die Flächentönung über Alpha im SVG. Dadurch folgen Symbole weiter Auswahl- und Ordnerfarbe. Ausgenommen sind Busy-, Fehler- und Pause-Zustände, Tag-Ordner und RSS-Favicons. Die globalen `--icon-*` bleiben unberührt (sonst änderte sich z. B. jedes Papierkorb-Symbol in Menüs).
+
 ## Lehre: Kartenhöhe nicht anfassen
 
 Thunderbird setzt die Zeilenhöhe der Karten per JavaScript fest (`about3Pane.js`, `ROW_HEIGHT` aus Schriftgröße, Dichte und Zeilenzahl) und kapselt die Zeile mit `contain: strict`. Ein eigenes `padding` auf `.card-container` ließ die Absenderzeile samt Datum verschwinden (nur noch der Betreff sichtbar). Abstand also nur über Thunderbirds Variablen oder Hintergrundbild (Trennlinie), nie über Padding oder Rahmen auf der Karte. Mehr Luft gibt die Dichte „Touch“ (Menü, Dichte). Ein Test in `check-theme-css.ps1` sperrt das Padding.
