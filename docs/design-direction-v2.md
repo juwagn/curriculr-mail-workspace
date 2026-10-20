@@ -40,7 +40,7 @@ Kontrast (WCAG AA) per Skript für alle drei Modi in Hell und Dunkel geprüft: T
 
 ## Ordner-Symbole
 
-Eigener Satz Linien-Symbole (Lucide, ISC-Lizenz) im Ordnerbaum: Posteingang, Entwürfe, Gesendet, Archiv, Spam, Papierkorb, Postausgang, Vorlagen, Suchordner, Ordner, Konto. 20 px statt 16 px (kompakt 18, Touch 22). Technik: Thunderbirds `context-fill` greift bei `data:`-Bildern nicht (alles wurde schwarz). Darum `content` auf ein transparentes Pixel, das Symbol als `mask-image`, Farbe über `background-color: var(--icon-color)`, die Flächentönung über Alpha im SVG. Dadurch folgen Symbole weiter Auswahl- und Ordnerfarbe. Ausgenommen sind Busy-, Fehler- und Pause-Zustände, Tag-Ordner und RSS-Favicons. Die globalen `--icon-*` bleiben unberührt (sonst änderte sich z. B. jedes Papierkorb-Symbol in Menüs).
+Symbole aus Phosphor Icons (phosphoricons.com, MIT; Gewicht „Light“, Flächentönung aus „Duotone“). Gewählt, weil die dünne, runde Linie zur leichten Inter-nahen Marke von Curricu:lr passt (Lucide war zu kräftig) im Ordnerbaum: Posteingang, Entwürfe, Gesendet, Archiv, Spam, Papierkorb, Postausgang, Vorlagen, Suchordner, Ordner, Konto. 22 px statt 16 px (kompakt 20, Touch 24). Technik: Thunderbirds `context-fill` greift bei `data:`-Bildern nicht (alles wurde schwarz). Darum `content` auf ein transparentes Pixel, das Symbol als `mask-image`, Farbe über `background-color: var(--icon-color)`, die Flächentönung über Alpha im SVG. Dadurch folgen Symbole weiter Auswahl- und Ordnerfarbe. Ausgenommen sind Busy-, Fehler- und Pause-Zustände, Tag-Ordner und RSS-Favicons. Die globalen `--icon-*` bleiben unberührt (sonst änderte sich z. B. jedes Papierkorb-Symbol in Menüs).
 
 ## Lehre: Kartenhöhe nicht anfassen
 
