@@ -76,7 +76,9 @@
   /* Typografie: nur Systemschrift, Größen relativ zur Basis            */
   /* ------------------------------------------------------------------ */
   --ws-font: message-box;
-  --ws-text-sm: 0.857em;   /* Datum, Zähler, Hilfetext   (~12px bei 14px) */
+  /* Untergrenze 12px: unter macOS (Systemschrift ca. 13px) ergäben 0.857em nur ~11px,
+     zu klein für Datum und Hilfetext. Windows (14px) bleibt bei ~12px. */
+  --ws-text-sm: max(0.857em, 12px);   /* Datum, Zähler, Hilfetext (Windows ~12px, macOS 12px) */
   --ws-text-md: 1em;       /* Fließtext, Labels          (14px)            */
   --ws-text-lg: 1.25em;    /* Bereichstitel              (~17.5px)         */
   --ws-text-xl: 1.75em;    /* Seitentitel                (~24.5px)         */
@@ -87,6 +89,10 @@
   --ws-leading: 1.45;
   --ws-leading-tight: 1.2;
   --ws-tracking-caps: 0.06em;  /* Badge, Gruppen-Überschriften in Versalien */
+  /* Laufweite je Größe (nie ein fester Wert): große Schrift leicht enger,
+     kleine Schrift (Datum, Uhrzeit) leicht weiter. Fließtext bleibt bei 0. */
+  --ws-tracking-display: -0.01em;  /* Nachrichtenbetreff */
+  --ws-tracking-small: 0.01em;     /* Datum, Uhrzeit */
 
   /* ------------------------------------------------------------------ */
   /* Abstände: 4-px-Raster                                              */
