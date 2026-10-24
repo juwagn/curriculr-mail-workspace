@@ -13,6 +13,11 @@
 - „Kontrast erhöhen“ schaltet das Theme nicht mehr ab: eigener Block mit kräftigeren Rändern und Tönungen. Nur Windows-Forced-Colors bleibt unangetastet.
 - Moduswechsel überblendet auch Ordnerliste, Spaces-Leiste, Liste, Badge und Schnell-Tabs.
 
+### Verbessert (Runde 2: Apple-näher, runder)
+- „Alle“ ist jetzt Graphit statt Bernstein (hell `#55575c`, dunkel `#b4b7bd`), Tönungen und Trennlinien deutlich leiser. Icon und `MODE_COLORS` angepasst.
+- Radienskala: Knöpfe und Felder 8 px, Suche und Badges als Kapsel; gestaltete Tab-Leiste (oben gerundet, runder Schließen-Knopf, kein Akzentbalken).
+- Plugin-Seiten: einheitliche Radien, leises Badge wie im Theme, Druck-Feedback, federnder Schalter, Kontrast-Modus (`prefers-contrast`, `forced-colors`), Überblendung beim Bereichswechsel, Schrift folgt dem System.
+
 ### Behoben
 - Absender und Datum fehlten in der Kartenansicht (eigenes Padding auf `.card-container`). Jede Mail hat jetzt eine feine Trennlinie.
 
