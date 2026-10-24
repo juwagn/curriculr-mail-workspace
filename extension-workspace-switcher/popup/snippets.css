@@ -13,12 +13,12 @@ body {
 }
 
 #later label {
-  font-weight: 600;
+  font-weight: var(--ws-weight-semibold);
 }
 
 #later .row {
   display: flex;
-  gap: 6px;
+  gap: var(--ws-space-sm);
 }
 
 #later input {
@@ -50,8 +50,13 @@ ul {
   background: var(--ws-accent-softer);
 }
 
+/* Druck: stärker getönt als Hover (sonst überstimmt .snippet:hover button:active). */
+.snippet:active {
+  background: var(--ws-accent-soft);
+}
+
 .snippet-title {
-  font-weight: 600;
+  font-weight: var(--ws-weight-semibold);
 }
 
 .snippet-preview {
@@ -65,7 +70,7 @@ ul {
 #empty,
 #status,
 #error {
-  padding: 8px 10px;
+  padding: var(--ws-space-sm) var(--ws-space-md);
 }
 
 #error {
@@ -83,4 +88,13 @@ footer button {
   border: 0;
   background: transparent;
   color: var(--ws-text-dim);
+}
+
+/* Mehr Kontrast: Fokus und Hover brauchen eine Kante, nicht nur Tönung. */
+@media (prefers-contrast: more) {
+  .snippet:hover,
+  .snippet:focus-visible {
+    outline: 2px solid var(--ws-text);
+    outline-offset: -2px;
+  }
 }
