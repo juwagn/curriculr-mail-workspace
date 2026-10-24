@@ -79,7 +79,7 @@ Nur Systemschrift (`font: message-box`, also Segoe UI Variable unter Windows). D
 
 | Token | Wert | Bei 14px | Einsatz |
 |---|---|---|---|
-| `--ws-text-sm` | 0.857em | 12px | Datum, Zähler, Hilfetext, Badge |
+| `--ws-text-sm` | max(0.857em, 12px) | 12px (macOS: 12px statt ~11px) | Datum, Zähler, Hilfetext, Badge |
 | `--ws-text-md` | 1em | 14px | Text, Labels, Betreff |
 | `--ws-text-lg` | 1.25em | 17.5px | Bereichstitel (Einstellungen) |
 | `--ws-text-xl` | 1.75em | 24.5px | Seitentitel |

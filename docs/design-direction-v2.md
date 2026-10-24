@@ -17,7 +17,7 @@ Quellen: Superhuman, Spark, HEY, Apple Mail (macOS 26), Gmail (Material 3 Expres
 3. **Ein Akzent, wenige Stellen.** Auswahl, Ungelesen, Zähler, aktive Aktion.
 4. **Dichte ist wählbar.** Outlook (Roomy/Cozy/Compact) und Mimestream (vier Listenstile) trennen Luft von Inhalt. Bei uns: `uidensity` von Thunderbird.
 5. **Ungelesen = Gewicht plus Punkt.** Nie nur Farbe.
-6. **Typografie trägt die Hierarchie.** Absender 14 px / 600–700, Betreff gleich groß, Datum 12 px gedämpft, Nachrichtenbetreff 20–22 px / 600.
+6. **Typografie trägt die Hierarchie.** Absender 14 px, Betreff gleich groß, Datum 12 px gedämpft, Nachrichtenbetreff 20–22 px / 600. Gewichte siehe „macOS-Anpassungen“.
 
 ## Entscheidungen
 
@@ -29,22 +29,38 @@ Quellen: Superhuman, Spark, HEY, Apple Mail (macOS 26), Gmail (Material 3 Expres
 | Alle | Graphit `#4a4744` | Bernstein `#8a5a0b`. Grund: Graphit machte „Alle“ zur grauen Fläche. Eine Zeile in `tokens.css`, `logic.mjs` und den Icons |
 | Karte (Ruhe) | Fläche, Schatten, Balken | transparent, durchgehende Liste, eingerückte Trennlinie (`--ws-divider`) unter jeder Mail |
 | Karte (Hover/Auswahl) | Rand/Outline 2 px | Hover getönt, Auswahl getönt plus 1-px-Ring |
-| Ungelesen | Balken links | Thunderbirds Punkt im Akzent, Absender 700, Betreff 600 |
+| Ungelesen | Balken links | Thunderbirds Punkt im Akzent, Absender 600, Betreff 400 |
 | Toolbar | Linie 2 px im Akzent | getönte Fläche, leise Pille mit Akzentpunkt |
 | Seitenleiste | gleiche Tönung wie Auswahl | Auswahl als hellere Pille (Dunkel: getönte Aufhellung), Zähler ohne Pille |
 | Dunkel | helle Akzent-Leiste | Leiste wie Seitenleiste, Akzent nur auf aktivem Button |
-| Abstände | Karte 8/12 px, Lücke 4 px | Ordnerzeilen 36 px, Kontoabstand 24 px. Die Kartenhöhe bleibt bei Thunderbird (siehe Lehre) |
+| Abstände | Karte 8/12 px, Lücke 4 px | Ordnerzeilen 32 px (zunächst 36), Kontoabstand 24 px. Die Kartenhöhe bleibt bei Thunderbird (siehe Lehre) |
 | Tags, Schnell-Tabs | Streifen (`inset 3px`) | Punkt im Verlauf, keine Seitenstreifen |
 
 Kontrast (WCAG AA) per Skript für alle drei Modi in Hell und Dunkel geprüft: Text 4,5:1 oder besser. Knappste Paare: Privat Akzent auf Seitenleiste 4,53, Dunkel Schule Akzent auf Auswahl 3,81 (nur Icon, kein Text).
 
 ## Ordner-Symbole
 
-Symbole aus Phosphor Icons (phosphoricons.com, MIT; Gewicht „Light“, Flächentönung aus „Duotone“). Gewählt, weil die dünne, runde Linie zur leichten Inter-nahen Marke von Curricu:lr passt (Lucide war zu kräftig) im Ordnerbaum: Posteingang, Entwürfe, Gesendet, Archiv, Spam, Papierkorb, Postausgang, Vorlagen, Suchordner, Ordner, Konto. 22 px statt 16 px (kompakt 20, Touch 24). Technik: Thunderbirds `context-fill` greift bei `data:`-Bildern nicht (alles wurde schwarz). Darum `content` auf ein transparentes Pixel, das Symbol als `mask-image`, Farbe über `background-color: var(--icon-color)`, die Flächentönung über Alpha im SVG. Dadurch folgen Symbole weiter Auswahl- und Ordnerfarbe. Ausgenommen sind Busy-, Fehler- und Pause-Zustände, Tag-Ordner und RSS-Favicons. Die globalen `--icon-*` bleiben unberührt (sonst änderte sich z. B. jedes Papierkorb-Symbol in Menüs).
+Symbole aus Phosphor Icons (phosphoricons.com, MIT; Gewicht „Light“, Flächentönung aus „Duotone“). Gewählt, weil die dünne, runde Linie zur leichten Inter-nahen Marke von Curricu:lr passt (Lucide war zu kräftig) im Ordnerbaum: Posteingang, Entwürfe, Gesendet, Archiv, Spam, Papierkorb, Postausgang, Vorlagen, Suchordner, Ordner, Konto. Größe mit der Textgröße skalierend (siehe „macOS-Anpassungen“). Technik: Thunderbirds `context-fill` greift bei `data:`-Bildern nicht (alles wurde schwarz). Darum `content` auf ein transparentes Pixel, das Symbol als `mask-image`, Farbe über `background-color: var(--icon-color)`, die Flächentönung über Alpha im SVG. Dadurch folgen Symbole weiter Auswahl- und Ordnerfarbe. Ausgenommen sind Busy-, Fehler- und Pause-Zustände, Tag-Ordner und RSS-Favicons. Die globalen `--icon-*` bleiben unberührt (sonst änderte sich z. B. jedes Papierkorb-Symbol in Menüs).
 
 ## Lehre: Kartenhöhe nicht anfassen
 
 Thunderbird setzt die Zeilenhöhe der Karten per JavaScript fest (`about3Pane.js`, `ROW_HEIGHT` aus Schriftgröße, Dichte und Zeilenzahl) und kapselt die Zeile mit `contain: strict`. Ein eigenes `padding` auf `.card-container` ließ die Absenderzeile samt Datum verschwinden (nur noch der Betreff sichtbar). Abstand also nur über Thunderbirds Variablen oder Hintergrundbild (Trennlinie), nie über Padding oder Rahmen auf der Karte. Mehr Luft gibt die Dichte „Touch“ (Menü, Dichte). Ein Test in `check-theme-css.ps1` sperrt das Padding.
+
+## macOS-Anpassungen
+
+Anlass: Das Theme läuft jetzt auch unter macOS. Die Systemschrift ist dort ca. 13 px groß (Windows 14 px), und rein relative Werte ergaben zu kleine Schrift und zu feine Gewichtsabstufungen. Grundlage: Skill `apple-design`, Abschnitt 15 (Typografie, nach WWDC 2020 „The Details of UI Typography“).
+
+| Bereich | Vorher | Jetzt | Begründung |
+|---|---|---|---|
+| `--ws-text-sm` (Datum, Zähler, Hilfetext) | 0.857em (macOS ca. 11 px) | `max(0.857em, 12px)` | Kleine Schrift braucht eine Untergrenze. Windows bleibt bei 12 px, Add-on-Seiten (14 px Basis) ändern sich nicht |
+| Ordner-Symbole | fest 22 px (kompakt 20, Touch 24) | `clamp(16px, 1.35em, 32px)`, kompakt 1.25em, Touch 1.5em | Layout skaliert mit der Textgröße (Dynamic Type), nie unter 16 px. Bei 13 px Basis ca. 17,5 px, bei 14 px ca. 19 px, also näher an macOS-Seitenleisten |
+| Ordnerzeile `--list-item-min-height` | 36 px | 32 px | macOS-Seitenleisten sind dichter. Mehr Luft bleibt Thunderbirds Dichte „Touch“ überlassen |
+| Karte gelesen | Absender 500, Betreff 400 gedämpft | Absender 400, Betreff 400 gedämpft | Ruhe: gelesen darf zurücktreten |
+| Karte ungelesen | Absender 700, Betreff 600 | Absender 600, Betreff 400, beide in voller Tinte | Hierarchie aus Gewicht: Absender trägt, Betreff folgt. 700/600 war zu flach und zu laut. Ungelesen bleibt Gewicht plus Punkt, nie nur Farbe |
+| Laufweite Nachrichtenbetreff | 0 | `--ws-tracking-display: -0.01em` | Große Schrift wirkt mit Standardlaufweite zu weit. Leicht enger |
+| Laufweite Datum (Karte, Nachrichtenkopf) | 0 | `--ws-tracking-small: 0.01em` | Kleine Schrift wird mit etwas mehr Laufweite lesbarer |
+
+Laufweite ist größenabhängig und nie ein fester Wert für alles: groß enger, klein weiter, Fließtext bei 0. Die Kartenhöhe bleibt unberührt (siehe Lehre unten): Geändert sind nur Gewicht, Laufweite und Schriftgröße des Datums, die Absenderzeile bestimmt die Zeilenhöhe.
 
 ## Einstellungsseite und Popups (umgesetzt)
 
@@ -58,7 +74,7 @@ Thunderbird setzt die Zeilenhöhe der Karten per JavaScript fest (`about3Pane.js
 
 ## Offen
 
-- **Im echten Thunderbird sichten.** Mock und statische Seiten ersetzen die Browser-Toolbox nicht. Zu prüfen: Zeilenhöhe der Karten, Punkt-Position, `#messageHeader`, Popup-Größe.
+- **Im echten Thunderbird sichten.** Mock und statische Seiten ersetzen die Browser-Toolbox nicht. Zu prüfen: Zeilenhöhe der Karten (Datum jetzt mind. 12 px), Ordner-Symbole in em unter macOS, Punkt-Position, `#messageHeader`, Popup-Größe.
 - **Modus-Umschalter im Kopf der Einstellungen** (Brief 10) fehlt: Der Kopf zeigt nur den aktiven Modus.
 - **Ungelesen-Punkt in eigener Spalte** (Brief) geht per CSS nicht: Thunderbird setzt ihn in die Betreffzeile.
 - Eigene Farben aus den Optionen: Kontrast prüft niemand.
