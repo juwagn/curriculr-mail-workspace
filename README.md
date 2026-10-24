@@ -10,7 +10,7 @@ Für Thunderbird 128+ (getestet mit 158 unter Windows 11). Alles läuft lokal: k
 - **Sende-Wächter:** warnt vor dem Senden bei falschem Absender, offen sichtbaren externen Empfängern, weitergeleiteten sensiblen Verläufen und Mails nach Feierabend.
 - **Später senden, Textbausteine, Schnell-Tabs, Auto-Tags, Kalender-Kopplung.**
 - **Klassenzimmer:** Sichtschutz (Unschärfe) und Fokus-Modus.
-- **Theme:** ruhige Karten-Ansicht, Akzent je Workspace, warme Neutrale, Hell und Dunkel, Hochkontrast bleibt unangetastet.
+- **Theme:** ruhige Karten-Ansicht, Akzent je Workspace, warme Neutrale, Hell und Dunkel, Windows-Hochkontrast bleibt unangetastet, „Kontrast erhöhen“ verstärkt Ränder und Schrift.
 
 ## Installation
 

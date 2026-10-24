@@ -66,7 +66,7 @@ Jede Moduswechsel-Quelle (Klick, Kürzel, Menü, Optionen) schreibt in den Stora
 
 ## Theme `theme-css/` (existiert, funktioniert)
 
-- Alles in `@media not (prefers-contrast)`. Im Hochkontrastmodus bleibt nur die Konto-Ausblendung aktiv.
+- Alles in `@media (forced-colors: none)`. Bei Windows-Hochkontrast (Forced Colors) bleibt nur die Konto-Ausblendung aktiv. Bei `prefers-contrast: more` (macOS „Kontrast erhöhen“) bleibt das Theme an und verstärkt Ränder, Schrift, Tönungen und Fokusring.
 - Hell und dunkel über `prefers-color-scheme`.
 - Akzent je `data-workspace`: Schule `#3b82f6`, Privat `#10b981`, Alle `#8b5cf6`. Eigene Farben überschreiben über `--ws-custom-*`. Die Schriftfarbe auf Akzentflächen wird automatisch kontrastgerecht gewählt.
 - Überschreibt Thunderbird-eigene Variablen für Flächen, Akzent und Radien. Deklarationen brauchen `!important` (User-Sheet gegen Author-Sheets).
