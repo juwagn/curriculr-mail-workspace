@@ -147,7 +147,7 @@
     --folderpane-unread-count-text: var(--ws-accent) !important;
     --folderpane-unread-new-count-background: transparent !important;
     --folderpane-total-count-background: transparent !important;
-    --spaces-bg-color: var(--ws-sidebar) !important;
+    --spaces-bg-color: var(--ws-rail) !important;
     --spaces-bg-image: none !important;
     --spaces-button-text-color: var(--ws-text-dim) !important;
     --spaces-button-active-text-color: var(--ws-accent) !important;
@@ -364,7 +364,7 @@
      Akzentfläche. Die Variablen setzt der Block "Ordnerliste und Spaces Toolbar"
      oben (--spaces-bg-color, --spaces-button-*). */
   #spacesToolbar {
-    background-color: var(--ws-sidebar) !important;
+    background-color: var(--ws-rail) !important;
     border-inline-end: none !important;
     color: var(--ws-text) !important;
   }
@@ -388,9 +388,21 @@
   /* 4d. Toolbar und Modus-Indikator                                      */
   /* -------------------------------------------------------------------- */
   /* Getönte Fläche statt Akzentlinie (--toolbar-background-color, oben). */
+  /* Die Fläche liegt auf dem Container, nicht nur auf #unifiedToolbar: Unter macOS sitzen
+     die Ampel-Knöpfe (.titlebar-buttonbox-container) im selben Container, davor zeichnet
+     Thunderbird die native Titelleiste (weiß). Sonst bricht die Leiste dort ab. */
+  #unifiedToolbarContainer {
+    background-color: var(--ws-bg-tinted) !important;
+  }
+
   #unifiedToolbar {
     border-block-end: none !important;
-    background-color: var(--ws-bg-tinted) !important;
+    background-color: transparent !important;
+  }
+
+  /* Haarlinie unter der Toolbar: leise statt 15 % Schwarz */
+  unified-toolbar {
+    border-block-end-color: var(--ws-border) !important;
   }
 
   .unified-toolbar-button {
@@ -678,7 +690,7 @@
 
     #threadTree[rows="thread-card"] .card-container,
     #folderTree li > .container,
-    #unifiedToolbar {
+    #unifiedToolbarContainer {
       transition:
         background-color var(--ws-duration) var(--ws-ease-out),
         box-shadow var(--ws-duration) var(--ws-ease-out),

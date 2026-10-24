@@ -57,7 +57,10 @@
   --ws-bg: color-mix(in srgb, var(--ws-accent) var(--ws-bg-amount), var(--ws-paper));
   --ws-surface: #fffffe;
   --ws-surface-2: color-mix(in srgb, var(--ws-accent) var(--ws-surface-2-amount), var(--ws-paper));
-  --ws-sidebar: color-mix(in srgb, var(--ws-accent) var(--ws-sidebar-amount), var(--ws-paper));
+  /* Seitenleiste: Grundton aus Tinte (hebt sich in jedem Modus gleich stark von der Liste ab,
+     Apple-Staffelung), darüber der leise Modus-Akzent. Die Spaces-Leiste ist einen Schritt tiefer. */
+  --ws-sidebar: color-mix(in srgb, var(--ws-accent) var(--ws-sidebar-amount), color-mix(in srgb, var(--ws-text) var(--ws-sidebar-ink), var(--ws-paper)));
+  --ws-rail: color-mix(in srgb, var(--ws-text) var(--ws-rail-ink), var(--ws-sidebar));
   --ws-border: color-mix(in srgb, var(--ws-accent) 10%, var(--ws-paper));
   /* Trennlinie zwischen Listenzeilen: gerade noch sichtbar, nie laut. */
   --ws-divider: color-mix(in srgb, var(--ws-accent) 11%, var(--ws-paper));
@@ -70,7 +73,9 @@
      docs/design-system.md; nicht erhöhen ohne Kontrastcheck) */
   --ws-bg-amount: 1.5%;
   --ws-surface-2-amount: 4%;
-  --ws-sidebar-amount: 7%;
+  --ws-sidebar-amount: 5%;
+  --ws-sidebar-ink: 5%;
+  --ws-rail-ink: 3%;
   --ws-tint-amount: 5%;
   --ws-selected-amount: 15%;
   --ws-current-amount: 9%;
@@ -138,8 +143,9 @@
   /* ------------------------------------------------------------------ */
   --ws-bg-tinted: color-mix(in srgb, var(--ws-accent) var(--ws-tint-amount), var(--ws-paper));
   --ws-sidebar-tinted: var(--ws-sidebar);
-  /* Auswahl in der Seitenleiste: getönte Pille auf der Leiste (Hell 7 %, Dunkel 16 %). */
-  --ws-sidebar-selected: color-mix(in srgb, var(--ws-accent) 7%, var(--ws-sidebar));
+  /* Auswahl in der Seitenleiste: helle Pille (Hell: Fläche, hebt sich klar von der Leiste ab;
+     Dunkel: getönte Aufhellung). */
+  --ws-sidebar-selected: var(--ws-surface);
   --ws-accent-soft: color-mix(in srgb, var(--ws-accent) var(--ws-selected-amount), var(--ws-bg));
   --ws-accent-softer: color-mix(in srgb, var(--ws-accent) var(--ws-current-amount), var(--ws-bg));
   --ws-accent-line: color-mix(in srgb, var(--ws-accent) 45%, transparent);
@@ -164,10 +170,12 @@
     --ws-text-dim: #a9adb3;
     --ws-danger: #f2867a;
 
-    --ws-sidebar-selected: color-mix(in srgb, var(--ws-accent) 16%, var(--ws-sidebar));
+    --ws-sidebar-selected: color-mix(in srgb, var(--ws-accent) 11%, var(--ws-sidebar));
     --ws-bg-amount: 4%;
     --ws-surface-2-amount: 6%;
     --ws-sidebar-amount: 8%;
+    --ws-sidebar-ink: 4%;
+    --ws-rail-ink: 2%;
     --ws-tint-amount: 5%;
     --ws-selected-amount: 18%;
     --ws-current-amount: 11%;

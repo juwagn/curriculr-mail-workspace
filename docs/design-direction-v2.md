@@ -102,3 +102,10 @@ Laufweite ist größenabhängig und nie ein fester Wert für alles: groß enger,
 - **Modus-Umschalter im Kopf der Einstellungen** (Brief 10) fehlt: Der Kopf zeigt nur den aktiven Modus.
 - **Ungelesen-Punkt in eigener Spalte** (Brief) geht per CSS nicht: Thunderbird setzt ihn in die Betreffzeile.
 - Eigene Farben aus den Optionen: Kontrast prüft niemand.
+
+## Staffelung links und Titelleiste (Runde 3)
+
+- **Seitenleiste hebt sich ab:** Grundton aus Tinte (Hell 5 %, Dunkel 4 %) plus leiser Modus-Akzent (5 % / 8 %), `--ws-sidebar`. Abstand zur Liste (`--ws-bg`) jetzt 1,15–1,21:1 statt 1,05–1,08:1, in allen Modi etwa gleich. Die Spaces-Leiste ist einen Schritt tiefer (`--ws-rail`, +3 % / +2 % Tinte): Leiste < Ordner < Liste.
+- **Auswahl-Pille:** Hell die helle Fläche (`--ws-surface`, Akzent darauf 5,6–9,7:1), Dunkel 11 % Akzent auf der Leiste.
+- **Kontrast (gerechnet, WCAG):** Akzent auf Seitenleiste 4,68 (Privat hell) bis 7,92; gedämpfter Text auf Leiste mindestens 5,78; Akzent auf Pille mindestens 4,52. Nur das Privat-Symbol direkt auf der Spaces-Leiste liegt bei 4,42 (Symbol, kein Text).
+- **Titelleiste:** Unter macOS zeichnet Thunderbird hinter den Ampel-Knöpfen die native Titelleiste (weiß), die Toolbar-Tönung lag nur auf `#unifiedToolbar`. Die Fläche liegt jetzt auf `#unifiedToolbarContainer`, die Leiste läuft durch. Die Haarlinie unter der Toolbar (`unified-toolbar`) ist leise (`--ws-border`).

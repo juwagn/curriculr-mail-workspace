@@ -18,6 +18,10 @@
 - Radienskala: Knöpfe und Felder 8 px, Suche und Badges als Kapsel; gestaltete Tab-Leiste (oben gerundet, runder Schließen-Knopf, kein Akzentbalken).
 - Plugin-Seiten: einheitliche Radien, leises Badge wie im Theme, Druck-Feedback, federnder Schalter, Kontrast-Modus (`prefers-contrast`, `forced-colors`), Überblendung beim Bereichswechsel, Schrift folgt dem System.
 
+### Verbessert (Runde 3)
+- Seitenleiste hebt sich deutlicher von der Liste ab (Tinte statt nur Akzent), Spaces-Leiste einen Schritt tiefer, helle Auswahl-Pille.
+- Toolbar läuft durchgehend: Fläche liegt auf dem Container, keine weiße Insel hinter den Ampel-Knöpfen mehr.
+
 ### Behoben
 - Absender und Datum fehlten in der Kartenansicht (eigenes Padding auf `.card-container`). Jede Mail hat jetzt eine feine Trennlinie.
 
