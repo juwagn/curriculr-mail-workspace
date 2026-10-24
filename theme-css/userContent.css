@@ -5,7 +5,7 @@
  * eigenes Layout, nur Zitate und Klartext-Mails werden ruhiger. */
 
 @-moz-document url-prefix("imap:"), url-prefix("mailbox:"), url-prefix("news:"), url-prefix("ews:"), url-prefix("owl:") {
-  @media not (prefers-contrast) {
+  @media (forced-colors: none) {
     /* Zitate: dünne Linie statt verschachtelter Blöcke */
     blockquote[type="cite"] {
       margin-inline: 0;

@@ -610,12 +610,20 @@
 
     #threadTree[rows="thread-card"] .card-container,
     #folderTree li > .container,
-    #spacesToolbar .spaces-toolbar-button,
     #unifiedToolbar {
       transition:
         background-color var(--ws-duration) var(--ws-ease-out),
         box-shadow var(--ws-duration) var(--ws-ease-out),
         color var(--ws-duration) var(--ws-ease-out) !important;
+    }
+
+    /* Knöpfe: zusätzlich der Druck-Zustand (scale), kürzer als die Flächen. */
+    #spacesToolbar .spaces-toolbar-button,
+    .unified-toolbar-button {
+      transition:
+        background-color var(--ws-duration) var(--ws-ease-out),
+        color var(--ws-duration) var(--ws-ease-out),
+        transform var(--ws-duration-fast) var(--ws-ease-out) !important;
     }
 
     /* Badge: Punkt (background-image) lässt sich nicht überblenden, Fläche und Schrift schon. */

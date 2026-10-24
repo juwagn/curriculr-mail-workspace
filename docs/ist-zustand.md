@@ -72,7 +72,7 @@ Jede Moduswechsel-Quelle (Klick, Kürzel, Menü, Optionen) schreibt in den Stora
 - Überschreibt Thunderbird-eigene Variablen für Flächen, Akzent und Radien. Deklarationen brauchen `!important` (User-Sheet gegen Author-Sheets).
 - **Nachrichtenliste Kartenansicht:** Karten mit Radius und Abstand, Typografie, ungelesene Mails mit Akzentbalken links (`.card-container::before`), Stern bei neuen Mails im Akzent. Die Tabellenansicht ist nur leicht angepasst.
 - **Ordnerliste:** ruhige Seitenleiste, Konto-Zeilen als kleine gedämpfte Überschrift. `#folderTree li[data-server-key].workspace-hidden { display: none }`.
-- **Spaces Toolbar:** Der aktive Button nutzt den Akzent.
+- **Spaces Toolbar:** Seitenleiste in der getönten Fläche, der aktive Button als Pille mit Akzent-Symbol.
 - **Toolbar:** Es gibt einen Modus-Indikator im Akzent, aber kein Text-Badge „SCHUL-MODUS/PRIVAT-MODUS“.
 - **Bewegung:** Übergänge, respektiert `prefers-reduced-motion`.
 - `userContent.css`: Zitate als dünne Linie, lesbare Zeilenlänge bei Klartext, dezenter Signaturtrenner.

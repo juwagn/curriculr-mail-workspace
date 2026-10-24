@@ -5,6 +5,14 @@
 ### Neu
 - Moderne, größere Ordner-Symbole (Phosphor Light, MIT) im Ordnerbaum.
 
+### Verbessert (macOS, nach Skill „apple-design“)
+- Spaces-Leiste in Hell und Dunkel als ruhige Seitenleiste statt Akzentblock; Modus zeigt der aktive Button.
+- Druck-Feedback (`:active`) für Zeilen, Ordner und Knöpfe; Hover setzt sofort ein, nur das Ausblenden animiert.
+- Trennlinie verschwindet bei Hover, Auswahl und der Zeile darüber.
+- Schriftgröße mind. 12 px, Ordner-Symbole in `em` (skalieren mit der Textgröße), Ordnerzeilen 32 px, ruhigere Gewichte in der Karte, leichtes Tracking bei Betreff und Datum.
+- „Kontrast erhöhen“ schaltet das Theme nicht mehr ab: eigener Block mit kräftigeren Rändern und Tönungen. Nur Windows-Forced-Colors bleibt unangetastet.
+- Moduswechsel überblendet auch Ordnerliste, Spaces-Leiste, Liste, Badge und Schnell-Tabs.
+
 ### Behoben
 - Absender und Datum fehlten in der Kartenansicht (eigenes Padding auf `.card-container`). Jede Mail hat jetzt eine feine Trennlinie.
 
