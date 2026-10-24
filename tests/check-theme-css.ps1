@@ -28,7 +28,9 @@ if (Test-Path -LiteralPath $cssPath) {
     $css = (Get-Content -LiteralPath $tokensPath -Raw) + "`n" + $css
     $code = [regex]::Replace($css, '(?s)/\*.*?\*/', '')
     Assert (Test-Braces $css) 'userChrome.css: Klammern ausgeglichen'
-    Assert ($code -match '@media not \(prefers-contrast\)') 'Overrides respektieren Hochkontrast'
+    Assert ($code -match '@media \(forced-colors: none\) \{') 'Overrides stehen in @media (forced-colors: none), Windows-Hochkontrast bleibt unangetastet'
+    Assert ($code -notmatch '@media not \(prefers-contrast\)') 'Theme schaltet sich bei prefers-contrast nicht mehr ab'
+    Assert ($code -match '(?s)@media \(forced-colors: none\) and \(prefers-contrast: more\)\s*\{[^}]*--ws-border:[^}]*--ws-divider:[^}]*--ws-text-dim:\s*var\(--ws-text\)[^}]*--ws-accent-soft:[^}]*--ws-focus-width:\s*3px') 'prefers-contrast: more verstaerkt Raender, Trennlinie, Schrift, Toenungen und Fokusring'
     Assert ($code -match '@media \(prefers-color-scheme: dark\)') 'Dark-Mode per prefers-color-scheme'
 
     # Token-System
@@ -89,11 +91,20 @@ if (Test-Path -LiteralPath $cssPath) {
     Assert ($code -match '(?s)data-ws-privacy="blur"\][^{]*#messagePane') 'Sichtschutz deckt die Nachrichtenansicht ab'
     Assert ($code -match '(?s)data-ws-privacy="blur"\][^{]*#today-pane-panel') 'Sichtschutz deckt die Today Pane ab'
     Assert ($code -match '(?s):root\[data-ws-focus="true"\][^{]*\.folder-count-badge\s*\{[^}]*display:\s*none') 'Fokus-Modus blendet Zaehler aus'
-    $mediaStart = $code.IndexOf('@media not (prefers-contrast)')
-    Assert ($mediaStart -ge 0 -and $code.IndexOf('#ws-pinned-folders-bar') -gt $mediaStart -and $code.IndexOf('data-ws-privacy') -gt $mediaStart) 'neue Regeln stehen in @media not (prefers-contrast)'
+    $mediaStart = $code.IndexOf('@media (forced-colors: none) {')
+    Assert ($mediaStart -ge 0 -and $code.IndexOf('#ws-pinned-folders-bar') -gt $mediaStart -and $code.IndexOf('data-ws-privacy') -gt $mediaStart) 'neue Regeln stehen in @media (forced-colors: none)'
+    $contrastStart = $code.IndexOf('@media (forced-colors: none) and (prefers-contrast: more)')
+    Assert ($contrastStart -gt $mediaStart -and $mediaStart -ge 0) 'prefers-contrast: more-Block steht nach dem Hauptblock'
 
     # Bewegung nur ohne reduced motion
     Assert ($code -match '@media \(prefers-reduced-motion: no-preference\)') 'Transitions nur ohne reduced motion'
+    $motionStart = $code.IndexOf('@media (prefers-reduced-motion: no-preference)')
+    $motionCode = if ($motionStart -ge 0) { $code.Substring($motionStart) } else { '' }
+    Assert ($motionCode -match '(?s)#folderPane,\s*#spacesToolbar,\s*#threadTree\s*\{[^}]*transition:[^}]*background-color') 'Uebergang auch fuer Ordnerliste, Spaces Toolbar und Nachrichtenliste'
+    Assert (($motionCode -match '(?s)#unifiedToolbarContent::before\s*\{[^}]*transition:[^}]*background-color[^}]*color') -and ($motionCode -match '(?s)\.ws-pinned-folder\s*\{[^}]*transition:[^}]*background-color')) 'Uebergang auch fuer Badge und Schnell-Tabs'
+    Assert ($motionCode -match '(?s)tr\[is="thread-card"\]:hover \.card-container,\s*#folderTree li > \.container:hover\s*\{[^}]*transition:\s*none\s*!important') 'Hover setzt sofort ein (transition: none), nur das Ausblenden animiert'
+    Assert ($motionCode -match '(?s)data-ws-privacy="blur"\][^{]*\{[^}]*transition:\s*filter var\(--ws-duration\) var\(--ws-ease-out\)') 'Sichtschutz-Unschaerfe animiert nur ohne reduced motion'
+    Assert ($code -notmatch '(?s)filter:\s*blur\(6px\)\s*!important;\s*transition') 'Sichtschutz-Basisregel hat keinen eigenen Uebergang'
     Assert ($css -notmatch '(?i)TODO|TBD') 'keine Platzhalter'
 }
 

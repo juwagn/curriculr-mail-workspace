@@ -19,22 +19,25 @@
  * userChrome.css ist ein User-Sheet und verliert ohne !important gegen
  * Thunderbirds eigene Regeln. Darum tragen alle Deklarationen !important.
  *
- * Alles steht in @media not (prefers-contrast), damit der Hochkontrastmodus
- * von Windows unangetastet bleibt. Einzige Ausnahme: das Ausblenden von
- * Konten, denn der Switcher muss auch dort funktionieren. */
+ * Alles steht in @media (forced-colors: none), damit der Hochkontrastmodus
+ * von Windows (Forced Colors) unangetastet bleibt. Einzige Ausnahme: das
+ * Ausblenden von Konten, denn der Switcher muss auch dort funktionieren.
+ * „Kontrast erhöhen“ (macOS) und „Mehr Kontrast“ setzen prefers-contrast: more,
+ * schalten das Theme aber nicht ab: ein Block am Ende (Abschnitt 5) verstärkt
+ * Ränder, Trennlinien, Schrift und Tönungen und macht den Fokusring dicker. */
 
 /* @import muss vor allen Regeln stehen. */
 @import url("tokens.css");
 
 /* ---------------------------------------------------------------------- */
-/* Workspace-Switcher: Konten ausblenden (auch im Hochkontrastmodus)      */
+/* Workspace-Switcher: Konten ausblenden (auch bei Forced Colors)         */
 /* ---------------------------------------------------------------------- */
 
 #folderTree li[data-server-key].workspace-hidden {
   display: none !important;
 }
 
-@media not (prefers-contrast) {
+@media (forced-colors: none) {
   /* -------------------------------------------------------------------- */
   /* 1. Theme-eigene Tokens (Farben, Akzent, Radien: tokens.css)          */
   /* -------------------------------------------------------------------- */
@@ -547,7 +550,6 @@
   /* -------------------------------------------------------------------- */
   :root[data-ws-privacy="blur"] :is(#threadTree tbody tr td, #messagePane, #messagepane, #today-pane-panel #agenda) {
     filter: blur(6px) !important;
-    transition: filter 0.15s ease !important;
   }
 
   :root[data-ws-privacy="blur"] :is(#threadTree tbody tr:hover td, #messagePane:hover, #messagepane:hover, #today-pane-panel #agenda:hover) {
@@ -593,7 +595,19 @@
   /* -------------------------------------------------------------------- */
   /* 4i. Bewegung                                                         */
   /* -------------------------------------------------------------------- */
+  /* Übergänge nur ohne reduzierte Bewegung. Moduswechsel und Hell/Dunkel-Wechsel
+     blenden Flächen weich über (kein harter Helligkeitssprung). Hover setzt dagegen
+     sofort ein (Reaktion auf den Zeiger darf nie verzögert sein), nur das
+     Ausblenden wird animiert: die Übergangszeit gilt immer für den Zielzustand. */
   @media (prefers-reduced-motion: no-preference) {
+    #folderPane,
+    #spacesToolbar,
+    #threadTree {
+      transition:
+        background-color var(--ws-duration) var(--ws-ease-out),
+        color var(--ws-duration) var(--ws-ease-out) !important;
+    }
+
     #threadTree[rows="thread-card"] .card-container,
     #folderTree li > .container,
     #spacesToolbar .spaces-toolbar-button,
@@ -603,5 +617,57 @@
         box-shadow var(--ws-duration) var(--ws-ease-out),
         color var(--ws-duration) var(--ws-ease-out) !important;
     }
+
+    /* Badge: Punkt (background-image) lässt sich nicht überblenden, Fläche und Schrift schon. */
+    :root[data-workspace] #unifiedToolbarContent::before {
+      transition:
+        background-color var(--ws-duration) var(--ws-ease-out),
+        color var(--ws-duration) var(--ws-ease-out) !important;
+    }
+
+    #ws-pinned-folders-bar .ws-pinned-folder {
+      transition:
+        background-color var(--ws-duration) var(--ws-ease-out),
+        border-color var(--ws-duration) var(--ws-ease-out),
+        color var(--ws-duration) var(--ws-ease-out) !important;
+    }
+
+    /* Hover sofort: höhere Spezifität als die Übergangsregeln oben. */
+    #threadTree[rows="thread-card"] tr[is="thread-card"]:hover .card-container,
+    #folderTree li > .container:hover {
+      transition: none !important;
+    }
+
+    /* Sichtschutz: Unschärfe weich ein- und ausblenden */
+    :root[data-ws-privacy="blur"] :is(#threadTree tbody tr td, #messagePane, #messagepane, #today-pane-panel #agenda) {
+      transition: filter var(--ws-duration) var(--ws-ease-out) !important;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* 5. Kontrast erhöhen (prefers-contrast: more)                           */
+/*    macOS „Kontrast erhöhen“, Windows „Mehr Kontrast“ ohne Forced      */
+/*    Colors. Variablen sind Tokens: einmal auf :root verstärkt, alle      */
+/*    Regeln oben folgen. Nach dem Hauptblock, damit sie die Tokens aus    */
+/*    tokens.css (auch die Dunkel-Werte) überstimmen.                     */
+/* ---------------------------------------------------------------------- */
+@media (forced-colors: none) and (prefers-contrast: more) {
+  :root {
+    /* Ränder und Trennlinien: deutlich dunkler (Hell) bzw. heller (Dunkel), ca. 3:1 */
+    --ws-border: color-mix(in srgb, var(--ws-text) 50%, var(--ws-paper)) !important;
+    --ws-divider: color-mix(in srgb, var(--ws-text) 45%, var(--ws-paper)) !important;
+
+    /* Gedämpfte Schrift gibt es nicht mehr: volle Tinte */
+    --ws-text-dim: var(--ws-text) !important;
+
+    /* Hover, Ruhe-Auswahl und Auswahl: ca. 10 Prozentpunkte mehr Akzent */
+    --ws-hover: color-mix(in srgb, var(--ws-accent) 17%, transparent) !important;
+    --ws-accent-softer: color-mix(in srgb, var(--ws-accent) calc(var(--ws-current-amount) + 10%), var(--ws-bg)) !important;
+    --ws-accent-soft: color-mix(in srgb, var(--ws-accent) calc(var(--ws-selected-amount) + 10%), var(--ws-bg)) !important;
+    --ws-accent-line: color-mix(in srgb, var(--ws-accent) 80%, transparent) !important;
+
+    /* Fokusring dicker */
+    --ws-focus-width: 3px !important;
   }
 }

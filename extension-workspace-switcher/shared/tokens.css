@@ -18,7 +18,8 @@
  * Nur --ws-* Variablen, keine Regeln. Darum kein !important nötig:
  * Thunderbird definiert keine --ws-* Namen.
  * Hochkontrast: Tokens dürfen existieren, angewendet werden sie nur
- * innerhalb von @media not (prefers-contrast) (userChrome.css). */
+ * innerhalb von @media (forced-colors: none) (userChrome.css). Bei
+ * prefers-contrast: more verstärkt userChrome.css (Abschnitt 5) die Tokens. */
 
 :root {
   /* Eigene Farben aus den Optionen setzt das Add-on inline als --ws-custom-*.
