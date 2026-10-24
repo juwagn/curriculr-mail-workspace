@@ -41,7 +41,7 @@
   /* Modus-Akzente */
   --ws-accent-school: var(--ws-custom-school, var(--brand-marine-700));
   --ws-accent-private: var(--ws-custom-private, #2b7550);
-  --ws-accent-all: var(--ws-custom-all, #8a5a0b);
+  --ws-accent-all: var(--ws-custom-all, #55575c);
   --ws-accent: var(--ws-accent-all);
 
   /* Schrift auf Akzentflächen: hell, ab LCH-Helligkeit 70 dunkel. */
@@ -50,25 +50,27 @@
 
   /* Neutrale: Papier und Tinte sind fest, alle Flächen mischen den Modus-Akzent
      in Papier. So bekommt jeder Modus seine eigene Farbwelt (Schule kühles Blau,
-     Privat Salbei, Alle warmer Sand) statt einer grauen Einheitsfläche. */
+     Privat Salbei, Alle neutrales Graphit) statt einer grauen Einheitsfläche. Die Tönung
+     bleibt leise (Apple: ca. 4–6 %), Tiefe kommt aus der Staffelung Seitenleiste/Liste. */
   --ws-paper: #fdfdfb;
   --ws-bg: color-mix(in srgb, var(--ws-accent) var(--ws-bg-amount), var(--ws-paper));
   --ws-surface: #fffffe;
   --ws-surface-2: color-mix(in srgb, var(--ws-accent) var(--ws-surface-2-amount), var(--ws-paper));
   --ws-sidebar: color-mix(in srgb, var(--ws-accent) var(--ws-sidebar-amount), var(--ws-paper));
-  --ws-border: color-mix(in srgb, var(--ws-accent) 14%, var(--ws-paper));
-  /* Trennlinie zwischen Listenzeilen: deutlicher als die Haarlinie, aber leise. */
-  --ws-divider: color-mix(in srgb, var(--ws-accent) 24%, var(--ws-paper));
+  --ws-border: color-mix(in srgb, var(--ws-accent) 10%, var(--ws-paper));
+  /* Trennlinie zwischen Listenzeilen: gerade noch sichtbar, nie laut. */
+  --ws-divider: color-mix(in srgb, var(--ws-accent) 11%, var(--ws-paper));
   --ws-text: #1c1e22;
   --ws-text-dim: #545961;
   --ws-danger: #b42318;
   --ws-hover: color-mix(in srgb, var(--ws-accent) 7%, transparent);
 
-  /* Modus-Tönung und Auswahl (Anteile geprüft, nicht erhöhen ohne Kontrastcheck) */
+  /* Modus-Tönung und Auswahl (Anteile geprüft für alle Modi, Farbe v3 siehe
+     docs/design-system.md; nicht erhöhen ohne Kontrastcheck) */
   --ws-bg-amount: 1.5%;
-  --ws-surface-2-amount: 6%;
-  --ws-sidebar-amount: 14%;
-  --ws-tint-amount: 8%;
+  --ws-surface-2-amount: 4%;
+  --ws-sidebar-amount: 7%;
+  --ws-tint-amount: 5%;
   --ws-selected-amount: 15%;
   --ws-current-amount: 9%;
 
@@ -129,8 +131,8 @@
   /* ------------------------------------------------------------------ */
   --ws-bg-tinted: color-mix(in srgb, var(--ws-accent) var(--ws-tint-amount), var(--ws-paper));
   --ws-sidebar-tinted: var(--ws-sidebar);
-  /* Auswahl in der Seitenleiste: hellere Pille (Dunkel: getönte Aufhellung). */
-  --ws-sidebar-selected: color-mix(in srgb, var(--ws-accent) 4%, var(--ws-surface));
+  /* Auswahl in der Seitenleiste: getönte Pille auf der Leiste (Hell 7 %, Dunkel 16 %). */
+  --ws-sidebar-selected: color-mix(in srgb, var(--ws-accent) 7%, var(--ws-sidebar));
   --ws-accent-soft: color-mix(in srgb, var(--ws-accent) var(--ws-selected-amount), var(--ws-bg));
   --ws-accent-softer: color-mix(in srgb, var(--ws-accent) var(--ws-current-amount), var(--ws-bg));
   --ws-accent-line: color-mix(in srgb, var(--ws-accent) 45%, transparent);
@@ -143,23 +145,23 @@
   :root {
     --ws-accent-school: var(--ws-custom-school-dark, #80a3be);
     --ws-accent-private: var(--ws-custom-private-dark, #8cc4a0);
-    --ws-accent-all: var(--ws-custom-all-dark, #dcb36a);
+    --ws-accent-all: var(--ws-custom-all-dark, #b4b7bd);
     /* Dunkel: Akzente sind hell, Schrift darauf dunkel. */
     --ws-on-accent-threshold: 55;
 
     --ws-paper: #16171a;
     --ws-surface: #1f2023;
-    --ws-border: color-mix(in srgb, var(--ws-accent) 18%, var(--ws-paper));
-    --ws-divider: color-mix(in srgb, var(--ws-accent) 28%, var(--ws-paper));
+    --ws-border: color-mix(in srgb, var(--ws-accent) 14%, var(--ws-paper));
+    --ws-divider: color-mix(in srgb, var(--ws-accent) 16%, var(--ws-paper));
     --ws-text: #ecedee;
     --ws-text-dim: #a9adb3;
     --ws-danger: #f2867a;
 
     --ws-sidebar-selected: color-mix(in srgb, var(--ws-accent) 16%, var(--ws-sidebar));
     --ws-bg-amount: 4%;
-    --ws-surface-2-amount: 8%;
-    --ws-sidebar-amount: 12%;
-    --ws-tint-amount: 8%;
+    --ws-surface-2-amount: 6%;
+    --ws-sidebar-amount: 8%;
+    --ws-tint-amount: 5%;
     --ws-selected-amount: 18%;
     --ws-current-amount: 11%;
     --ws-leading: 1.5;  /* helle Schrift auf dunkel braucht mehr Luft */

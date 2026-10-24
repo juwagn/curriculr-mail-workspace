@@ -28,7 +28,7 @@ Kontrast Marine: 9.4:1 auf `--ws-surface`, gedämpfter Text auf Auswahl 4.8:1, D
 |---|---|---|---|
 | Schule | `#00467d` | `#80a3be` | Curricu:lr-Marine (Marken-Interaktionsblau) |
 | Privat | `#4f7560` | `#93b8a0` | gedämpftes Salbeigrün |
-| Alle | `#4a4744` | `#bdb8b1` | warmes Graphit, ohne eigene Buntfarbe |
+| Alle | `#55575c` | `#b4b7bd` | kühles, neutrales Graphit (Farbe v3, ersetzt Bernstein) |
 
 Eigene Farben aus den Optionen überschreiben die Akzente wie bisher über `--ws-custom-*`. Die dunkle Variante entsteht in `darkVariant()`.
 
@@ -49,29 +49,47 @@ Eigene Farben aus den Optionen überschreiben die Akzente wie bisher über `--ws
 
 | Token | Hell | Dunkel | Einsatz |
 |---|---|---|---|
-| `--ws-bg-tinted` / `--ws-sidebar-tinted` | Akzent 4 % | Akzent 6 % | Modus-Tönung: Toolbar, Sidebar, Compose-Kopf |
-| `--ws-accent-softer` | Akzent 7 % | Akzent 9 % | aktuelle Zeile, Hover-Karte |
-| `--ws-accent-soft` | Akzent 13 % | Akzent 16 % | Auswahl |
+| `--ws-bg-tinted` | Akzent 5 % | Akzent 5 % | Modus-Tönung: Toolbar, Compose-Kopf |
+| `--ws-sidebar` / `--ws-sidebar-tinted` | Akzent 7 % | Akzent 8 % | Seitenleiste |
+| `--ws-surface-2` | Akzent 4 % | Akzent 6 % | Zähler, Code, sekundäre Flächen |
+| `--ws-accent-softer` | Akzent 9 % auf Liste | Akzent 11 % | aktuelle Zeile, Hover-Karte |
+| `--ws-accent-soft` | Akzent 15 % auf Liste | Akzent 18 % | Auswahl |
+| `--ws-sidebar-selected` | Akzent 7 % auf Seitenleiste | Akzent 16 % auf Seitenleiste | Auswahl-Pille im Ordnerbaum |
+| `--ws-border` / `--ws-divider` | Akzent 10 % / 11 % | Akzent 14 % / 16 % | Haarlinie, Trennlinie unter Mails |
 
 ## Kontrastprüfung (WCAG AA)
 
-Gerechnet für alle drei Modi in Hell und Dunkel, insgesamt 58 Paare, **0 Fehler**. Die jeweils knappsten Werte:
+Stand Farbe v3 (2026-10-24). Neu gerechnet mit Python (WCAG-2-Formel, `color-mix` in sRGB nachgebildet, Schrift-auf-Akzent über LCH-Helligkeit mit Schwelle 70 hell / 55 dunkel) für Schule, Privat und Alle, je Hell und Dunkel, je 18 Paare. Alle Textpaare liegen bei 4.5 oder darüber. Die jeweils knappsten Werte (Modus in Klammern):
 
-| Paar | Hell (knappster Modus) | Dunkel (knappster Modus) | Ziel |
+| Paar | Hell | Dunkel | Ziel |
 |---|---|---|---|
-| Akzent als Text auf Fläche | 5.07 (Privat) | 7.02 (Schule) | 4.5 |
-| Akzent als Text auf getönter Toolbar | 4.54 (Privat) | 6.96 (Schule) | 4.5 |
-| Schrift auf Akzentfläche (Badge, Primärknopf) | 5.07 (Privat) | 7.27 (Schule) | 4.5 |
-| Text auf Auswahl | 13.14 (Alle) | 8.41 (Alle) | 4.5 |
-| Gedämpft auf Auswahl | 4.86 (Alle) | 5.03 (Alle) | 4.5 |
-| Gedämpft auf getönter Sidebar | 4.94 (Alle) | 6.32 (Alle) | 4.5 |
-| Gedämpft auf Hintergrund | 5.66 | 6.74 | 4.5 |
-| Fokus-Ring gegen Fläche | 5.07 | 7.02 | 3.0 |
+| Akzent als Text auf Seitenleiste | 4.97 (Privat) | 6.02 (Schule) | 4.5 |
+| Akzent als Text auf Hintergrund / Fläche | 5.37 (Privat) | 6.13 (Schule) | 4.5 |
+| Akzent als Text auf getönter Toolbar | 5.11 (Privat) | 6.29 (Schule) | 4.5 |
+| Akzent auf Auswahl-Pille der Seitenleiste | 4.53 (Privat) | 4.55 (Schule) | 4.5 |
+| Schrift auf Akzentfläche (Badge, Primärknopf) | 5.58 (Privat) | 7.90 (Schule) | 4.5 |
+| Text auf Auswahl | 12.32 (Schule) | 9.84 (Privat) | 4.5 |
+| Gedämpft auf Auswahl | 5.20 (Schule) | 5.12 (Privat) | 4.5 |
+| Gedämpft auf Auswahl-Pille der Seitenleiste | 5.47 (Schule) | 4.91 (Alle) | 4.5 |
+| Gedämpft auf Seitenleiste | 6.14 (Schule) | 6.88 (Alle) | 4.5 |
+| Gedämpft auf Hintergrund | 6.74 (Schule) | 7.44 (Privat) | 4.5 |
+| Fokus-Ring gegen Fläche | 5.58 (Privat) | 6.13 (Schule) | 3.0 |
 | Danger auf Fläche | 6.42 | 6.49 | 4.5 |
 
-Korrektur während der Prüfung: Dunkle Auswahl 22 % → 16 % und Dim-Text `#a3a09a` → `#aeaba5`. Vorher lag „gedämpft auf Auswahl“ bei 3.84.
+Neuer Modus Alle (Graphit) für sich: hell `#55575c` als Text 6.97 auf Hintergrund, 6.40 auf Seitenleiste, 7.23 auf Fläche; Schrift auf Akzentfläche (weiß) 7.23. Dunkel `#b4b7bd` als Text 8.38 auf Hintergrund, 7.72 auf Seitenleiste; Schrift auf Akzentfläche (schwarz) 10.45.
 
-**Grenzen:** Privat hell auf getönter Fläche liegt knapp über der Grenze (4.54). `--ws-tint-amount` darf darum nicht ohne neue Prüfung steigen. Eigene Farben prüft niemand. Ein Hinweis in den Optionen bei zu wenig Kontrast wäre ein späterer Schritt. Ränder sind dekorativ (1.3:1). Bedeutung tragen sie nie allein.
+Abhebung der Flächen (Kontrastverhältnis zweier Flächen, dekorativ, kein Grenzwert):
+
+| Paar | Hell (Schule / Privat / Alle) | Dunkel (Schule / Privat / Alle) |
+|---|---|---|
+| Auswahl gegen Liste | 1.30 / 1.22 / 1.25 | 1.36 / 1.45 / 1.46 |
+| Auswahl-Pille gegen Seitenleiste | 1.12 / 1.10 / 1.10 | 1.32 / 1.39 / 1.40 |
+| Seitenleiste gegen Liste | 1.10 / 1.08 / 1.09 | 1.06 / 1.08 / 1.09 |
+| Trennlinie gegen Liste | 1.18 / 1.14 / 1.15 | 1.22 / 1.28 / 1.29 |
+
+Die Auswahl in der Liste hat sich gegenüber v2 nicht verändert (Alle hell 1.25 statt 1.23), darum bleiben `--ws-selected-amount` und `--ws-current-amount` stehen. Die Pille der Seitenleiste war fast weiß (Akzent 4 %) auf einer Leiste mit 14 % (Abhebung 1.17 bei Alle). Auf einer Leiste mit 7 % läge sie bei 1.06 und wäre fast unsichtbar. Sie ist jetzt Akzent 7 % auf der Seitenleiste.
+
+**Grenzen:** Privat hell ist knapp (Akzent auf Seitenleiste 4.97, auf Auswahl-Pille 4.53). Die Pille darf darum nicht über 7 % steigen, Seitenleiste und `--ws-tint-amount` nicht ohne neue Prüfung. Privat hell als Akzent auf der Listenauswahl (15 %) liegt bei 4.39: erlaubt nur für Symbole und Ring (3:1), Text dort bleibt `--ws-text`. Eigene Farben prüft niemand. Ein Hinweis in den Optionen bei zu wenig Kontrast wäre ein späterer Schritt. Ränder und Trennlinien sind dekorativ (1.13 bis 1.29). Bedeutung tragen sie nie allein. Alle Werte sind gerechnet, nicht im echten Thunderbird gesichtet.
 
 ## Typografie
 

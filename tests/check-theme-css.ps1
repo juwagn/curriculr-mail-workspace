@@ -45,7 +45,7 @@ if (Test-Path -LiteralPath $cssPath) {
     Assert ($code -match '(?si):root\[data-workspace="private"\]\s*\{[^}]*--ws-accent:\s*var\(--ws-accent-private\)') 'private setzt Privat-Akzent'
     Assert ($code -match '(?i)--ws-accent-school:\s*var\(--ws-custom-school,\s*var\(--brand-marine-700\)\)') -and ($code -match '(?i)--brand-marine-700:\s*#00467d') 'Schul-Akzent: eigene Farbe, sonst Curricu:lr-Marine (hell)'
     Assert ($code -match '(?i)--ws-accent-private:\s*var\(--ws-custom-private,\s*#2b7550\)') 'Privat-Akzent: eigene Farbe, sonst #2b7550 (hell)'
-    Assert ($code -match '(?i)--ws-accent-all:\s*var\(--ws-custom-all,\s*#8a5a0b\)') 'Alle-Akzent: eigene Farbe, sonst #8a5a0b (hell)'
+    Assert ($code -match '(?i)--ws-accent-all:\s*var\(--ws-custom-all,\s*#55575c\)') 'Alle-Akzent: eigene Farbe, sonst #55575c (hell)'
     foreach ($m in 'school', 'private', 'all') {
         Assert ($code -match "(?i)--ws-accent-$($m):\s*var\(--ws-custom-$m-dark,") "Dark-Akzent $m nutzt --ws-custom-$m-dark"
     }
