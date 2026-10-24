@@ -15,6 +15,15 @@
  * (die Spaces-Leiste ist in Hell und Dunkel eine Seitenleiste, keine Akzentfläche),
  * großzügige Abstände, keine Schatten, keine Balken.
  *
+ * Rundungen (Radienskala, Tabelle in docs/design-direction-v2.md):
+ *   Steuerelemente (Knöpfe, Felder), Zeilen, Auswahl, Tabs   8 px  (--ws-radius)
+ *   Container und Popups                                    12 px  (--ws-radius-lg)
+ *   Suche, Badge, Pillen, Schnell-Tabs, runde Knöpfe        Kapsel (--ws-radius-pill)
+ *   Konzentrik: ein Element in einem gerundeten Container hat
+ *   Radius = Außenradius − Abstand (nie größer als der Rahmen darum).
+ *   Popup-Menüs bleiben bei Thunderbird: unter macOS müssen sie zum
+ *   Systemradius passen (popup.css, GetMenuCornerRadius).
+ *
  * Gilt im Hauptfenster (messenger.xhtml) und im 3-Pane-Tab (about:3pane).
  * userChrome.css ist ein User-Sheet und verliert ohne !important gegen
  * Thunderbirds eigene Regeln. Darum tragen alle Deklarationen !important.
@@ -73,14 +82,23 @@
     --button-primary-text-color: var(--ws-accent-text) !important;
     --focus-outline-color: var(--ws-accent) !important;
 
-    /* Form */
-    --button-border-radius: var(--ws-radius-sm) !important;
-    --input-text-border-radius: var(--ws-radius-sm) !important;
-    --input-search-border-radius: var(--ws-radius-lg) !important;
+    /* Form: Steuerelemente 8 px, Suche als Kapsel (siehe Kopfkommentar) */
+    --button-border-radius: var(--ws-radius) !important;
+    --input-text-border-radius: var(--ws-radius) !important;
+    --input-search-border-radius: var(--ws-radius-pill) !important;
     /* 32px statt 36px: näher an macOS-Seitenleisten (Zeile ca. 28-32px), die großen
      * Ordner-Symbole füllen die Zeile trotzdem. Mehr Luft bleibt Sache der
      * Thunderbird-Dichte „Touch“, nicht des Themes. */
     --list-item-min-height: 32px !important;
+
+    /* Linien zwischen den Bereichen (Splitter, Kopfleisten, Nachrichtenkopf) leiser.
+     * Thunderbird leitet sie aus --sidebar-border-color ab. --layout-border-1 bleibt
+     * unangetastet, denn es färbt auch Knopf- und Feldränder. */
+    --sidebar-border-color: color-mix(in srgb, var(--ws-border) 60%, transparent) !important;
+
+    /* Tab-Leiste: keine eigene Tönung und kein Innenschatten (4d2) */
+    --tabs-toolbar-background-color: transparent !important;
+    --tabs-toolbar-box-shadow: none !important;
 
     /* Karten: Radius und Abstand. Die Zeilenhöhe rechnet Thunderbird selbst aus,
      * darum nur Thunderbirds eigene Variablen, kein Padding auf .card-container
@@ -146,15 +164,16 @@
       padding-inline: var(--ws-space-sm) !important;
     }
 
-    /* Trennung: feine Linie unter jeder Karte, eingerückt (Hintergrundbild statt Rahmen,
-       damit die Zeilenhöhe unverändert bleibt). */
+    /* Trennung: feine Linie unter jeder Karte (Hintergrundbild statt Rahmen, damit die
+       Zeilenhöhe unverändert bleibt). Einzug links und rechts gleich --ws-row-pad-inline,
+       die Linie beginnt also an der Textkante und reicht nicht bis an den Rand. */
     & tr[is="thread-card"] .card-container {
       box-shadow: none !important;
       border-radius: var(--ws-radius) !important;
       background-image: linear-gradient(var(--ws-divider), var(--ws-divider)) !important;
       background-repeat: no-repeat !important;
       background-position: center bottom !important;
-      background-size: calc(100% - 2 * var(--ws-space-lg)) 1px !important;
+      background-size: calc(100% - 2 * var(--ws-row-pad-inline)) 1px !important;
     }
 
     /* Trennlinie weg bei gehoverter, ausgewählter und aktueller Zeile sowie bei der
@@ -352,7 +371,7 @@
 
   /* Aktiver Button: Farben kommen über --spaces-button-active-* */
   #spacesToolbar .spaces-toolbar-button {
-    border-radius: var(--ws-radius-lg) !important;
+    border-radius: var(--ws-radius) !important;
   }
 
   #spacesToolbar .spaces-toolbar-button:hover {
@@ -384,8 +403,57 @@
     transform: scale(0.97) !important;
   }
 
+  /* Suche: Kapsel */
   global-search-bar {
-    --button-border-radius: var(--ws-radius-lg) !important;
+    --button-border-radius: var(--ws-radius-pill) !important;
+  }
+
+  /* -------------------------------------------------------------------- */
+  /* 4d2. Tab-Leiste (messenger.xhtml, tabmail.css)                       */
+  /*     Echte Selektoren aus Thunderbirds Skin: #tabs-toolbar >          */
+  /*     #tabmail-tabs > .tabmail-tab > .tab-stack > .tab-background      */
+  /*     (+ .tab-line) und .tab-content (.tab-label, button.tab-close-    */
+  /*     button). Ausgewählt: Fläche statt Linie, inaktiv transparent.    */
+  /* -------------------------------------------------------------------- */
+  #tabs-toolbar {
+    background-image: none !important;
+    box-shadow: none !important;
+    padding-block-start: var(--ws-space-xs) !important;
+    padding-inline: var(--ws-space-sm) !important;
+  }
+
+  /* Tabs oben abgerundet; der Tab beschneidet seinen Hintergrund selbst (overflow: hidden). */
+  .tabmail-tab {
+    border-radius: var(--ws-radius) var(--ws-radius) 0 0 !important;
+    margin-inline-end: var(--ws-space-2xs) !important;
+  }
+
+  .tabmail-tab[selected] {
+    box-shadow: none !important;
+  }
+
+  .tabmail-tab .tab-background[selected] {
+    background-color: var(--ws-surface) !important;
+    background-image: none !important;
+  }
+
+  .tabmail-tab:hover .tab-background:not([selected]) {
+    background-color: var(--ws-hover) !important;
+  }
+
+  /* Akzentbalken oben am Tab entfällt (Design-Richtung: keine Balken). Die Auswahl
+     trägt Fläche und Gewicht. */
+  .tabmail-tab .tab-line {
+    background-color: transparent !important;
+  }
+
+  .tabmail-tab[selected] .tab-label {
+    font-weight: var(--ws-weight-semibold) !important;
+  }
+
+  /* Schließen-Knopf rund (16-px-Symbol + 2 px Polster ergibt einen Kreis). */
+  button.tab-close-button {
+    border-radius: var(--ws-radius-pill) !important;
   }
 
   /* Workspace-Badge am Anfang der Toolbar: SCHULE / PRIVAT / ALLE.

@@ -71,6 +71,17 @@ if (Test-Path -LiteralPath $cssPath) {
     Assert ($code -match '(?s)\.tree-button-more,[^{]*\.tree-button-flag\s*\{[^}]*opacity:\s*0') 'Menue-Knopf und leerer Stern nur bei Hover'
     Assert ($code -match '(?s)#spacesToolbar\s*\{[^}]*background-color:\s*var\(--ws-sidebar\)') 'Spaces Toolbar als Seitenleiste (Hell und Dunkel)'
 
+    # Rundungen (Radienskala): Steuerelemente 8px, Suche Kapsel, Tabs oben 8px
+    Assert (($code -match '--button-border-radius:\s*var\(--ws-radius\)\s*!important') -and ($code -match '--input-text-border-radius:\s*var\(--ws-radius\)\s*!important')) 'Knoepfe und Felder: Radius 8px aus dem Token'
+    Assert (($code -match '--input-search-border-radius:\s*var\(--ws-radius-pill\)') -and ($code -match '(?s)global-search-bar\s*\{[^}]*--button-border-radius:\s*var\(--ws-radius-pill\)')) 'Suche ist eine Kapsel'
+    Assert ($code -match '(?s)\.tabmail-tab\s*\{[^}]*border-radius:\s*var\(--ws-radius\)\s+var\(--ws-radius\)\s+0\s+0\s*!important') 'Tabs oben mit 8px abgerundet'
+    Assert ($code -match '(?s)\.tabmail-tab \.tab-background\[selected\]\s*\{[^}]*background-color:\s*var\(--ws-surface\)') 'ausgewaehlter Tab mit Flaeche (--ws-surface)'
+    Assert ($code -match '(?s)\.tabmail-tab:hover \.tab-background:not\(\[selected\]\)\s*\{[^}]*background-color:\s*var\(--ws-hover\)') 'inaktiver Tab: Hover mit --ws-hover'
+    Assert ($code -match '(?s)button\.tab-close-button\s*\{[^}]*border-radius:\s*var\(--ws-radius-pill\)') 'Tab-Schliessen-Knopf rund'
+    Assert ($code -match 'background-size:\s*calc\(100% - 2 \* var\(--ws-row-pad-inline\)\) 1px') 'Trennlinie eingerueckt um --ws-row-pad-inline'
+    Assert ($code -match '(?s)tr\[is="thread-card"\]:has\(\+ tr\[is="thread-card"\]:is\(\.selected, \.current, :hover\)\) \.card-container\s*\{[^}]*background-image:\s*none') 'Trennlinie entfaellt an Auswahl, aktueller Zeile, Hover und der Zeile davor'
+    Assert ($code -match '--sidebar-border-color:\s*color-mix\(') 'Bereichslinien (Splitter) leiser ueber --sidebar-border-color'
+
     # Folder Pane und Spaces Toolbar
     Assert ($code.Contains('#folderTree li > .container')) 'Ordnerzeilen gestylt'
     Assert ($code -match '--list-item-min-height\s*:') 'Zeilenhoehe der Ordnerliste gesetzt'

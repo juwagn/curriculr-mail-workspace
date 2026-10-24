@@ -52,6 +52,20 @@ Anlass: Der Skill „apple-design“ (§12, §16) beschreibt Apples Farbhaltung:
 
 Symbole aus Phosphor Icons (phosphoricons.com, MIT; Gewicht „Light“, Flächentönung aus „Duotone“). Gewählt, weil die dünne, runde Linie zur leichten Inter-nahen Marke von Curricu:lr passt (Lucide war zu kräftig) im Ordnerbaum: Posteingang, Entwürfe, Gesendet, Archiv, Spam, Papierkorb, Postausgang, Vorlagen, Suchordner, Ordner, Konto. Größe mit der Textgröße skalierend (siehe „macOS-Anpassungen“). Technik: Thunderbirds `context-fill` greift bei `data:`-Bildern nicht (alles wurde schwarz). Darum `content` auf ein transparentes Pixel, das Symbol als `mask-image`, Farbe über `background-color: var(--icon-color)`, die Flächentönung über Alpha im SVG. Dadurch folgen Symbole weiter Auswahl- und Ordnerfarbe. Ausgenommen sind Busy-, Fehler- und Pause-Zustände, Tag-Ordner und RSS-Favicons. Die globalen `--icon-*` bleiben unberührt (sonst änderte sich z. B. jedes Papierkorb-Symbol in Menüs).
 
+## Rundungen (Radienskala)
+
+Drei Stufen und die Kapsel, alle aus den Tokens (`--ws-radius-*`). Konzentrik: Ein Element in einem gerundeten Container hat Radius = Außenradius − Abstand, nie mehr.
+
+| Element | Radius | Token |
+|---|---|---|
+| Knöpfe, Eingabefelder (`--button-border-radius`, `--input-text-border-radius`), Toolbar- und Spaces-Knöpfe | 8 px | `--ws-radius` |
+| Nachrichtenzeilen, Ordnerzeilen, Auswahl | 8 px | `--ws-radius` |
+| Tabs (oben, unten eckig) | 8 px | `--ws-radius` |
+| Container und Popups (Einstellungen, Dialoge) | 12 px | `--ws-radius-lg` |
+| Suche, Workspace-Badge, Schlagwort-Pillen, Schnell-Tabs, Tab-Schließen-Knopf | Kapsel | `--ws-radius-pill` |
+
+`--ws-radius-sm` (6 px) bleibt für Kleinteile in der Add-on-UI. Popup-Menüs in Thunderbird bleiben beim Systemradius (macOS-Menüs müssen zum Rahmen des Systems passen). Bereichsränder (Splitter, Kopfleisten) sind leiser über `--sidebar-border-color`, die Trennlinien der Nachrichtenliste beginnen an der Textkante (`--ws-row-pad-inline`) und entfallen an Auswahl und Hover. Eingerückte, gerundete Bereiche sind bewusst nicht gebaut (ohne Live-Test zu riskant).
+
 ## Lehre: Kartenhöhe nicht anfassen
 
 Thunderbird setzt die Zeilenhöhe der Karten per JavaScript fest (`about3Pane.js`, `ROW_HEIGHT` aus Schriftgröße, Dichte und Zeilenzahl) und kapselt die Zeile mit `contain: strict`. Ein eigenes `padding` auf `.card-container` ließ die Absenderzeile samt Datum verschwinden (nur noch der Betreff sichtbar). Abstand also nur über Thunderbirds Variablen oder Hintergrundbild (Trennlinie), nie über Padding oder Rahmen auf der Karte. Mehr Luft gibt die Dichte „Touch“ (Menü, Dichte). Ein Test in `check-theme-css.ps1` sperrt das Padding.
