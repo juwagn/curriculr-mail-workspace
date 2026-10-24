@@ -67,7 +67,7 @@ if (Test-Path -LiteralPath $cssPath) {
     Assert ($code -match 'linear-gradient\(var\(--ws-divider\)') 'Karten haben feine Trennlinie'
     Assert ($code -match '(?s)tr\[is="thread-card"\]\.selected \.card-container\s*\{[^}]*box-shadow:\s*inset 0 0 0 1px var\(--ws-accent-line\)') 'Auswahl hat feinen Akzent-Ring'
     Assert ($code -match '(?s)\.tree-button-more,[^{]*\.tree-button-flag\s*\{[^}]*opacity:\s*0') 'Menue-Knopf und leerer Stern nur bei Hover'
-    Assert ($code -match '(?s)#spacesToolbar\s*\{[^}]*--spaces-bg-color:\s*var\(--ws-accent\)') 'Spaces Toolbar in Akzentfarbe'
+    Assert ($code -match '(?s)#spacesToolbar\s*\{[^}]*background-color:\s*var\(--ws-sidebar\)') 'Spaces Toolbar als Seitenleiste (Hell und Dunkel)'
 
     # Folder Pane und Spaces Toolbar
     Assert ($code.Contains('#folderTree li > .container')) 'Ordnerzeilen gestylt'

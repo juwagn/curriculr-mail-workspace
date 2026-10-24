@@ -11,8 +11,9 @@
  *
  * Gestaltung (docs/design-direction-v2.md): Flächen statt Linien. Jeder Modus hat
  * eigene Farbwelt (Schule Blau, Privat Salbei, Alle Sand). Die Nachrichtenliste ist
- * die hellste Fläche, Ordnerliste und Toolbar tragen die Modus-Tönung, großzügige
- * Abstände, keine Schatten, keine Balken.
+ * die hellste Fläche, Ordnerliste, Spaces-Leiste und Toolbar tragen die Modus-Tönung
+ * (die Spaces-Leiste ist in Hell und Dunkel eine Seitenleiste, keine Akzentfläche),
+ * großzügige Abstände, keine Schatten, keine Balken.
  *
  * Gilt im Hauptfenster (messenger.xhtml) und im 3-Pane-Tab (about:3pane).
  * userChrome.css ist ein User-Sheet und verliert ohne !important gegen
@@ -308,32 +309,14 @@
   /* -------------------------------------------------------------------- */
   /* 4c. Spaces Toolbar                                                   */
   /* -------------------------------------------------------------------- */
-  /* Volle Akzentfläche: zeigt den Modus auf einen Blick.
-     Schrift/Icons über --ws-accent-text, damit auch eigene Farben lesbar bleiben. */
+  /* Seitenleiste in beiden Modi: getönte Fläche, aktiver Button als Pille mit
+     Akzent-Icon. Den Modus zeigen Akzent-Icon und Toolbar-Badge, keine volle
+     Akzentfläche. Die Variablen setzt der Block "Ordnerliste und Spaces Toolbar"
+     oben (--spaces-bg-color, --spaces-button-*). */
   #spacesToolbar {
-    --spaces-bg-color: var(--ws-accent) !important;
-    --spaces-button-text-color: color-mix(in srgb, var(--ws-accent-text) 78%, transparent) !important;
-    --spaces-button-active-text-color: var(--ws-accent-text) !important;
-    --spaces-button-active-bg-color: color-mix(in srgb, var(--ws-accent-text) 20%, transparent) !important;
-    background-color: var(--ws-accent) !important;
+    background-color: var(--ws-sidebar) !important;
     border-inline-end: none !important;
-    color: var(--ws-accent-text) !important;
-  }
-
-  /* Dunkel: eine helle Akzentfläche wäre zu laut, die Leiste bleibt Seitenleiste. */
-  @media (prefers-color-scheme: dark) {
-    #spacesToolbar {
-      --spaces-bg-color: var(--ws-sidebar) !important;
-      --spaces-button-text-color: var(--ws-text-dim) !important;
-      --spaces-button-active-text-color: var(--ws-accent) !important;
-      --spaces-button-active-bg-color: var(--ws-sidebar-selected) !important;
-      background-color: var(--ws-sidebar) !important;
-      color: var(--ws-text) !important;
-    }
-
-    #spacesToolbar .spaces-toolbar-button:hover {
-      background-color: var(--ws-hover) !important;
-    }
+    color: var(--ws-text) !important;
   }
 
   /* Aktiver Button: Farben kommen über --spaces-button-active-* */
@@ -342,7 +325,13 @@
   }
 
   #spacesToolbar .spaces-toolbar-button:hover {
-    background-color: color-mix(in srgb, var(--ws-accent-text) 12%, transparent) !important;
+    background-color: var(--ws-hover) !important;
+  }
+
+  /* Druck: kurz einfedern und stärker tönen (Rückmeldung beim Klicken) */
+  #spacesToolbar .spaces-toolbar-button:active {
+    background-color: var(--ws-sidebar-selected) !important;
+    transform: scale(0.97) !important;
   }
 
   /* -------------------------------------------------------------------- */
