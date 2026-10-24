@@ -67,17 +67,16 @@ h1 {
 
 .check {
   display: flex;
-  gap: 8px;
+  gap: var(--ws-space-sm);
   align-items: flex-start;
 }
 
 .later {
   display: flex;
-  gap: 8px;
+  gap: var(--ws-space-sm);
   align-items: center;
   flex-wrap: wrap;
 }
-
 
 .actions {
   display: flex;
@@ -85,4 +84,15 @@ h1 {
   padding-top: var(--ws-space-sm);
   justify-content: flex-end;
   flex-wrap: wrap;
+}
+
+/* Erzwungene Farben: Symbol-Kreis bekommt einen Rand, weil Flächenfarben entfallen. */
+@media (forced-colors: active) {
+  .issue::before {
+    border: 1px solid CanvasText;
+  }
+
+  .issue.warn::before {
+    border-width: 2px;
+  }
 }

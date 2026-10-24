@@ -89,6 +89,10 @@ nav a:hover {
   background: var(--ws-hover);
 }
 
+nav a:active {
+  background: var(--ws-accent-softer);
+}
+
 nav a[aria-current="page"] {
   background: var(--ws-sidebar-selected);
   font-weight: var(--ws-weight-semibold);
@@ -110,6 +114,20 @@ main {
 section {
   display: grid;
   gap: var(--ws-space-lg);
+}
+
+/* Bereichswechsel: kurzes Einblenden (nur Deckkraft, kein Slide). Beim Entfernen von
+   [hidden] wechselt display von none auf grid, dadurch startet die Animation neu. */
+@media (prefers-reduced-motion: no-preference) {
+  main > section {
+    animation: ws-section-in 150ms var(--ws-ease-out);
+  }
+}
+
+@keyframes ws-section-in {
+  from {
+    opacity: 0;
+  }
 }
 
 main h2 {
@@ -202,7 +220,7 @@ tr:last-child td {
   block-size: 32px;
   padding: 2px;
   border: 1px solid var(--ws-field-border);
-  border-radius: var(--ws-radius-sm);
+  border-radius: var(--ws-radius);
   background: var(--ws-surface);
   cursor: pointer;
 }
@@ -211,7 +229,7 @@ input[type="number"],
 input[type="time"] {
   background: var(--ws-surface);
   border: 1px solid var(--ws-field-border);
-  border-radius: var(--ws-radius-sm);
+  border-radius: var(--ws-radius);
   padding: var(--ws-control-pad-block) var(--ws-space-sm);
 }
 
@@ -332,4 +350,29 @@ code {
 
 .plain-list:empty {
   display: none;
+}
+
+/* Mehr Kontrast: ausgewählter Bereich braucht mehr als eine Tönung. */
+@media (prefers-contrast: more) {
+  nav a[aria-current="page"] {
+    outline: 2px solid var(--ws-text);
+    outline-offset: -2px;
+  }
+}
+
+/* Erzwungene Farben: Auswahl und Symbole über Systemfarben statt Tönung. */
+@media (forced-colors: active) {
+  nav a[aria-current="page"] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  nav a:focus-visible {
+    outline-color: Highlight;
+  }
+
+  .dot {
+    forced-color-adjust: none;
+  }
 }
