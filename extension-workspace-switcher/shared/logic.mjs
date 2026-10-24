@@ -19,7 +19,7 @@ export const MODE_LABELS = {
 export const MODE_COLORS = {
   school: "#00467d",
   private: "#2b7550",
-  all: "#8a5a0b",
+  all: "#55575c",
 };
 
 const HEX_COLOR = /^#[0-9a-f]{6}$/i;

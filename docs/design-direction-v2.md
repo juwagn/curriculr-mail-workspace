@@ -23,10 +23,10 @@ Quellen: Superhuman, Spark, HEY, Apple Mail (macOS 26), Gmail (Material 3 Expres
 
 | Bereich | Alt | Neu |
 |---|---|---|
-| Neutrale | feste warme Grautöne | Papier (`#fdfdfb`) plus Modus-Akzent: Liste 1,5 %, Toolbar 8 %, Seitenleiste 14 % (Dunkel 12 %) |
+| Neutrale | feste warme Grautöne | Papier (`#fdfdfb`) plus Modus-Akzent: Liste 1,5 %, Toolbar 5 %, Seitenleiste 7 % (Dunkel 8 %). Ursprünglich 8 % / 14 % (12 %), mit Farbe v3 gesenkt |
 | Schule | Marine `#00467d` | unverändert (Marke) |
 | Privat | Salbei `#4f7560` | `#2b7550`, klarer, gleiche Ruhe |
-| Alle | Graphit `#4a4744` | Bernstein `#8a5a0b`. Grund: Graphit machte „Alle“ zur grauen Fläche. Eine Zeile in `tokens.css`, `logic.mjs` und den Icons |
+| Alle | Graphit `#4a4744` | v2: Bernstein `#8a5a0b`. Grund: Das warme Graphit machte „Alle“ zur grauen Fläche. Farbe v3: kühles Graphit `#55575c` (Dunkel `#b4b7bd`), siehe unten. Eine Zeile in `tokens.css`, `logic.mjs` und den Icons |
 | Karte (Ruhe) | Fläche, Schatten, Balken | transparent, durchgehende Liste, eingerückte Trennlinie (`--ws-divider`) unter jeder Mail |
 | Karte (Hover/Auswahl) | Rand/Outline 2 px | Hover getönt, Auswahl getönt plus 1-px-Ring |
 | Ungelesen | Balken links | Thunderbirds Punkt im Akzent, Absender 600, Betreff 400 |
@@ -36,7 +36,17 @@ Quellen: Superhuman, Spark, HEY, Apple Mail (macOS 26), Gmail (Material 3 Expres
 | Abstände | Karte 8/12 px, Lücke 4 px | Ordnerzeilen 32 px (zunächst 36), Kontoabstand 24 px. Die Kartenhöhe bleibt bei Thunderbird (siehe Lehre) |
 | Tags, Schnell-Tabs | Streifen (`inset 3px`) | Punkt im Verlauf, keine Seitenstreifen |
 
-Kontrast (WCAG AA) per Skript für alle drei Modi in Hell und Dunkel geprüft: Text 4,5:1 oder besser. Knappste Paare: Privat Akzent auf Seitenleiste 4,53, Dunkel Schule Akzent auf Auswahl 3,81 (nur Icon, kein Text).
+Kontrast (WCAG AA) per Skript für alle drei Modi in Hell und Dunkel geprüft: Text 4,5:1 oder besser. Werte nach Farbe v3 stehen in `design-system.md`. Knappste Paare: Privat hell Akzent auf Seitenleiste 4,97 und auf Auswahl-Pille 4,53, Privat hell Akzent auf Listenauswahl 4,39 (nur Symbol, kein Text).
+
+## Farbe v3 (Apple-näher)
+
+Anlass: Der Skill „apple-design“ (§12, §16) beschreibt Apples Farbhaltung: neutrales Grau plus ein Akzent, Tiefe durch Staffelung (Seitenleiste hellgrau, Liste weiß) statt durch eingefärbte Flächen. Bernstein für „Alle“ wirkte braun/beige und beißt sich mit den kühlen Modi Schule (Marine) und Privat (Salbei).
+
+- **Alle ist Graphit:** hell `#55575c`, dunkel `#b4b7bd` (leicht bläulich, damit es zu den kühlen Modi passt). Alle darf neutral wirken, die Modi Schule und Privat bleiben die farbigen. Als Text hell mindestens 5,57 (auf der Listenauswahl), Schrift auf der Akzentfläche 7,23; dunkel mindestens 5,51 (auf der Pille) und 10,45. Dieselben Werte in `tokens.css`, `logic.mjs`, `icons/all.svg` und im Test von `check-theme-css.ps1`.
+- **Tönungen leiser (Apple etwa 4 bis 6 %):** Seitenleiste 14 % → 7 % (Dunkel 12 % → 8 %), Toolbar 8 % → 5 % (Dunkel 8 % → 5 %), `--ws-surface-2` 6 % → 4 % (Dunkel 8 % → 6 %). Schule und Privat zeigen ihren Modus weiter über Akzent, Auswahl und Toolbar-Pille. Die Fläche selbst ist nur noch ein Hauch.
+- **Auswahl bleibt:** `--ws-selected-amount` (15 % / 18 %) und `--ws-current-amount` (9 % / 11 %) sind unverändert, die Abhebung gegen die Liste ebenfalls (Alle hell 1,25). Nur die Pille im Ordnerbaum ist jetzt Akzent 7 % auf der Seitenleiste (vorher fast weiß), sonst wäre sie auf der helleren Leiste unsichtbar gewesen (1,06 statt 1,10 bis 1,12).
+- **Linien leiser:** `--ws-divider` 24 % → 11 % (Dunkel 28 % → 16 %), `--ws-border` 14 % → 10 % (Dunkel 18 % → 14 %). Beide sind dekorativ. Rechenwerte liegen zwischen 1,13 und 1,29.
+- **Nicht angefasst:** Radien, Dichte, Symbole, Selektoren.
 
 ## Ordner-Symbole
 
