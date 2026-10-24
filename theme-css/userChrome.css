@@ -151,6 +151,14 @@
       background-size: calc(100% - 2 * var(--ws-space-lg)) 1px !important;
     }
 
+    /* Trennlinie weg bei gehoverter, ausgewählter und aktueller Zeile sowie bei der
+       Zeile darüber, sonst bleibt sie als Strich in der Pille sichtbar. Nur das
+       Hintergrundbild fällt weg, die Hintergrundfarbe bleibt (Hover, Auswahl). */
+    & tr[is="thread-card"]:is(.selected, .current, :hover) .card-container,
+    & tr[is="thread-card"]:has(+ tr[is="thread-card"]:is(.selected, .current, :hover)) .card-container {
+      background-image: none !important;
+    }
+
     /* Hover: weiche, getönte Karte. Auswahl und aktuelle Zeile haben eigene Tokens. */
     & tr[is="thread-card"]:not(.selected, .current):hover .card-container {
       background-color: var(--ws-accent-softer) !important;
