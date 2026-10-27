@@ -31,10 +31,13 @@
   --ws-custom-all: initial;
   --ws-custom-all-dark: initial;
 
-  /* Curricu:lr-Marke: Marine trägt Interaktion, Gold nur als Signatur (Doppelpunkt). */
-  --brand-marine-900: #00345c;
-  --brand-marine-700: #00467d;
-  --brand-gold: #ffc857;
+  /* Curricu:lr-Marke: Marine trägt Interaktion. Gold gehört nur ins Logo (Doppelpunkt).
+     Text, Gefahr und Feldrahmen tragen die Werte aus curriculr-tokens.css (--cl-ink-900,
+     --cl-ink-500, --cl-danger, --cl-border). Hier stehen sie als Hex, weil diese Datei auch als
+     chrome/tokens.css ins Thunderbird-Profil kopiert wird, wo curriculr-tokens.css fehlt;
+     auf den Add-on-Seiten überschreibt ui.css sie mit var(--cl-*). Die Modus-Akzente sind
+     produktspezifisch (MODE_COLORS in logic.mjs und icons/<modus>.svg tragen dieselben Werte). */
+  --brand-marine-700: #00467d;   /* = --cl-marine-700 */
 
   /* ------------------------------------------------------------------ */
   /* Farbe – Hell                                                       */
@@ -64,9 +67,11 @@
   --ws-border: color-mix(in srgb, var(--ws-accent) 10%, var(--ws-paper));
   /* Trennlinie zwischen Listenzeilen: gerade noch sichtbar, nie laut. */
   --ws-divider: color-mix(in srgb, var(--ws-accent) 11%, var(--ws-paper));
-  --ws-text: #1c1e22;
-  --ws-text-dim: #545961;
-  --ws-danger: #b42318;
+  --ws-text: #111827;       /* --cl-ink-900 */
+  --ws-text-dim: #4b5563;   /* --cl-ink-500 */
+  --ws-danger: #b42318;     /* --cl-danger */
+  --ws-success: #047857;    /* --cl-success */
+  --ws-control-border: #8a919c;   /* --cl-border: Feldrahmen, mind. 3 : 1 */
   --ws-hover: color-mix(in srgb, var(--ws-accent) 7%, transparent);
 
   /* Modus-Tönung und Auswahl (Anteile geprüft für alle Modi, Farbe v3 siehe
@@ -96,7 +101,6 @@
   --ws-weight-bold: 700;
   --ws-leading: 1.45;
   --ws-leading-tight: 1.2;
-  --ws-tracking-caps: 0.06em;  /* Badge, Gruppen-Überschriften in Versalien */
   /* Laufweite je Größe (nie ein fester Wert): große Schrift leicht enger,
      kleine Schrift (Datum, Uhrzeit) leicht weiter. Fließtext bleibt bei 0. */
   --ws-tracking-display: -0.01em;  /* Nachrichtenbetreff */
@@ -164,11 +168,13 @@
 
     --ws-paper: #16171a;
     --ws-surface: #1f2023;
+    --ws-text: #ecebe8;       /* --cl-ink-900 dunkel */
+    --ws-text-dim: #aeaba5;   /* --cl-ink-500 dunkel */
+    --ws-danger: #f2867a;     /* --cl-danger dunkel */
+    --ws-success: #4acb9b;    /* --cl-success dunkel */
+    --ws-control-border: #7a7a80;   /* --cl-border dunkel */
     --ws-border: color-mix(in srgb, var(--ws-accent) 14%, var(--ws-paper));
     --ws-divider: color-mix(in srgb, var(--ws-accent) 16%, var(--ws-paper));
-    --ws-text: #ecedee;
-    --ws-text-dim: #a9adb3;
-    --ws-danger: #f2867a;
 
     --ws-sidebar-selected: color-mix(in srgb, var(--ws-accent) 11%, var(--ws-sidebar));
     --ws-bg-amount: 4%;

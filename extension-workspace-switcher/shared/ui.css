@@ -29,6 +29,15 @@
   }
 }
 
+/* Add-on-Seiten laden curriculr-tokens.css: dort kommen Text, Status und Feldrahmen direkt aus --cl-*. */
+:root {
+  --ws-text: var(--cl-ink-900);
+  --ws-text-dim: var(--cl-ink-500);
+  --ws-danger: var(--cl-danger);
+  --ws-success: var(--cl-success);
+  --ws-control-border: var(--cl-border);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -69,7 +78,7 @@ textarea {
 
 /* Feldrand: 3:1 gegen die Fläche (WCAG 1.4.11), anders als die dekorative Haarlinie. */
 :root {
-  --ws-field-border: color-mix(in srgb, var(--ws-text) 45%, var(--ws-surface));
+  --ws-field-border: var(--ws-control-border);
 }
 
 button {
@@ -182,10 +191,22 @@ input.switch:checked:active::after {
   border-radius: var(--ws-radius-pill);
   font-size: var(--ws-text-sm);
   font-weight: var(--ws-weight-semibold);
-  letter-spacing: var(--ws-tracking-caps);
+  position: relative;
   background-color: color-mix(in srgb, var(--pill-accent) var(--ws-selected-amount), var(--ws-bg));
-  background-image: radial-gradient(circle at 11px 50%, var(--pill-accent) 0 4px, transparent 4.5px);
   color: var(--ws-text);
+}
+
+/* Akzentpunkt der Kapsel (statt Verlauf als Hintergrund) */
+.pill::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 7px;
+  inline-size: 8px;
+  block-size: 8px;
+  margin-block-start: -4px;
+  border-radius: var(--ws-radius-pill);
+  background: var(--pill-accent);
 }
 
 .pill.school {
@@ -300,8 +321,11 @@ input.switch:checked:active::after {
   .pill {
     forced-color-adjust: none;
     background-color: Canvas;
-    background-image: radial-gradient(circle at 11px 50%, CanvasText 0 4px, transparent 4.5px);
     color: CanvasText;
     border: 1px solid CanvasText;
+  }
+
+  .pill::before {
+    background: CanvasText;
   }
 }

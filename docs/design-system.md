@@ -13,7 +13,7 @@ Stand 2026-10-19. Abgeleitet aus `docs/design-brief.md`. Token-Quelle: `extensio
 Das Add-on gehört zur Curricu:lr-Familie. Quelle der Markenwerte: `curriculr-terminplan/plugin/assets/css/design-tokens.css`.
 
 - **Name:** „Curricu:lr Mail-Workspace“, immer mit Doppelpunkt.
-- **Logo:** `icons/curriculr.svg` (Marine-Quadrat, goldener Doppelpunkt), unverändert aus der Familie.
+- **Logo:** `icons/curriculr-icon.svg` (Marine-Quadrat, goldener Doppelpunkt), unverändert aus der Familie.
 - **Farben:** `--brand-marine-900` `#00345c`, `--brand-marine-700` `#00467d`, `--brand-gold` `#ffc857`. Marine ist der Schul-Akzent. Gold erscheint nur als Signatur am Doppelpunkt, nie als Fläche oder Statusfarbe.
 - **Schrift:** Die Familie nutzt Inter. Hier bleibt es bei der Systemschrift, weil der Brief externe Schriften ausschließt und Thunderbird selbst die Systemschrift nutzt.
 - **Modusfarben** (Privat, Alle) sind Funktion, nicht Marke, und bleiben eigenständig.
@@ -102,7 +102,7 @@ Nur Systemschrift (`font: message-box`, also Segoe UI Variable unter Windows). D
 | `--ws-text-lg` | 1.25em | 17.5px | Bereichstitel (Einstellungen) |
 | `--ws-text-xl` | 1.75em | 24.5px | Seitentitel |
 
-Gewichte 400 / 500 / 600 / 700. Ungelesener Absender in 700, gelesener in 500. Versalien nur für Badge und Gruppen-Überschriften, mit Laufweite `0.06em`. Zeilenhöhe 1.45, im Dunkeln 1.5.
+Gewichte 400 / 500 / 600 / 700. Ungelesener Absender in 700, gelesener in 500. Keine Versalien und keine gesperrte Schrift (Curricu:lr-Regel 10-design), auch nicht in Badge und Gruppen-Überschriften. Zeilenhöhe 1.45, im Dunkeln 1.5.
 
 ## Abstände und Dichte
 
@@ -128,7 +128,7 @@ Die Dichte „Touch“ nutzt die Normalwerte. Thunderbird vergrößert dort selb
 
 | Komponente | Regel |
 |---|---|
-| Toolbar | Fläche `--ws-bg-tinted`, keine Linie. Badge links: `--ws-text-sm`, 600, Versalien, Pill in Akzent. Im Modus Alle Graphit. |
+| Toolbar | Fläche `--ws-bg-tinted`, keine Linie. Badge links: `--ws-text-sm`, 600, Satzschreibung, Pill in Akzent. Im Modus Alle Graphit. |
 | Karte | Ruhe: transparent auf `--ws-bg`, kein Schatten. Hover: `--ws-accent-softer`, Radius 8. Auswahl: `--ws-accent-soft`. |
 | Ungelesen | 8px-Punkt im Akzent in eigener Spalte links, Absender 700. |
 | Ordnerbaum | unverändert, nur Tokens und `--ws-sidebar-tinted`. |
