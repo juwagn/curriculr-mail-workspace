@@ -62,9 +62,9 @@
     "open_in_tab": true
   },
   "icons": {
-    "32": "icons/curriculr.svg",
-    "64": "icons/curriculr.svg",
-    "128": "icons/curriculr.svg"
+    "32": "icons/curriculr-icon.svg",
+    "64": "icons/curriculr-icon.svg",
+    "128": "icons/curriculr-icon.svg"
   },
   "experiment_apis": {
     "workspace": {

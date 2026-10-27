@@ -85,7 +85,7 @@ Betroffen sind:
 
 **Hauptfenster**
 
-- Toolbar: leicht in Modusfarbe getönt. Links das Badge (SCHULE / PRIVAT / ALLE), kleiner und leiser als heute.
+- Toolbar: leicht in Modusfarbe getönt. Links das Badge (Schule / Privat / Alle), kleiner und leiser als heute.
 - Ordnerbaum: bleibt wie heute (ruhige Sidebar, gedämpfte Konto-Zeilen). Er bekommt nur die neuen Tokens und die Tönung.
 - Mail-Liste: durchgehende Fläche. Ein Eintrag ist zweizeilig (Absender und Datum, darunter Betreff). Der Ungelesen-Punkt steht in einer eigenen schmalen Spalte links, damit die Texte bündig bleiben.
 - Schnell-Tab-Leiste: neue Pill-Optik, Farbe als kleiner Punkt in der Pill statt Streifen.

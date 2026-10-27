@@ -89,7 +89,7 @@ if (Test-Path -LiteralPath $cssPath) {
     Assert ($code -match '--spaces-bg-color\s*:') 'Spaces-Hintergrund gesetzt'
 
     # v0.2.0: Badge, Verfassen-Fenster, Tag-Pills, Schnell-Tabs, Ordnerfarben, Sichtschutz, Fokus
-    foreach ($label in 'SCHULE', 'PRIVAT', 'ALLE') { Assert ($code.Contains("content: `"$label`"")) "Toolbar-/Compose-Badge $label" }
+    foreach ($label in 'Schule', 'Privat', 'Alle') { Assert ($code.Contains("content: `"$label`"")) "Toolbar-/Compose-Badge $label" }
     Assert ($code.Contains('#unifiedToolbarContent::before')) 'Workspace-Badge in der Toolbar'
     Assert ($code -match ':root\[data-ws-compose="school"\]' -and $code -match ':root\[data-ws-compose="private"\]') 'Verfassen-Fenster nach Absender-Workspace gefaerbt'
     Assert ($code -match '(?s)thread-card-tags[^{]*\{[^}]*border-radius:\s*var\(--ws-radius-pill\)') 'Schlagwoerter als Pill'

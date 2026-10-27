@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Geändert (Design-Review nach Curricu:lr-Design-Paket)
+- Logo-Dateien nach Paketnamen: `icons/curriculr.svg` heißt jetzt `icons/curriculr-icon.svg`; neu `curriculr-logo-auf-hell.svg` und `curriculr-logo-auf-dunkel.svg`. Die Einstellungsseite zeigt die Wortmarke als Logo-Datei (hell und dunkel) statt als nachgebauten Text mit goldenem Doppelpunkt.
+- Symbole: Workspace-Symbole (Schule, Privat, Alle, Bausteine) und Ordner-Symbole im Theme stammen jetzt aus Lucide (Strich 1,75) statt aus Phosphor; Lizenz in `THIRD_PARTY.md`.
+- Farben: Text, Sekundärtext, Gefahr, Erfolg und Feldrahmen folgen den Paketwerten (`--cl-*`; Feldrahmen `#8A919C`, mindestens 3 : 1). Die Add-on-Seiten laden dafür `shared/curriculr-tokens.css` (Kopie aus curriculr-design).
+- Keine Versalien und keine gesperrte Schrift mehr: Workspace-Badge zeigt „Schule“, „Privat“, „Alle“; Gruppen-Überschriften in den Einstellungen in Satzschreibung.
+- Akzentpunkt der Kapsel in den Einstellungen ohne Verlauf (eigenes Pseudo-Element).
+
 ### Neu
 - Moderne, größere Ordner-Symbole (Phosphor Light, MIT) im Ordnerbaum.
 

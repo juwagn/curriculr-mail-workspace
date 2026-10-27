@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Curricu:lr Mail-Workspace – Einstellungen</title>
+    <link rel="stylesheet" href="../shared/curriculr-tokens.css" />
     <link rel="stylesheet" href="../shared/tokens.css" />
     <link rel="stylesheet" href="../shared/ui.css" />
     <link rel="stylesheet" href="options.css" />
@@ -12,7 +13,13 @@
   <body>
     <div class="app">
       <header>
-        <h1 class="brand"><img src="../icons/curriculr.svg" alt="" width="28" height="28" /> <span>Curricu<span class="brand-colon">:</span>lr Mail-Workspace</span></h1>
+        <h1 class="brand">
+          <picture>
+            <source srcset="../icons/curriculr-logo-auf-dunkel.svg" media="(prefers-color-scheme: dark)" />
+            <img src="../icons/curriculr-logo-auf-hell.svg" alt="Curricu:lr" width="110" height="20" />
+          </picture>
+          <span class="brand-product">Mail-Workspace</span>
+        </h1>
         <p class="mode">
           <span id="current-mode" class="pill"></span>
           <span id="status" class="dim" role="status" aria-live="polite"></span>

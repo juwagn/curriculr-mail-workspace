@@ -27,16 +27,15 @@ h1 {
   font-size: var(--ws-text-lg);
 }
 
-/* Curricu:lr-Wortmarke: Doppelpunkt in Kronengold, Logo-Icon davor */
+/* Curricu:lr-Wortmarke als Logo-Datei (curriculr-logo-auf-hell/-auf-dunkel.svg), danach der Produktname */
 .brand {
   display: flex;
   align-items: center;
   gap: var(--ws-space-sm);
 }
 
-.brand-colon {
-  color: var(--brand-gold);
-  -webkit-text-stroke: 0.5px var(--brand-marine-900);
+.brand-product {
+  font-weight: var(--ws-weight-semibold);
 }
 
 .mode {
@@ -69,8 +68,6 @@ nav {
   padding-inline: var(--ws-space-md);
   font-size: var(--ws-text-sm);
   font-weight: var(--ws-weight-semibold);
-  letter-spacing: var(--ws-tracking-caps);
-  text-transform: uppercase;
   color: var(--ws-text-dim);
 }
 
